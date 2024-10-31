@@ -1,0 +1,40 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;}
+#content {
+    margin-top: 100px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    
+    padding: 20px 10px 10px 10px;
+    
+    height: 400px;
+    width: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+#input{
+ margin-top: 50px;
+ display: flex;
+ flex-direction: column;
+    justify-content: space-between;
+    gap: 2px;
+    
+}
+input[type=text]{
+    border: 0;
+    border-bottom: 1px solid black;
+}
+input[type=text]:focus{
+    border-bottom: 2px solid #9b72c7;
+    outline: none;
+}
+input[type="submit"]{
+    background-color: #9b72c7;
+    color: white;
+    margin-top: 30px;
+    border: 0;
+    padding: 10px 10px ;
+    border-radius: 5px;
+}

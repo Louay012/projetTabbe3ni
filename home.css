@@ -3,7 +3,7 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 header ul{
     list-style: none;
