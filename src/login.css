@@ -1,37 +1,38 @@
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#login_body{
+    
     background: url(image/pixelcut-export\ \(1\)_LE_auto_x2.jpg);
     background-repeat: no-repeat ;
     background-size: cover;
-
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
 }
     
 
-#content {
-    margin-top: 100px;
+#content_login {
+    
     display: flex;
-    align-items: start;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
     background-color: rgb(255, 255, 255);
-    padding: 20px 10px 10px 10px;
+    padding: 20px 0px 10px 0px;
     height: 400px;
     width: 500px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+    
 }
 
 
    
 
-#input{
- margin-top: 50px;
- display: flex;
- flex-direction: column;
-    justify-content: space-between;
-    gap: 2px;
-    
-}
+
 input[type=text]{
     border: 0;
     border-bottom: 1px solid black;

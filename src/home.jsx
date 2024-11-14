@@ -6,7 +6,7 @@ import { Link} from 'react-router-dom';
 
 
 function Home() {
-
+    console.log("Rendering Home");
   return <>
     <header>
         <nav>
