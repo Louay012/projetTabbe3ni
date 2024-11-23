@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Home from './home';
-import Login from './login';
-import Signup from './signup'
+import Home from './home.jsx';
+import Login from './login.jsx';
+import Signup from './signup.jsx'
 import { createBrowserRouter , RouterProvider } from 'react-router-dom';
+import Dashboard from './Dashboard';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -16,7 +16,11 @@ const router = createBrowserRouter([
   {
   path:"/signup",
     element:<Signup/>
-  }
+  },
+  {
+    path:"/dashboard",
+      element:<Dashboard/>
+    }
 ])
 function App() {
   return <>
