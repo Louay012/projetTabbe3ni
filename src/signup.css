@@ -4,6 +4,32 @@
     align-items: center;
    
 }
+#message{
+    text-align: center;
+}
+.offscreen {
+    display: none;
+}
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin: auto;
+    text-align: center;
+    width: 200px;
+}
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #8927f3;
+    height: 62px;
+    color: #fff;
+    padding: 4px;
+    position: relative;
+    bottom: -10px;
+}
 #signup_content {
     margin-top: 75px;
     display: flex;
@@ -21,25 +47,25 @@
    
 }
 #input{
- margin-top: 20px;
- display: flex;
- flex-direction: column;
+
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 2px;
-    
+ 
 }
-#signup_content input[type=text]{
+#signup_content input[type=email],
+#signup_content input[type=text ]{
     border: 0;
     border-bottom: 1px solid black;
 }
-#signup_content input[type=text]:focus{
+#signup_content input[type=email]:focus,
+input[type=text]:focus{
     border-bottom: 2px solid #9b72c7;
     outline: none;
 }
 #signup_content input[type="submit"]{
     background-color: #9b72c7;
     color: white;
-    margin-top: 30px;
     border: 0;
     padding: 10px 10px ;
     border-radius: 5px;

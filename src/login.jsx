@@ -4,20 +4,21 @@ import logo from './image/logo3.png';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 function Login() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+   
     const navigate = useNavigate();  
-  const submit= async (e) =>{
+    const submit= async (e) =>{
     e.preventDefault();
     try{
-        const response = await fetch('http://localhost/tabbe3ni/src/API/login.php',{
+        const response = await fetch('http://localhost/Projet/projetTabbe3ni/src/API/login.php',{
             method:'POST',
             headers:{
                     'Content-Type': 'application/json',
                 },
             body:JSON.stringify({
-                username: username,
+                email: email,
                 password: password,
             })
         })
@@ -37,14 +38,15 @@ function Login() {
     }
   }
   return <>
-  <div id="login_body">
+    <p  className={message ? "errmsg" : "offscreen"} aria-live="assertive">{message}</p>
+    <div id="login_body">
     
     <div id="content_login">  
         <form onSubmit={submit}>
             <Link to="/"><img src={logo} alt='logo'></img></Link><br></br>
             <div id="input">
-            <label htmlFor="username">Username : </label>
-            <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} required placeholder="Enter your username" name="username"></input><br></br>
+            <label htmlFor="email">Email : </label>
+            <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required placeholder="Enter your email" name="email"></input><br></br>
             <label htmlFor="pass">Password : </label>
             <input type="text" value={password} onChange={(e)=> setPassword(e.target.value)} required placeholder="Enter your password " name="pass"></input>
             <input type="submit" value="Login"></input>

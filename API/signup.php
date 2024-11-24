@@ -19,14 +19,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
    
    try {
-        $stmt=$pdo->prepare("select * from users where username=:user");
-        $stmt->bindParam(':user',$username);
+        $stmt=$pdo->prepare("select * from users where email=:email");
+        $stmt->bindParam(':email',$email);
     
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if($user){
 
-            echo json_encode(['success' => false, 'message' => 'user existe deja']);
+            echo json_encode(['success' => false, 'message' => 'Email est déja utilisé ']);
         } else {
             $stmt=$pdo->prepare("insert into users(username,email,password) values(:username,:email,:pass) ");
             $stmt->bindParam(':username',$username);

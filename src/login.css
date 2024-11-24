@@ -4,14 +4,12 @@
     background-repeat: no-repeat ;
     background-size: cover;
     height: 100vh;
-    margin: 0;
+    
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    
+     
 }
-    
 
 #content_login {
     
@@ -29,11 +27,7 @@
     
 }
 
-
-   
-
-
-#content_login input[type=text]{
+input[type=text]{
     border: 0;
     border-bottom: 1px solid black;
 }
