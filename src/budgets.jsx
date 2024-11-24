@@ -16,7 +16,7 @@ function Budgets() {
             
             try{
            
-                const response=await fetch('http://localhost/tabbe3ni/src/API/get_budgets.php?user_id=2' ,{ method: 'GET'})
+                const response=await fetch('http://localhost/TABBE3NI/API/get_budgets.php?user_id=2' ,{ method: 'GET'})
 
 
                 const data = await response.json();

@@ -1,13 +1,17 @@
-#login_body{
-    
+#body{
     background: url(image/pixelcut-export\ \(1\)_LE_auto_x2.jpg);
     background-repeat: no-repeat ;
     background-size: cover;
-    height: 100vh;
+ 
     
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+#login_body{
+    
+    
+    position: absolute;
+    top: 20%;
+    left:30%;
+  
      
 }
 
@@ -27,11 +31,12 @@
     
 }
 
-input[type=text]{
+#content_login input[type=password],input[type=email]{
     border: 0;
     border-bottom: 1px solid black;
 }
-#content_login input[type=text]:focus{
+
+#content_login input[type=password]:focus,input[type=email]:focus{
     border-bottom: 2px solid #9b72c7;
     outline: none;
 }

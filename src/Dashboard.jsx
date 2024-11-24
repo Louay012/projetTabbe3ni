@@ -9,8 +9,7 @@ function Dashboard() {
               <Sidebar></Sidebar>
               <div className='bg-violet-100 flex-1 m-2 rounded-lg p-4 '>
               <div className=' flex flex-row flex-wrap gap-10'>
-              <BudgetCard></BudgetCard>
-              <BudgetCard></BudgetCard>
+              
               </div>
               </div>
       </div>

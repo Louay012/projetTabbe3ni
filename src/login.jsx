@@ -12,7 +12,7 @@ function Login() {
     const submit= async (e) =>{
     e.preventDefault();
     try{
-        const response = await fetch('http://localhost/Projet/projetTabbe3ni/src/API/login.php',{
+        const response = await fetch('http://localhost/TABBE3NI/API/login.php',{
             method:'POST',
             headers:{
                     'Content-Type': 'application/json',
@@ -38,25 +38,30 @@ function Login() {
     }
   }
   return <>
-    <p  className={message ? "errmsg" : "offscreen"} aria-live="assertive">{message}</p>
-    <div id="login_body">
     
-    <div id="content_login">  
-        <form onSubmit={submit}>
-            <Link to="/"><img src={logo} alt='logo'></img></Link><br></br>
-            <div id="input">
-            <label htmlFor="email">Email : </label>
-            <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required placeholder="Enter your email" name="email"></input><br></br>
-            <label htmlFor="pass">Password : </label>
-            <input type="text" value={password} onChange={(e)=> setPassword(e.target.value)} required placeholder="Enter your password " name="pass"></input>
-            <input type="submit" value="Login"></input>
-            
+    <div id="body" className='h-screen w-screen'>
+        <div className={message ? "alert alert-danger flex justify-center items-center fixed top-2" : "hidden"} role="alert">
+            {message}
+        </div>
+    
+        <div id="login_body">
+            <div id="content_login">  
+                <form onSubmit={submit}>
+                    <Link to="/"><img src={logo} alt='logo'></img></Link><br></br>
+                    <div id="input">
+                    <label htmlFor="email">Email : </label>
+                    <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required placeholder="Enter your email" name="email"></input><br></br>
+                    <label htmlFor="pass">Password : </label>
+                    <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} required placeholder="Enter your password " name="pass"></input>
+                    <input type="submit" value="Login"></input>
+                    
+                    </div>
+                    
+                </form>
+                <p style={{fontSize:'14px',fontFamily:'cursive'}}>You don't have an account yet? <Link to="../signup" className="link-secondary" >You can sign up here</Link></p>
             </div>
-            
-        </form>
-        <p style={{fontSize:'14px',fontFamily:'cursive'}}>You don't have an account yet? <Link to="../signup" className="link-secondary" >You can sign up here</Link></p>
-    </div>
-    </div>
+        </div>
+  </div>
     </>;
 }
 

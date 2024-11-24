@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from "react";
-import './signup.css'; // Ensure your CSS is imported here or in the main `App.js`
+import './signup.css'; 
 import img1 from './image/Team goals-bro.png';
 import logo from './image/logo3.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +28,7 @@ function Signup() {
     e.preventDefault();
     try{
         
-        const response = await fetch('http://localhost/Projet/projetTabbe3ni/src/API/signup.php',{
+        const response = await fetch('http://localhost/TABBE3NI/API/signup.php',{
             method:'POST',
             headers:{
                     'Content-Type': 'application/json',
@@ -57,7 +57,9 @@ function Signup() {
     }
   }
   return <>
-   <p  className={message ? "errmsg" : "offscreen"} aria-live="assertive">{message}</p>
+   <div className={message ? "alert alert-danger flex justify-center items-center fixed top-2" : "hidden"} role="alert">
+            {message}
+        </div>
   <div id="signup_body">
     <div id="signup_content">
     
@@ -72,7 +74,7 @@ function Signup() {
           
             <label htmlFor="pass">Password : </label>
             
-            <input type="text" placeholder="Enter your password " onBlur={() => setpasswordFocus(false)} onFocus={(e) => setpasswordFocus(true)} value={password} onChange={(e)=>setPassword(e.target.value)} required name="pass"></input>
+            <input type="password" placeholder="Enter your password " onBlur={() => setpasswordFocus(false)} onFocus={(e) => setpasswordFocus(true)} value={password} onChange={(e)=>setPassword(e.target.value)} required name="pass"></input>
             <p  className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             The password must have at least:<br />
