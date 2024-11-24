@@ -11,7 +11,7 @@ function Login() {
   const submit= async (e) =>{
     e.preventDefault();
     try{
-        const response = await fetch('http://localhost/tabbe3ni/src/API/login.php',{
+        const response = await fetch('http://localhost/tabbe3ni/API/login.php',{
             method:'POST',
             headers:{
                     'Content-Type': 'application/json',

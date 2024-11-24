@@ -13,7 +13,7 @@ function Signup() {
   const signup= async (e) =>{
     e.preventDefault();
     try{
-        const response = await fetch('http://localhost/tabbe3ni/src/API/signup.php',{
+        const response = await fetch('http://localhost/tabbe3ni/API/signup.php',{
             method:'POST',
             headers:{
                     'Content-Type': 'application/json',
