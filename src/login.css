@@ -33,15 +33,15 @@
    
 
 
-input[type=text]{
+#content_login input[type=text]{
     border: 0;
     border-bottom: 1px solid black;
 }
-input[type=text]:focus{
+#content_login input[type=text]:focus{
     border-bottom: 2px solid #9b72c7;
     outline: none;
 }
-input[type="submit"]{
+#content_login input[type="submit"]{
     background-color: #9b72c7;
     color: white;
     margin-top: 30px;
