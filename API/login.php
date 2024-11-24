@@ -13,14 +13,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
     
 
-    $username = $input['username'] ?? '';
+    $email = $input['email'] ?? '';
    
     $password = $input['password'] ?? '';
 
    
    try {
-    $stmt=$pdo->prepare("select * from users where username=:user and password=:pass ");
-    $stmt->bindParam(':user',$username);
+    $stmt=$pdo->prepare("select * from users where email=:email and password=:pass ");
+    $stmt->bindParam(':email',$email);
     $stmt->bindParam(':pass',$password);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
