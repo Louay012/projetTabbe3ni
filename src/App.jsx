@@ -6,6 +6,7 @@ import Income from './income.jsx';
 import { createBrowserRouter , RouterProvider } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
 import Budgets from './budgets.jsx';
+import Transactions from './transactions.jsx';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -30,6 +31,9 @@ const router = createBrowserRouter([
   {
     path:"/budgets",
       element:<Budgets/>
+    },
+    {path:"/transactions",
+      element:<Transactions/>
     }
 ])
 function App() {
