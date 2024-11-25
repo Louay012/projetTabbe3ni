@@ -1,46 +1,4 @@
-#signup_body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
-}
-#message{
-    text-align: center;
-}
-.offscreen {
-    display: none;
-}
-.errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    margin: auto;
-    text-align: center;
-    width: 200px;
-}
-.instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    height: 62px;
-    color: #9b72c7;
-    padding: 4px;
-    position: relative;
-    bottom: -10px;
-}
 
-
-
-#signup_content input[type="submit"]{
-    background-color: #9b72c7;
-    color: white;
-    border: 0;
-    padding: 10px 10px ;
-    border-radius: 5px;
-    margin: 10px;
-}
 #contimg{
     height: 600px;
     width: 600px;

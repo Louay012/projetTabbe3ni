@@ -13,7 +13,7 @@ function Sidebar() {
                     <h2>User</h2>
                     <ul className='list-none flex flex-col  ' >
                       <li className='py-2 px-2 flex gap-2 items-center ' >
-                      <Link className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
+                      <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
                         <BiDollarCircle className='text-inherit'/>
                          <span className='text-inherit'>Income</span> 
                          </Link>
@@ -25,7 +25,7 @@ function Sidebar() {
                          </Link>
                         </li>
                         <li className='py-2 px-2 flex gap-2 items-center ' >
-                      <Link className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
+                      <Link to={"/transactions"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
                         <HiOutlineShoppingBag className='text-inherit'/>
                          <span className='text-inherit'>Transactions</span> 
                          </Link>

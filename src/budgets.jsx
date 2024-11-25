@@ -11,51 +11,106 @@ function Budgets() {
   const [show, setShow] = useState(false);
   const [budget_cat, setbudget_cat] = useState('');
   const [allocated_amount, setallocated_amount] = useState(0);
-  const handle_submit=()=>{
-
-  }
+  
+  
   const hideForm=()=>{
     setShow(false);
 }
   const showForm=()=>{
         setShow(true);
   }
-    useEffect(() => {
-        const fetch_budgets=async () => {
+  const fetch_budgets=async () => {
             
-            try{
-           
-                const response=await fetch('http://localhost/TABBE3NI/API/get_budgets.php?user_id=2' ,{ method: 'GET'})
-
-
-                const data = await response.json();
-
-                if (data.success) {
-                setBudgets(data.data);
-                } else {
-                setError(data.message || "Failed to fetch budgets.");
-
-                }
-            } catch (err) {
-                setError("An error occurred while fetching budgets.");
-
-            } finally {
-                setLoading(false);
-            }
-            }
-            fetch_budgets()
-        },[])
+    try{
    
-       
-        
-        
+        const response=await fetch('http://localhost/TABBE3NI/API/get_budgets.php?user_id=2' ,{ method: 'GET'})
 
+
+        const data = await response.json();
+
+        if (data.success) {
+        setBudgets(data.data);
+        } else {
+        setError(data.message || "Failed to fetch budgets.");
+
+        }
+    } catch (err) {
+        setError("An error occurred while fetching budgets.");
+
+    } finally {
+        setLoading(false);
+    }
+    }
+    useEffect(() => {
+        
+            fetch_budgets()
+        },[budgets])
+        const handle_submit=async (event) => {
+          event.preventDefault()
+          try{
+            console.log("message")
+                const response=await fetch('http://localhost/TABBE3NI/API/add_budget.php',{
+                  method:"POST",
+                  headers:{
+                    'Content-Type': 'application/json',
+                },
+                  body:JSON.stringify({
+                    budget_cat: budget_cat,
+                    allocated_amount: allocated_amount,
+                  })
+                })
+                console.log("message")
+            const data=await response.json();
+            console.log("message")
+            if (data.success) {
+              fetch_budgets();
+              
+              } else {
+              setError(data.message || "Failed to add budgets.");
+      
+                    }
+              } catch (err) {
+                  setError("An error occurred while adding a budget.");
+      
+              }
+              hideForm() 
+              }
+              const handle_addExpense=async (id,AddedAmount) => {
+   
+                try{
+                  console.log("message")
+                      const response=await fetch('http://localhost/TABBE3NI/API/add_expense.php',{
+                        method:"POST",
+                        headers:{
+                          'Content-Type': 'application/json',
+                      },
+                        body:JSON.stringify({
+                          id: id,
+                          AddedAmount: AddedAmount,
+                        })
+                      })
+                      console.log("message")
+                  const data=await response.json();
+                  console.log("message")
+                  if (data.success) {
+                    
+                    } else {
+                    console.log(data.message || "Failed to add budgets.");
+            
+                          }
+                    } catch (err) {
+                      console.log("An error occurred while adding a budget.");
+            
+                    } 
+                    fetch_budgets();
+                  }
+              
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
 
 
-  return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
+  return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
               
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2 justify-center items-center  shadow-md    '>
@@ -66,6 +121,7 @@ function Budgets() {
                       type="text"
                       placeholder="Enter the budget category :"
                       name="category"
+                      onChange={(e)=>{setbudget_cat(e.target.value)}}
                       required
                     />
                   </Form.Group>
@@ -76,6 +132,7 @@ function Budgets() {
                       type="Number "
                       placeholder="Enter the allocated amount "
                       name="allocated_amount"
+                      onChange={(e)=>{setallocated_amount(e.target.value)}}
                       required
                     />
                   </Form.Group>
@@ -93,9 +150,9 @@ function Budgets() {
                   <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showForm}/>
                 </div>
               
-                <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-x-10 '>
+                <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-10 '>
                 
-                  {budgets.map((budget)=><BudgetCard key={budget.budget_id} name={budget.category_name} max={budget.allocated_amount} 
+                  {budgets.map((budget)=><BudgetCard key={budget.budget_id} id={budget.budget_id} onAddExpense={handle_addExpense} name={budget.category_name} max={budget.allocated_amount} 
                   amount={budget.amount} >
                     </BudgetCard>)}
                 

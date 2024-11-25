@@ -62,9 +62,9 @@ function Signup() {
             {message}
         </div>
   <div  className='flex justify-center items-center  '>
-    <div  className='flex bg-white justify-between items-center shadow-md rounded m-3 border-1 px-5 w-5/6'>
+    <div  className='flex bg-white justify-between items-center shadow-md rounded m-3 border-1 px-4 py-4 w-3/4 h-5/6 '>
     
-        <form  onSubmit={signup} className='flex flex-col gap-4'>
+        <form  onSubmit={signup} className='flex flex-col gap-3'>
             <div className='flex justify-center items-center'>
             <Link to={'../'}><img src={logo} alt=''></img> </Link><br></br>
             </div>
@@ -81,19 +81,20 @@ function Signup() {
             <div className='flex flex-col'>
             <label htmlFor="pass">Password : </label>
             <input type="password" className="border-b  border-b-slate-800 p-1 focus:outline-none focus:border-b-2 focus:border-b-purple-500" placeholder="Enter your password " onBlur={() => setpasswordFocus(false)} onFocus={(e) => setpasswordFocus(true)} value={password} onChange={(e)=>setPassword(e.target.value)} required name="pass"></input>
-            </div>
-            <p  className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
+            <p  className={passwordFocus && !validPassword ? "" : "hidden"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             The password must have at least:<br />
                             -6 characters.<br />
                             -1 Uppercase letter, 1 lowercase letter and a number.
                         </p>
+            </div>
+            
             
             <input type="submit" className="bg-violet border-0 text-white p-2 rounded font-mono font-bold hover:bg-purple-500 focus:outline-none focus:ring-1" value="Sign Up"></input>
             <p style={{fontSize:'14px',fontFamily:'cursive'}}>you already have an account? <Link to="../login" className="link-secondary" >Login</Link></p>
             
         </form>
-        <img id="contimg" src={img1} alt=''></img>
+        <img style={{height:"600px",width:"600px" }} src={img1} alt='' className=''></img>
     </div>
     </div>
     </div>
