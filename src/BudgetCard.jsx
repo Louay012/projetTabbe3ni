@@ -23,7 +23,7 @@ function BudgetCard({name,max,amount}) {
   
  
   return (
-    <Card className='w-5/12 h-1/6 shadow-md'>
+    <Card className='w-96 h-0 shadow-md'>
       <CardBody className='flex flex-col gap-2'>
         <CardTitle>
           <div className='flex justify-between items-center'>

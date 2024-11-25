@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRef, useState, useEffect } from "react";
-import './signup.css'; 
+
 import img1 from './image/Team goals-bro.png';
 import logo from './image/logo3.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,24 +57,31 @@ function Signup() {
     }
   }
   return <>
+  <div className='h-screen w-screen flex flex-col justify-center'>
    <div className={message ? "alert alert-danger flex justify-center items-center fixed top-2" : "hidden"} role="alert">
             {message}
         </div>
-  <div id="signup_body">
-    <div id="signup_content">
+  <div  className='flex justify-center items-center  '>
+    <div  className='flex bg-white justify-between items-center shadow-md rounded m-3 border-1 px-5 w-5/6'>
     
-        <form id="signup_form" onSubmit={signup}>
+        <form  onSubmit={signup} className='flex flex-col gap-4'>
+            <div className='flex justify-center items-center'>
             <Link to={'../'}><img src={logo} alt=''></img> </Link><br></br>
-            <div id="input">
+            </div>
+            <div className='flex flex-col'>
             <label htmlFor="username">Username : </label>
-            <input type="text" placeholder="Enter your username " value={username} onChange={(e)=>setUsername(e.target.value)} required name="username"></input><br></br>
+            <input type="text" className="border-b  border-b-slate-800 p-1 focus:outline-none focus:border-b-2 focus:border-b-purple-500" placeholder="Enter your username " value={username} onChange={(e)=>setUsername(e.target.value)} required name="username"></input>
+            </div>
+
+            <div className='flex flex-col'>
             <label htmlFor="email">Email : </label>
-            
-            <input type="email" placeholder="Enter your email " value={email} onChange={(e)=>setEmail(e.target.value)} required name="email"></input><br></br>
-          
+            <input type="email"  className="border-b  border-b-slate-800 p-1 focus:outline-none focus:border-b-2 focus:border-b-purple-500" placeholder="Enter your email " value={email} onChange={(e)=>setEmail(e.target.value)} required name="email"></input>
+            </div>
+
+            <div className='flex flex-col'>
             <label htmlFor="pass">Password : </label>
-            
-            <input type="password" placeholder="Enter your password " onBlur={() => setpasswordFocus(false)} onFocus={(e) => setpasswordFocus(true)} value={password} onChange={(e)=>setPassword(e.target.value)} required name="pass"></input>
+            <input type="password" className="border-b  border-b-slate-800 p-1 focus:outline-none focus:border-b-2 focus:border-b-purple-500" placeholder="Enter your password " onBlur={() => setpasswordFocus(false)} onFocus={(e) => setpasswordFocus(true)} value={password} onChange={(e)=>setPassword(e.target.value)} required name="pass"></input>
+            </div>
             <p  className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             The password must have at least:<br />
@@ -82,11 +89,12 @@ function Signup() {
                             -1 Uppercase letter, 1 lowercase letter and a number.
                         </p>
             
-            <input type="submit" value="Sign Up"></input><br></br>
+            <input type="submit" className="bg-violet border-0 text-white p-2 rounded font-mono font-bold hover:bg-purple-500 focus:outline-none focus:ring-1" value="Sign Up"></input>
             <p style={{fontSize:'14px',fontFamily:'cursive'}}>you already have an account? <Link to="../login" className="link-secondary" >Login</Link></p>
-            </div>
+            
         </form>
         <img id="contimg" src={img1} alt=''></img>
+    </div>
     </div>
     </div>
     </>;
