@@ -7,6 +7,7 @@ import { createBrowserRouter , RouterProvider } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
 import Budgets from './budgets.jsx';
 import Transactions from './transactions.jsx';
+import Categories from './Categories.jsx';
 const router = createBrowserRouter([
   {
     path:"/",
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     },
     {path:"/transactions",
       element:<Transactions/>
+    }
+    ,
+    {path:"/categories",
+      element:<Categories/>
     }
 ])
 function App() {

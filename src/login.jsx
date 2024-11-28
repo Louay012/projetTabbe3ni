@@ -44,7 +44,7 @@ function Login() {
         </div>
     
         
-            <div  className='bg-white w-1/3 h-3/5 shadow-md absolute top-20p left-30p p-2 flex flex-col items-center gap-4' >   
+            <div  className='bg-white w-1/3 h-3/5 shadow-lg absolute top-20p left-30p p-2 flex flex-col items-center gap-4' >   
                 <Link to="/"><img src={logo} alt='logo'></img></Link>
                 <form onSubmit={submit} className='flex flex-col justify-between  gap-4'>
                     

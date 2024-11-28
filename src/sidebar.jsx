@@ -4,32 +4,38 @@ import { Link   } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
 import { BiDollarCircle } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-
+import { BiBorderAll } from "react-icons/bi";
 function Sidebar() {
   
   return (
-    <div className='bg-zinc-800 flex flex-col items-center  font-mono text-lg text-gray-50 w-1/6 '>
+    <div className='bg-zinc-800 flex flex-col items-center  font-mono text-lg text-gray-50 w-14 md:w-48 '>
                 <div className='flex-1 flex flex-col items-center py-3  gap-10 '>
                     <h2>User</h2>
-                    <ul className='list-none flex flex-col  ' >
-                      <li className='py-2 px-2 flex gap-2 items-center ' >
-                      <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
+                    <ul className='list-none flex flex-col items-start ' >
+                      <li className='py-2  flex gap-2 items-center md:px-3' >
+                      <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
                         <BiDollarCircle className='text-inherit'/>
-                         <span className='text-inherit'>Income</span> 
+                         <span className='hidden  md:block text-inherit'>Income</span> 
                          </Link>
                         </li>
-                        <li className='py-2 px-2 flex gap-2 items-center ' >
-                      <Link to={'../budgets'} className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
+                        <li className='py-2  flex gap-2 items-center md:px-3' >
+                      <Link to={'../budgets'} className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
                         <BiCartAlt className='text-inherit'/>
-                         <span className='text-inherit'>Budgets</span> 
+                         <span className='hidden  md:block text-inherit'>Budgets</span> 
                          </Link>
                         </li>
-                        <li className='py-2 px-2 flex gap-2 items-center ' >
-                      <Link to={"/transactions"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-3' >
+                        <li className='py-2  flex gap-2 items-center md:px-3' >
+                      <Link to={"/transactions"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
                         <HiOutlineShoppingBag className='text-inherit'/>
-                         <span className='text-inherit'>Transactions</span> 
+                         <span className='hidden  md:block text-inherit'>Transactions</span> 
                          </Link>
-                        </li>                    
+                        </li>   
+                        <li className='py-2  flex gap-2 items-center md:px-3' >
+                      <Link to={"/categories"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
+                        <BiBorderAll className='text-inherit'/>
+                         <span className='hidden  md:block text-inherit'>Categories</span> 
+                         </Link>
+                        </li>                  
                         </ul>
                     
                     </div>

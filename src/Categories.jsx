@@ -2,8 +2,8 @@ import React, { useState ,useEffect} from 'react'
 import Sidebar from './sidebar';
 import './transaction.css';
 
-function Transactions() {
-    const [Transactions, setTransactions] = useState([]);
+function Categories() {
+    const [Categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedChoice, setSelectedChoice] = useState('');
@@ -12,41 +12,40 @@ function Transactions() {
 
 
     
-    const fetch_Transactions=async () => {
+    const fetch_categories=async () => {
             
         
         try{
             
-            const response=await fetch('http://localhost/TABBE3NI/API/get_transactions.php' ,{
+            const response=await fetch('http://localhost/TABBE3NI/API/get_categories.php' ,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
-                    choice:selectedChoice,
                     user_id:user_id ,
-                    order :selectedOrder}),
+                    }),
             })
             setLoading(false);
             const data = await response.json();
             console.log(data.test);
             if (data.success) {
-            setTransactions(data.data);
-            console.log(Transactions)
+            setCategories(data.data);
+           
             
             } else {
-            setError(data.message || "Failed to fetch transactions.");
+            setError(data.message || "Failed to fetch categories.");
 
             }
         } catch (err) {
-            setError("An error occurred while fetching transactions." );
+            setError("An error occurred while fetching categories." );
 
         } finally {
             setLoading(false);
         }
         }
         
-        useEffect(() => {fetch_Transactions()
+        useEffect(() => {fetch_categories()
         },[ selectedOrder ,selectedChoice])  ;   
         
     if (loading) return <p>Loading...</p>;
@@ -54,8 +53,10 @@ function Transactions() {
 
     return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
-              <div className='flex-1 bg-purple-50  m-3 rounded-lg p-4  flex flex-col justify-start gap-3   shadow-md'>
-              <div className='flex items-center justify-start gap-3'>
+              <div className='flex-1 bg-purple-50  m-3 rounded-lg p-4   flex flex-col justify-start gap-3  shadow-md'>
+              
+                
+                <div className='flex items-center justify-start gap-3'>
                     <label htmlFor="choice">Choose an option:</label>
                     <select className='block w-30 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-900 outline-none py-2 px-3'
                         id="choice"
@@ -84,23 +85,21 @@ function Transactions() {
                         <option value="Amount">Amount</option>
                         <option value="date">Date</option>
                     </select>
-            </div>    
+            </div> 
+                
             {/*<div></div>overflow-x-auto*/}
                <table className='  border-2 text-left table shadow-sm border-gray-200  '>
                 <tr className='bg-zinc-700 text-white '>
-                    <th className='border-1 border-gray-300'>Transaction_id</th>
-                    <th className='border-1 border-gray-300'> Category</th>
-                    <th className='border-1 border-gray-300'>Amount</th>
-                    <th className='border-1 border-gray-300'>Date</th>
-                    <th className='border-1 border-gray-300'>Description</th>
+                    <th className='border-1 border-gray-300'>category_id</th>
+                    <th className='border-1 border-gray-300'> category_name</th>
+                    <th className='border-1 border-gray-300'>type</th>
                     </tr>
-               { Transactions.map((transaction)=>
+               { Categories.map((category)=>
                <tr className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'> 
-                    <td className='border-1 border-gray-300'>{transaction.id}</td>
-                    <td className='border-1 border-gray-300'>{transaction.category}</td>
-                    <td className='border-1 border-gray-300'>{transaction.amount}</td>
-                    <td className='border-1 border-gray-300'>{transaction.date}</td>
-                    <td className='border-1 border-gray-300'>{transaction.description}</td>
+                    <td className='border-1 border-gray-300'>{category.category_id}</td>
+                    <td className='border-1 border-gray-300'>{category.category_name}</td>
+                    <td className='border-1 border-gray-300'>{category.type}</td>
+                    
                 </tr>)}
                </table>
 
@@ -108,4 +107,4 @@ function Transactions() {
     </div>
     
 }
-export default Transactions;
+export default Categories;

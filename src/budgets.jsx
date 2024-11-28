@@ -8,16 +8,26 @@ function Budgets() {
     const [budgets, setBudgets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [show, setShow] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const [budget_cat, setbudget_cat] = useState('');
+  const [id, setid] = useState(0);
+  
   const [allocated_amount, setallocated_amount] = useState(0);
-  
-  
-  const hideForm=()=>{
-    setShow(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const hideAddForm=()=>{
+    setShowAdd(false);
 }
-  const showForm=()=>{
-        setShow(true);
+  const showAddForm=()=>{
+    setShowAdd(true);
+  }
+  const hideEditForm=()=>{
+    setShowEdit(false);
+}
+  const showEditForm=(id,name,max)=>{
+    setid(id);
+    setbudget_cat(name);
+    setallocated_amount(max);
+    setShowEdit(true);
   }
   const fetch_budgets=async () => {
             
@@ -42,10 +52,9 @@ function Budgets() {
     }
     }
     useEffect(() => {
-        
-            fetch_budgets()
-        },[budgets])
-        const handle_submit=async (event) => {
+        fetch_budgets()
+        },[])
+    const handle_submit=async (event) => {
           event.preventDefault()
           try{
             console.log("message")
@@ -73,37 +82,67 @@ function Budgets() {
                   setError("An error occurred while adding a budget.");
       
               }
-              hideForm() 
+              hideAddForm() 
               }
-              const handle_addExpense=async (id,AddedAmount) => {
-   
+      const handle_EditBudget=async () => {
+                
                 try{
-                  console.log("message")
-                      const response=await fetch('http://localhost/TABBE3NI/API/add_expense.php',{
+                  
+                      const response=await fetch('http://localhost/TABBE3NI/API/edit_budget.php',{
                         method:"POST",
                         headers:{
                           'Content-Type': 'application/json',
                       },
                         body:JSON.stringify({
                           id: id,
-                          AddedAmount: AddedAmount,
+                          budget_cat: budget_cat,
+                          allocated_amount: allocated_amount,
                         })
                       })
-                      console.log("message")
+                  
                   const data=await response.json();
-                  console.log("message")
+                  
                   if (data.success) {
-                    
+                    fetch_budgets();
                     } else {
-                    console.log(data.message || "Failed to add budgets.");
+                    console.log(data.message || "Failed to edit budgets.");
             
                           }
                     } catch (err) {
-                      console.log("An error occurred while adding a budget.");
+                      console.log("An error occurred while editing a budget.");
             
                     } 
-                    fetch_budgets();
+                    
                   }
+      const handle_addExpense=async (id,AddedAmount) => {
+   
+                    try{
+                      console.log("message")
+                          const response=await fetch('http://localhost/TABBE3NI/API/add_expense.php',{
+                            method:"POST",
+                            headers:{
+                              'Content-Type': 'application/json',
+                          },
+                            body:JSON.stringify({
+                              id: id,
+                              AddedAmount:AddedAmount,
+                            })
+                          })
+                          console.log("message")
+                      const data=await response.json();
+                      console.log("message")
+                      if (data.success) {
+                        fetch_budgets();
+                        } else {
+                        console.log(data.message || "Failed to add expense.");
+                
+                              }
+                        } catch (err) {
+                          console.log("An error occurred while adding an expense.");
+                
+                        } 
+                        
+                      }
               
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -114,17 +153,17 @@ function Budgets() {
               <Sidebar></Sidebar>
               
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2 justify-center items-center  shadow-md    '>
-              <Form onSubmit={handle_submit} className={show ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
-                  <Form.Group className="mb-3" controlId="formBasicName">
-                    <Form.Label className='font-mono font-semibold text-lg'>Budget category:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter the budget category :"
-                      name="category"
-                      onChange={(e)=>{setbudget_cat(e.target.value)}}
-                      required
-                    />
-                  </Form.Group>
+                  <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+                      <Form.Group className="mb-3" controlId="formBasicName">
+                        <Form.Label className='font-mono font-semibold text-lg'>Budget category:</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter the budget category :"
+                          name="category"
+                          onChange={(e)=>{setbudget_cat(e.target.value)}}
+                          required
+                        />
+                      </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='font-mono font-semibold text-lg'>Allocated amount:</Form.Label>
@@ -137,7 +176,7 @@ function Budgets() {
                     />
                   </Form.Group>
                   <div className='flex justify-between'>
-                  <Button variant="secondary" onClick={hideForm}>
+                  <Button variant="secondary" onClick={hideAddForm}>
                     Cancel
                   </Button>
                   <Button variant="primary" type="submit" >
@@ -145,14 +184,52 @@ function Budgets() {
                   </Button>
                   </div>
                   </Form>
+
+
+                  <Form onSubmit={handle_EditBudget} className={showEdit ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+                  <Form.Group className="mb-3" controlId="formBasicName">
+                    <Form.Label className='font-mono font-semibold text-lg'>Budget category:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter the budget category :"
+                      name="category"
+                      value={budget_cat}
+                      onChange={(e)=>{setbudget_cat(e.target.value)}}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className='font-mono font-semibold text-lg'>Allocated amount:</Form.Label>
+                    <Form.Control
+                      type="Number "
+                      placeholder="Enter the allocated amount "
+                      name="allocated_amount"
+                      value={allocated_amount}
+                      onChange={(e)=>{setallocated_amount(e.target.value)}}
+                      required
+                    />
+                  </Form.Group>
+                  <div className='flex justify-between'>
+                  <Button variant="secondary" onClick={hideEditForm}>
+                    Cancel
+                  </Button>
+                  <Button variant="primary" type="submit" >
+                    Edit
+                  </Button>
+                  </div>
+                  </Form>
                 <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Budgets :</span>
-                  <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showForm}/>
+                  <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showAddForm}/>
                 </div>
               
                 <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-10 '>
                 
-                  {budgets.map((budget)=><BudgetCard key={budget.budget_id} id={budget.budget_id} onAddExpense={handle_addExpense} name={budget.category_name} max={budget.allocated_amount} 
+                  {budgets.map((budget)=><BudgetCard key={budget.budget_id} 
+                  id={budget.budget_id} onEditBudget={handle_EditBudget} onshowEdit={showEditForm}
+                  onAddExpense={handle_addExpense} name={budget.category_name} fetch_budgets={fetch_budgets}
+                  max={budget.allocated_amount} 
                   amount={budget.amount} >
                     </BudgetCard>)}
                 

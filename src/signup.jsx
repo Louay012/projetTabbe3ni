@@ -62,7 +62,7 @@ function Signup() {
             {message}
         </div>
   <div  className='flex justify-center items-center  '>
-    <div  className='flex bg-white justify-between items-center shadow-md rounded m-3 border-1 px-4 py-4 w-3/4 h-5/6 '>
+    <div  className='flex bg-white justify-around items-center shadow-lg rounded m-3 border-1 px-4 py-4 w-10/12 h-5/6 '>
     
         <form  onSubmit={signup} className='flex flex-col gap-3'>
             <div className='flex justify-center items-center'>

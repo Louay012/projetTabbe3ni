@@ -1,0 +1,40 @@
+.carre{
+    width: 100px;
+    height: 100px;
+    background: #069;
+    transition: left;
+    transition-property: red;
+    transition-duration: 0.5s;
+    position: relative;
+}
+#delay{
+    font-size: 14px;
+    transition-property:all;
+    transition-duration: 4s;
+    transition-delay: 2s;
+}
+#delay:hover{
+    font-size: 36px;
+}
+#modif-taille{
+    font-size: 15px;
+    transition-property:all;
+    
+    transition-duration: 4s;
+
+}
+#modif-taille:hover{
+    font-size: 35px;
+}
+.carre{
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+    transition-property: background-color;
+    transition-duration: 5s;
+    transition-delay: 2s;
+    
+}
+.carre:hover{
+    background-color: red;
+}
