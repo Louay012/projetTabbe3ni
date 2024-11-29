@@ -36,7 +36,7 @@ WHERE
         
     DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
     t.user_id = :user_id 
- ORDER BY :order ");
+ ORDER BY :order ;");
     $stmt->bindParam(':choice',$choice);
     }
     else{
