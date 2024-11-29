@@ -13,12 +13,13 @@ session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents("php://input"), true);
     $user_id = $input['user_id']  ;
-   
+    $type = $input['type'];
 
    try {
-    $stmt=$pdo->prepare("select * from categories where user_id=:user_id");
+    $stmt=$pdo->prepare("select * from categories where user_id=:user_id and type=:type");
 
     $stmt->bindParam(':user_id',$user_id);
+    $stmt->bindParam(':type',$type);
   
     $stmt->execute();
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

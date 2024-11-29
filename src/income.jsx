@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from './sidebar';
 import { Button, Form } from 'react-bootstrap';
+import { Controller, useForm } from 'react-hook-form'
+import DatePicker from 'react-datepicker'
 
-
+import "react-datepicker/dist/react-datepicker.css";
 
 function Income() {
   const [income, setIncome] = useState([]);
@@ -41,6 +43,7 @@ function Income() {
           const response=await fetch('http://localhost/TABBE3NI/API/get_categories.php' ,{ method: 'POST',
             body: JSON.stringify({ 
               user_id:2 ,
+              type:"income",
               }),
           })
 
@@ -76,7 +79,7 @@ function Income() {
     event.preventDefault()
     try{
       console.log("message")
-          const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
+          const response=await fetch('http://localhost/TABBE3NI/API/add_income.php',{
             method:"POST",
             headers:{
               'Content-Type': 'application/json',
@@ -104,7 +107,7 @@ function Income() {
         hideAddForm() 
         } 
   
-    
+        const { control, register, handleSubmit } = useForm()
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
   return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
@@ -112,7 +115,7 @@ function Income() {
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md    '>
               <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-120 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                   <Form.Group className="mb-3" controlId="formBasicName">
-                        <Form.Label className='font-mono font-semibold text-lg'>transaction category:</Form.Label>
+                        <Form.Label className='font-mono font-semibold text-lg'>income category:</Form.Label>
                         
                         <Form.Select
                           type="text"
@@ -146,6 +149,20 @@ function Income() {
                       name="transaction_description"
                       onChange={(e)=>{setdesc(e.target.value)}}
                       required
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                  <Form.Label className='font-mono font-semibold text-lg'> income date:</Form.Label>
+                  <Controller
+                      control={control}
+                      name='date-input'
+                      render={({ field }) => (
+                        <DatePicker
+                          placeholderText='Select date'
+                          onChange={(date) => field.onChange(date)}
+                          selected={field.value}
+                        />
+                    )}
                     />
                   </Form.Group>
                   <div className='flex justify-between'>

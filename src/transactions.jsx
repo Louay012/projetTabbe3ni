@@ -25,7 +25,7 @@ function Transactions() {
                 body: JSON.stringify({ 
                     choice:selectedChoice,
                     user_id:user_id ,
-                    order :selectedOrder}),
+                    order :"date",}),
             })
             setLoading(false);
             const data = await response.json();

@@ -16,7 +16,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $choice = $input['choice'] ;
     
     $order= $input['order'];
-
    try {
     if( $choice){
        
@@ -34,9 +33,8 @@ ON
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE
         
-    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
-    t.user_id = :user_id 
- ORDER BY :order ");
+    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND t.user_id = :user_id 
+ ORDER BY :order");
     $stmt->bindParam(':choice',$choice);
     }
     else{
@@ -54,9 +52,8 @@ ON
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE 
     t.user_id = :user_id 
- ORDER BY :order  ");
+ ORDER BY :order");
     }
-
     $stmt->bindParam(':user_id',$user_id);
     $stmt->bindParam(':order',$order);
     $stmt->execute();

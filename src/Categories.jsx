@@ -9,7 +9,7 @@ function Categories() {
     const [selectedChoice, setSelectedChoice] = useState('');
     const [selectedOrder, setSelectedOrder] = useState('category');
     const user_id=2;
-
+    const type = "expense";
 
     
     const fetch_categories=async () => {
@@ -23,7 +23,8 @@ function Categories() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
-                    user_id:user_id ,
+                    user_id:user_id,
+                    type:type,
                     }),
             })
             setLoading(false);
