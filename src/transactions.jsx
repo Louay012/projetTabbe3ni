@@ -68,7 +68,7 @@ function Transactions() {
                         </option>
                         <option value="7">Last week </option>
                         <option value="30">Last 30days</option>
-                        <option set value="">All the time</option>
+                        <option  value="">All the time</option>
                     </select>
                     <select className='block w-30 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-900 outline-none py-2 px-3'
                         id="order"
@@ -87,21 +87,25 @@ function Transactions() {
             </div>    
             {/*<div></div>overflow-x-auto*/}
                <table className='  border-2 text-left table shadow-sm border-gray-200  '>
-                <tr className='bg-zinc-700 text-white '>
-                    <th className='border-1 border-gray-300'>Transaction_id</th>
-                    <th className='border-1 border-gray-300'> Category</th>
-                    <th className='border-1 border-gray-300'>Amount</th>
-                    <th className='border-1 border-gray-300'>Date</th>
-                    <th className='border-1 border-gray-300'>Description</th>
-                    </tr>
-               { Transactions.map((transaction)=>
-               <tr className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'> 
-                    <td className='border-1 border-gray-300'>{transaction.id}</td>
-                    <td className='border-1 border-gray-300'>{transaction.category}</td>
-                    <td className='border-1 border-gray-300'>{transaction.amount}</td>
-                    <td className='border-1 border-gray-300'>{transaction.date}</td>
-                    <td className='border-1 border-gray-300'>{transaction.description}</td>
-                </tr>)}
+                <thead className='table-dark'>
+                    <tr className='bg-zinc-700 text-white '>
+                        <th className='border-1 border-gray-300'>Transaction_id</th>
+                        <th className='border-1 border-gray-300'> Category</th>
+                        <th className='border-1 border-gray-300'>Amount</th>
+                        <th className='border-1 border-gray-300'>Date</th>
+                        <th className='border-1 border-gray-300'>Description</th>
+                        </tr>
+                </thead>
+                    <tbody>
+                        { Transactions.map((transaction)=>
+                        <tr key={transaction.id} className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'> 
+                                <td className='border-1 border-gray-300'>{transaction.id}</td>
+                                <td className='border-1 border-gray-300'>{transaction.category}</td>
+                                <td className='border-1 border-gray-300'>{transaction.amount}</td>
+                                <td className='border-1 border-gray-300'>{transaction.date}</td>
+                                <td className='border-1 border-gray-300'>{transaction.description}</td>
+                            </tr>)}
+                </tbody>
                </table>
 
             </div>

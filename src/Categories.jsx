@@ -89,18 +89,22 @@ function Categories() {
                 
             {/*<div></div>overflow-x-auto*/}
                <table className='  border-2 text-left table shadow-sm border-gray-200  '>
-                <tr className='bg-zinc-700 text-white '>
-                    <th className='border-1 border-gray-300'>category_id</th>
-                    <th className='border-1 border-gray-300'> category_name</th>
-                    <th className='border-1 border-gray-300'>type</th>
-                    </tr>
-               { Categories.map((category)=>
-               <tr className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'> 
-                    <td className='border-1 border-gray-300'>{category.category_id}</td>
-                    <td className='border-1 border-gray-300'>{category.category_name}</td>
-                    <td className='border-1 border-gray-300'>{category.type}</td>
-                    
-                </tr>)}
+               <thead className='table-dark'>
+                    <tr className='bg-zinc-700 text-white '>
+                        <th className='border-1 border-gray-300'>category_id</th>
+                        <th className='border-1 border-gray-300'> category_name</th>
+                        <th className='border-1 border-gray-300'>type</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        { Categories.map((category)=>
+                        <tr className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'> 
+                                <td className='border-1 border-gray-300'>{category.category_id}</td>
+                                <td className='border-1 border-gray-300'>{category.category_name}</td>
+                                <td className='border-1 border-gray-300'>{category.type}</td>
+                                
+                            </tr>)}
+                </tbody>
                </table>
 
             </div>
