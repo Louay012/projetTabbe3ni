@@ -42,7 +42,7 @@ function Transactions() {
                     user_id:user_id ,
                     order :selectedOrder}),
             })
-            setLoading(false);
+           
             const data = await response.json();
             console.log(data.test);
             if (data.success) {
@@ -65,9 +65,10 @@ function Transactions() {
         },[ selectedOrder ,selectedChoice])  ;   
         
         const handle_submit=async (event) => {
-            event.preventDefault()
+            event.preventDefault();
+            console.log(categorie);
             try{
-              
+                console.log("try")
                   const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
                     method:'POST',
                     headers:{
@@ -82,16 +83,16 @@ function Transactions() {
                   })
                   console.log("message")
               const data=await response.json();
-              console.log("message")
+              console.log(data.success)
               if (data.success) {
                 fetch_Transactions();
-                
+                console.log("success")
                 } else {
-                setError(data.message || "Failed to add budgets.");
+                setError(data.message || "Failed to add transaction.");
         
                       }
                 } catch (err) {
-                    setError("An error occurred while adding a budget.");
+                    setError("An error occurred while adding a transaction.");
               
                 }
         
@@ -106,7 +107,7 @@ function Transactions() {
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
               <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Transactions :</span>
-                  <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showAddForm}/>
+                  <input className='btn btn-primary' type='submit' value='Add Transactions' onClick={showAddForm}/>
                 </div>  
                   <Form onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">

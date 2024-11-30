@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+
 
 import { Link   } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
 import { BiDollarCircle } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BiBorderAll } from "react-icons/bi";
+import { IoStatsChartSharp } from "react-icons/io5";
+
 function Sidebar() {
   
   return (
@@ -12,6 +14,12 @@ function Sidebar() {
                 <div className='flex-1 flex flex-col items-center py-3  gap-10 '>
                     <h2>User</h2>
                     <ul className='list-none flex flex-col items-start ' >
+                    <li className='py-2  flex gap-2 items-center md:px-3' >
+                      <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
+                        <IoStatsChartSharp className='text-inherit'/>
+                         <span className='hidden  md:block text-inherit'>Dashboard</span> 
+                         </Link>
+                        </li>
                       <li className='py-2  flex gap-2 items-center md:px-3' >
                       <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
                         <BiDollarCircle className='text-inherit'/>

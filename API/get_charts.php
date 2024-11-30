@@ -18,34 +18,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $order= $input['order'];
 
    try {
-    if( $choice){
-       
-        $stmt=$pdo->prepare("SELECT 
+    
+    $stmt=$pdo->prepare(" SELECT 
     t.transaction_id id, 
     c.category_name category,  
-    t.amount amount, 
-    t.transaction_date date, 
-    t.description description 
-FROM 
-    transactions t
-JOIN 
-    categories c 
-ON 
-    t.category_id = c.category_id AND t.user_id = c.user_id
-WHERE
-        
-    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
-    t.user_id = :user_id 
- ORDER BY $order ");
-    $stmt->bindParam(':choice',$choice);
-    }
-    else{
-       $stmt=$pdo->prepare(" SELECT 
-    t.transaction_id id, 
-    c.category_name category,  
-    t.amount amount, 
-    t.transaction_date date, 
-    t.description description 
+    Sum(t.amount) samount, 
+    t.transaction_date date
+
 FROM 
     transactions t
 JOIN 
@@ -54,8 +33,9 @@ ON
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE 
     t.user_id = :user_id 
- ORDER BY $order  ");
-    }
+ GROUP BY date;  
+ order by date");
+    
 
     $stmt->bindParam(':user_id',$user_id);
    

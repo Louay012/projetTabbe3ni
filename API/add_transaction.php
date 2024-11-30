@@ -7,13 +7,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
-echo "<script>console.log('test');</script>";
+
 include 'db_con.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
     
-    echo "<script>console.log('test');</script>";
+
     $categorie = $input['categorie'] ?? '';
    
     $amount = $input['amount'] ?? '';
@@ -28,16 +28,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $result = $stmt1->fetch(PDO::FETCH_ASSOC);
     $category_id=$result['category_id'];
     
-    $stmt=$pdo->prepare("insert into transactions(user_id,category_id,amount,transaction_date,description) values(2,:categorie_id,:amount,:date,:description)");
+    $stmt=$pdo->prepare("insert into transactions(user_id,category_id,amount,transaction_date,description) values(2,:category_id,:amount,:date,:description)");
     
-    $stmt->bindParam(':categorie_id',$categorie_id);
+    $stmt->bindParam(':category_id',$category_id);
     $stmt->bindParam(':amount',$amount);
     $stmt->bindParam(':description',$description);
     $stmt->bindParam(':date',$date);
     $stmt->execute();
     if($stmt){
        
-        echo json_encode(['success' => true, 'message' => 'Budget added']);
+        echo json_encode(['success' => true, 'message' => 'transaction added ']);
     } else {
         echo json_encode(['success' => false, 'message' => 'problem in adding']);
     }
