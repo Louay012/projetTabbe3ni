@@ -24,24 +24,40 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     c.category_name category,  
     Sum(t.amount) samount, 
     t.transaction_date date
-
-FROM 
-    transactions t
-JOIN 
-    categories c 
-ON 
-    t.category_id = c.category_id AND t.user_id = c.user_id
-WHERE 
-    t.user_id = :user_id 
- GROUP BY date;  
- order by date");
-    
-
+        FROM 
+            transactions t
+        JOIN 
+            categories c 
+        ON 
+            t.category_id = c.category_id AND t.user_id = c.user_id and c.type='expense'
+        WHERE 
+            t.user_id = :user_id 
+        GROUP BY date
+        order by date ;");
     $stmt->bindParam(':user_id',$user_id);
-   
     $stmt->execute();
-    $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true, 'data' => $transactions ]);
+    $last_expenses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt->closeCursor();
+    $stmt1=$pdo->prepare(" SELECT 
+    t.transaction_id id, 
+    c.category_name category,  
+    Sum(t.amount) samount, 
+    t.transaction_date date
+        FROM 
+            transactions t
+        JOIN 
+            categories c 
+        ON 
+            t.category_id = c.category_id AND t.user_id = c.user_id and c.type='income'
+        WHERE 
+            t.user_id = :user_id 
+        GROUP BY date 
+        order by date ");
+      $stmt1->bindParam(':user_id',$user_id);
+      $stmt1->execute();
+      $income = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+      $stmt1->closeCursor();
+    echo json_encode(['success' => true, 'expenses' => $last_expenses, 'incomes' => $income ]);
     }
     catch (Exception $e) {
         // Catch any database-related errors

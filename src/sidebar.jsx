@@ -15,7 +15,7 @@ function Sidebar() {
                     <h2>User</h2>
                     <ul className='list-none flex flex-col items-start ' >
                     <li className='py-2  flex gap-2 items-center md:px-3' >
-                      <Link  to={"/income"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
+                      <Link  to={"/dashboard"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
                         <IoStatsChartSharp className='text-inherit'/>
                          <span className='hidden  md:block text-inherit'>Dashboard</span> 
                          </Link>
