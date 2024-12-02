@@ -12,6 +12,8 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const user_id=2;
+ 
+          
   const fetch_Transactions=async () => {
     try{
         
@@ -29,7 +31,7 @@ function Dashboard() {
 
         
         if (data.success) {
-          console.log("success")
+          console.log("success1")
         setTransactions(data.data);
         const dates = Transactions.map((item) => item.date);
         const amounts = Transactions.map((item) => item.samount);
@@ -58,10 +60,12 @@ function Dashboard() {
     
     useEffect(() => {fetch_Transactions()
     },[Transactions])  ;
+    useEffect(() => {fetchRecentTransactions()
+    },[])  ;
   return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
-              <div className='bg-violet-100 flex-1 m-2 rounded-lg p-4 '>
-                      <div className="p-4 bg-white rounded shadow-md">
+              <div className='bg-violet-100 flex-1 m-2 rounded-lg p-4   '>
+                      <div className="p-4 bg-white rounded shadow-md w-1/2">
                         {chartData ? (
                           <Bar
                                 data={chartData}
@@ -82,6 +86,8 @@ function Dashboard() {
                               <p>Loading...</p>
                       )}
                     </div>
+                     
+            
               </div>
       </div>
       
