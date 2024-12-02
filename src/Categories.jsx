@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from "react";
 import Sidebar from './sidebar';
 import "./categorie.css";
-import { FaRandom } from "react-icons/fa";
+import { Card } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 function DashboardSection() {
     const [loading, setLoading] = useState(false);
@@ -92,7 +92,7 @@ try{
 return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
             <Sidebar></Sidebar>
-            <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
+            <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-4  items-center  shadow-md' >
             <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>
                   <input className='btn btn-primary' type='submit' value='Add Categories' onClick={showAddForm}/>
@@ -132,27 +132,27 @@ return <>
                   </Button>
                   </div>
                   </Form>
-                <div className="dashboard-section">
-                    <div className="income-source">
+                <div className="flex justify-around w-full ">
+                    <div className="flex-1 flex flex-col  items-center gap-4">
                         <h3>Income Source</h3>
-                        <div className="source-items">
+                        <div className="flex flex-wrap justify-center gap-2">
                             {incomeSources.map((income) => 
-                            <div key={income.id} className="source-item">
-                                <p>{income.category}</p>
-                                <h4>{income.total_amount} DT</h4>
-                            </div>
+                            <div  key={income.id} className=" bg-teal-200 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2">
+                                <h3 className="card-title">{income.category}</h3>
+                                <p>{income.total_amount} DT</p>
+                            </div >
                             )}
                         </div>
                     </div>
       
       {/* Spendings */}
-                    <div className="spendings">
+                    <div className="flex-1 flex flex-col  items-center gap-4">
                         <h3>Spendings</h3>
-                        <div className="spending-items">
+                        <div className=" flex flex-wrap justify-center gap-2">
                             {spendings.map((spending) => 
-                                <div key={spending.id} className="spending-item" style={{ backgroundColor:"blue"  }} >
-                                    <p>{spending.category}</p>
-                                    <h4>{spending.total_amount} DT</h4>
+                                <div key={spending.id} className=" bg-purple-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2" >
+                                    <h3>{spending.category}</h3>
+                                    <p>{spending.total_amount} DT</p>
                                 </div>
                                 )}
                         </div>

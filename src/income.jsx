@@ -8,6 +8,7 @@ function Income() {
   const [income, setIncome] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [cats, setcats] = useState([]);
   const fetch_income=async () => {
       
       try{
@@ -16,9 +17,11 @@ function Income() {
 
 
           const data = await response.json();
-
+          console.log(data.data);
           if (data.success) {
+            console.log(data.success);
             setIncome(data.data);
+            console.log(income);
           } else {
           setError(data.message || "Failed to fetch income.");
 
@@ -33,7 +36,7 @@ function Income() {
   useEffect(() => {
     fetch_income()
     },[])
-    const [cats, setcats] = useState([]);
+    
    const fetch_cat=async () => {
       
       try{
@@ -107,7 +110,7 @@ function Income() {
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-  return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
+  return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md    '>
               <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-120 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
