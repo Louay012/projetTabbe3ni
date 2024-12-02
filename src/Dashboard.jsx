@@ -60,8 +60,7 @@ function Dashboard() {
     
     useEffect(() => {fetch_Transactions()
     },[Transactions])  ;
-    useEffect(() => {fetchRecentTransactions()
-    },[])  ;
+   
   return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
               <div className='bg-violet-100 flex-1 m-2 rounded-lg p-4   '>

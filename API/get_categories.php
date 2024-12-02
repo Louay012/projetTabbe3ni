@@ -58,7 +58,7 @@ WHERE
   
     $stmt1->execute();
     $expense = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true, 'data1'=>$income 'data2' => $expense ]);
+    echo json_encode(['success' => true, 'data1'=>$income ,'data2' => $expense ]);
     }
     catch (Exception $e) {
         // Catch any database-related errors

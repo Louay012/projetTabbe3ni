@@ -1,6 +1,7 @@
 .dashboard-section {
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
+    
   }
   
   .income-source, .spendings {
