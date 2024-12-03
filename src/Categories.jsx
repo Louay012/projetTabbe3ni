@@ -1,6 +1,6 @@
 import React,{ useEffect, useState } from "react";
 import Sidebar from './sidebar';
-import "./categorie.css";
+
 import { Card } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 function DashboardSection() {
@@ -137,7 +137,7 @@ return <>
                         <h3>Income Source</h3>
                         <div className="flex flex-wrap justify-center gap-2">
                             {incomeSources.map((income) => 
-                            <div  key={income.id} className=" bg-teal-200 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2">
+                            <div  key={income.id} className=" bg-emerald-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2">
                                 <h3 className="card-title">{income.category}</h3>
                                 <p>{income.total_amount} DT</p>
                             </div >

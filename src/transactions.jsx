@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import Sidebar from './sidebar';
-import './transaction.css';
+
 import { Button, Form } from 'react-bootstrap';
 
 function Transactions() {
