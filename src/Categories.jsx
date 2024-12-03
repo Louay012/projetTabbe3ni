@@ -1,7 +1,7 @@
 import React,{ useEffect, useState ,useContext} from "react";
 import Sidebar from './sidebar';
-import "./categorie.css";
-import { FaRandom } from "react-icons/fa";
+
+import { Card } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
 
@@ -135,27 +135,27 @@ return <>
                   </Button>
                   </div>
                   </Form>
-                <div className="dashboard-section">
-                    <div className="income-source">
+                <div className="flex justify-around w-full ">
+                    <div className="flex-1 flex flex-col  items-center gap-4">
                         <h3>Income Source</h3>
-                        <div className="source-items">
+                        <div className="flex flex-wrap justify-center gap-2">
                             {incomeSources.map((income) => 
-                            <div key={income.id} className="source-item">
-                                <p>{income.category}</p>
-                                <h4>{income.total_amount} DT</h4>
-                            </div>
+                            <div  key={income.id} className=" bg-emerald-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2">
+                                <h3 className="card-title">{income.category}</h3>
+                                <p>{income.total_amount} DT</p>
+                            </div >
                             )}
                         </div>
                     </div>
       
       {/* Spendings */}
-                    <div className="spendings">
+                    <div className="flex-1 flex flex-col  items-center gap-4">
                         <h3>Spendings</h3>
-                        <div className="spending-items">
+                        <div className=" flex flex-wrap justify-center gap-2">
                             {spendings.map((spending) => 
-                                <div key={spending.id} className="spending-item" style={{ backgroundColor:"blue"  }} >
-                                    <p>{spending.category}</p>
-                                    <h4>{spending.total_amount} DT</h4>
+                                <div key={spending.id} className=" bg-purple-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2" >
+                                    <h3>{spending.category}</h3>
+                                    <p>{spending.total_amount} DT</p>
                                 </div>
                                 )}
                         </div>

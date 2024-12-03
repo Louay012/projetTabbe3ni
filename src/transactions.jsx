@@ -1,6 +1,6 @@
 import React, { useState ,useEffect,useContext} from 'react'
 import Sidebar from './sidebar';
-import './transaction.css';
+
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
 

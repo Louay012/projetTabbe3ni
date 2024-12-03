@@ -57,7 +57,27 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
       $stmt1->execute();
       $income = $stmt1->fetchAll(PDO::FETCH_ASSOC);
       $stmt1->closeCursor();
-    echo json_encode(['success' => true, 'expenses' => $last_expenses, 'incomes' => $income ]);
+      $stmt2=$pdo->prepare("SELECT
+    c.category_id id,
+	category_name category,
+    SUM(COALESCE(amount,0)) total_amount
+    
+FROM 
+    categories c 
+LEFT JOIN 
+    transactions t
+ON 
+    t.category_id = c.category_id 
+WHERE
+	c.user_id= :user_id and type='expense'
+    GROUP BY category
+    order by id ");
+
+    $stmt2->bindParam(':user_id',$user_id);
+  
+    $stmt2->execute();
+    $expense_cat = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode(['success' => true, 'expenses' => $last_expenses, 'incomes' => $income,'expense_cat' => $expense_cat ]);
     }
     catch (Exception $e) {
         // Catch any database-related errors

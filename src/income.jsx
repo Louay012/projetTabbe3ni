@@ -26,9 +26,11 @@ function Income() {
 
 
           const data = await response.json();
-
+          console.log(data.data);
           if (data.success) {
+            console.log(data.success);
             setIncome(data.data);
+            console.log(income);
           } else {
           setError(data.message || "Failed to fetch income.");
 
@@ -43,7 +45,7 @@ function Income() {
   useEffect(() => {
     fetch_income()
     },[])
-    const [cats, setcats] = useState([]);
+    
    const fetch_cat=async () => {
       
       try{
