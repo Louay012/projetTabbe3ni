@@ -8,6 +8,8 @@ import Dashboard from './Dashboard.jsx';
 import Budgets from './budgets.jsx';
 import Transactions from './transactions.jsx';
 import Categories from './Categories.jsx';
+import { UserProvider } from './UserContext'; // Import the context provider
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -42,10 +44,11 @@ const router = createBrowserRouter([
     }
 ])
 function App() {
-  return <>
-<RouterProvider router={router}></RouterProvider>
-    
-  </>;
+  return (
+    <UserProvider> 
+      <RouterProvider router={router} ></RouterProvider>
+    </UserProvider>
+  );
 }
 
 export default App;

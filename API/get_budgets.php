@@ -9,9 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 include 'db_con.php';
 session_start();
-if($_SERVER['REQUEST_METHOD']=='GET'){
-    $user_id = $_GET['user_id'] ;
-   try {
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $input = json_decode(file_get_contents("php://input"), true);
+    $user_id = $input['user_id'];
+   
+    try {
     $stmt=$pdo->prepare("select b.budget_id, c.category_name,b.allocated_amount,b.amount from budgets b,categories c 
     where b.user_id=:user_id and b.user_id=c.user_id  and b.category_id=c.category_id ");
     $stmt->bindParam(':user_id',$user_id);

@@ -1,9 +1,12 @@
-import React,{ useEffect, useState } from "react";
+import React,{ useEffect, useState ,useContext} from "react";
 import Sidebar from './sidebar';
 import "./categorie.css";
 import { FaRandom } from "react-icons/fa";
 import { Button, Form } from 'react-bootstrap';
+import { UserContext } from './UserContext';
+
 function DashboardSection() {
+  const { userDetails } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
   const [incomeSources, setIncomeSources] = useState([]);
@@ -13,7 +16,7 @@ function DashboardSection() {
     const[type,setType]=useState('');
     
 
-  const user_id=2;
+
   const [showAdd, setShowAdd] = useState(false);
 
   const hideAddForm=()=>{
@@ -32,7 +35,7 @@ function DashboardSection() {
                   'Content-Type': 'application/json',
               },
                 body:JSON.stringify({
-    
+                  user_id: userDetails.user_id,
                   categorie: categorie,
                   type: type,
               
@@ -58,13 +61,13 @@ function DashboardSection() {
   const fetch_Categories=async () => {
 try{
     
-  const response= await fetch('http://localhost/TABBE3NI/API/get_categories.php' ,{
+  const response= await fetch('http://localhost/TABBE3NI/API/categories.php' ,{
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
     },
     body: JSON.stringify({ 
-        user_id:user_id ,
+        user_id:userDetails.user_id ,
        }),
 })
 
@@ -91,7 +94,7 @@ try{
 
 return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
-            <Sidebar></Sidebar>
+            <Sidebar name={userDetails.username}></Sidebar>
             <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
             <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>

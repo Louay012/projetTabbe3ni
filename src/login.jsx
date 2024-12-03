@@ -1,13 +1,17 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import logo from './image/logo3.png';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
+import { UserContext } from './UserContext';
+
+
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-   
+    const { setUserDetails } = useContext(UserContext);
     const navigate = useNavigate();  
+    
     const submit= async (e) =>{
     e.preventDefault();
     try{
@@ -21,11 +25,15 @@ function Login() {
                 password: password,
             })
         })
+   
         const data = await response.json();
         if(data.success){
+            const userData=data.data;
+            setUserDetails(userData);
             setMessage('Login successful');
-            console.log('Login successful');
-            navigate('/');
+            
+            localStorage.setItem('userDetails', JSON.stringify(userData));
+            navigate('/dashboard');
         }
         else{
             setMessage(data.message);

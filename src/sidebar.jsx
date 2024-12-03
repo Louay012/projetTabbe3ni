@@ -7,12 +7,13 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BiBorderAll } from "react-icons/bi";
 import { IoStatsChartSharp } from "react-icons/io5";
 
-function Sidebar() {
+function Sidebar({name}) {
   
   return (
     <div className='bg-zinc-800 flex flex-col items-center  font-mono text-lg text-gray-50 w-14 md:w-48 '>
                 <div className='flex-1 flex flex-col items-center py-3  gap-10 '>
-                    <h2>User</h2>
+                    <h2>User : </h2>
+                    <span>{name}</span>
                     <ul className='list-none flex flex-col items-start ' >
                     <li className='py-2  flex gap-2 items-center md:px-3' >
                       <Link  to={"/dashboard"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >
