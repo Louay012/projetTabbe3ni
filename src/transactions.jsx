@@ -56,7 +56,7 @@ function Transactions() {
        }
      useEffect(() => {
        fetch_cat()
-   },[])
+   },[userDetails])
 
 
     
@@ -96,7 +96,7 @@ function Transactions() {
         }
         
         useEffect(() => {fetch_Transactions()
-        },[ selectedOrder ,selectedChoice])  ;   
+        },[ selectedOrder ,selectedChoice,userDetails])  ;   
         
         const handle_submit=async (event) => {
             event.preventDefault();
@@ -128,7 +128,7 @@ function Transactions() {
                       }
                 } catch (err) {
                     setError("An error occurred while adding a transaction.");
-              
+                    console.log(err)
                 }
         
                 hideAddForm() 

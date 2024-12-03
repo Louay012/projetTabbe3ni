@@ -6,6 +6,7 @@ import { UserContext } from './UserContext';
 
 
 function Income() {
+  const[date,setDate]=useState('');
   const [income, setIncome] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -79,11 +80,11 @@ function Income() {
     }
   useEffect(() => {
     fetch_cat()
-},[])
+},[userDetails])
 
-  const [cat , setcat] = useState();  
+  const [categorie , setCategorie] = useState();  
   const [amount , setamount] = useState();  
-  const [desc , setdesc] = useState(); 
+  const [description , setDescription] = useState(); 
   const hideAddForm=()=>{setShowAdd(false);}
   const [showAdd, setShowAdd] = useState(false);
     const showAddForm=()=>{
@@ -99,9 +100,11 @@ function Income() {
               'Content-Type': 'application/json',
           },
             body:JSON.stringify({
-              cat: cat,
+              user_id: userDetails.user_id,
               amount: amount,
-              desc: desc,
+              categorie: categorie,
+              description: description,
+              date: date,
             })
           })
           console.log("message")
@@ -115,8 +118,8 @@ function Income() {
 
               }
         } catch (err) {
-            setError("An error occurred while adding a budget.");
-
+            setError("An error occurred while adding an income.");
+            console.log(err)
         }
         hideAddForm() 
         } 
@@ -137,7 +140,7 @@ function Income() {
                           name="category"
                           
                           
-                          onChange={(e)=>{setcat(e.target.value)}}
+                          onChange={(e)=>{setCategorie(e.target.value)}}
                           required>
                             {cats.map((cat)=><option>{cat.category_name}</option>)}
                         </Form.Select>
@@ -154,14 +157,23 @@ function Income() {
                       required
                     />
                   </Form.Group>
-
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className='font-mono font-semibold text-lg'>Date:</Form.Label>
+                    <Form.Control
+                      type="Date"
+                      placeholder="Enter the amount "
+                      name="amount"
+                      onChange={(e)=>{setDate(e.target.value)}}
+                      
+                    />
+                  </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='font-mono font-semibold text-lg'> description:</Form.Label>
                     <Form.Control
                       type="Number "
                       placeholder="Enter the transaction description "
                       name="transaction_description"
-                      onChange={(e)=>{setdesc(e.target.value)}}
+                      onChange={(e)=>{setDescription(e.target.value)}}
                       required
                     />
                   </Form.Group>
