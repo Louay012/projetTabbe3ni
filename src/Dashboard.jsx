@@ -117,9 +117,9 @@ function Dashboard() {
     },[expenses,incomes])  ;
   return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar></Sidebar>
-              <div className="bg-violet-100 flex-1 m-2 rounded-lg p-4 flex flex-col gap-4 md:flex-row justify-around">
+              <div className="bg-violet-100 flex-1 m-2 rounded-lg p-2 flex flex-col gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
-                  <div className="p-2 bg-white rounded shadow-md w-[350px] md:w-96 h-[350px] md:h-[350px]">
+                  <div className="p-2 bg-white rounded shadow-md w-11/12 md:w-96 h-[350px] md:h-[350px]">
                     {chartData ? (
                       <Line
                         data={chartData}
@@ -144,7 +144,7 @@ function Dashboard() {
                   </div>
 
                   {/* Pie Chart */}
-                  <div className="p-4 bg-white rounded shadow-md flex justify-center items-center w-[350px] md:w-96 h-[350px] md:h-[350px]">
+                  <div className="p-4 bg-white rounded shadow-md flex justify-center items-center w-11/12 md:w-96 h-[350px] md:h-[350px]">
                     {piechartData ? (
                       <Pie
                         data={piechartData}
