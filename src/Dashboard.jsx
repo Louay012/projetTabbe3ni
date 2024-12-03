@@ -1,8 +1,9 @@
 import React from 'react';
 import { Bar, Line ,Pie } from 'react-chartjs-2';
 import Sidebar from './sidebar';
-import { useState ,useEffect,useMemo} from 'react';
+import { useState ,useEffect,useMemo,useContext} from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement,ArcElement, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import { UserContext } from './UserContext';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 //import './dashboard.css';
@@ -14,7 +15,7 @@ function Dashboard() {
   const [incomes, setIncomes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const user_id=2;
+  const { userDetails } = useContext(UserContext);
 
  
   const generateRandomRgbaColors = (n) => {
@@ -117,7 +118,7 @@ function Dashboard() {
     useEffect(() => {fetch_Transactions()
     },[expenses,incomes])  ;
   return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
-              <Sidebar></Sidebar>
+              <Sidebar name={userDetails.username}></Sidebar>
               <div className="bg-violet-100 flex-1 m-2 rounded-lg p-4 flex flex-col gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
                   <div className="p-2 bg-white rounded shadow-md w-[350px] md:w-96 h-[350px] md:h-[350px]">

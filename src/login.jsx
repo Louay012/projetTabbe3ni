@@ -32,7 +32,7 @@ function Login() {
             setUserDetails(userData);
             setMessage('Login successful');
             
-            localStorage.setItem('userDetails', JSON.stringify(userData));
+           
             navigate('/dashboard');
         }
         else{

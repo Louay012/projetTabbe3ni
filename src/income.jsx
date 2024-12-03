@@ -45,7 +45,7 @@ function Income() {
   useEffect(() => {
     fetch_income()
     },[])
-    
+    const [cats, setcats] = useState([]);
    const fetch_cat=async () => {
       
       try{
