@@ -30,9 +30,8 @@ function Login() {
         if(data.success){
             const userData=data.data;
             setUserDetails(userData);
+            localStorage.setItem('userDetails', JSON.stringify(userData));
             setMessage('Login successful');
-            
-           
             navigate('/dashboard');
         }
         else{

@@ -16,7 +16,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { userDetails } = useContext(UserContext);
-
+  const[username,setUsername]=useState('');
  
   const generateRandomRgbaColors = (n) => {
     const colors = [];
@@ -28,9 +28,14 @@ function Dashboard() {
     }
     return colors;
   };   
+  
+    
+  
   const fetch_Transactions=async () => {
 
     try{
+        if(userDetails){
+          setUsername(userDetails.username);
         
         const response=await fetch('http://localhost/TABBE3NI/API/get_charts.php' ,{
             method: 'POST',
@@ -88,8 +93,7 @@ function Dashboard() {
                 ],
               },  
             );
-            
-
+          
             setpieChartData({
               labels: exp_cat,
               datasets: [
@@ -107,6 +111,7 @@ function Dashboard() {
         } else {
         setError(data.message || "Failed to fetch transactions.");
         }
+      }
     } catch (err) {
         setError("An error occurred while fetching transactions." );
 
@@ -116,9 +121,11 @@ function Dashboard() {
     }
     const colors = useMemo(() => generateRandomRgbaColors(expense_cat.length), [expense_cat.length]);
     useEffect(() => {fetch_Transactions()
-    },[expenses,incomes])  ;
+    },[expenses,incomes,userDetails])  ;
+
+
   return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
-              <Sidebar name={userDetails.username}></Sidebar>
+              <Sidebar name={username}></Sidebar>
               <div className="bg-violet-100 flex-1 m-2 rounded-lg p-4 flex flex-col gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
                   <div className="p-2 bg-white rounded shadow-md w-[350px] md:w-96 h-[350px] md:h-[350px]">

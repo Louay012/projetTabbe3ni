@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
 
 function Transactions() {
+  const[username,setUsername]=useState('');
   const { userDetails } = useContext(UserContext);
     const [Transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -28,7 +29,8 @@ function Transactions() {
       const fetch_cat=async () => {
          
          try{
-         
+          if(userDetails){
+            
              const response=await fetch('http://localhost/TABBE3NI/API/get_expenses.php' ,{ method: 'POST',
                body: JSON.stringify({ 
                  user_id:userDetails.user_id ,
@@ -44,6 +46,7 @@ function Transactions() {
              setError(data.message || "Failed to fetch categories.");
    
              }
+            }
          } catch (err) {
              setError("An error occurred while fetching categories.");
    
@@ -61,7 +64,8 @@ function Transactions() {
             
         
         try{
-            
+          if(userDetails){
+            setUsername(userDetails.username);
             const response=await fetch('http://localhost/TABBE3NI/API/get_transactions.php' ,{
                 method: 'POST',
                 headers: {
@@ -82,7 +86,7 @@ function Transactions() {
             } else {
             setError(data.message || "Failed to fetch transactions.");
 
-            }
+            }}
         } catch (err) {
             setError("An error occurred while fetching transactions." );
 
@@ -134,7 +138,7 @@ function Transactions() {
     if (error) return <p>Error: {error}</p>;
 
     return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
-              <Sidebar name={userDetails.username}></Sidebar>
+              <Sidebar name={username}></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
               <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Transactions :</span>

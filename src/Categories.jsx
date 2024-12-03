@@ -6,7 +6,7 @@ import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
 
 function DashboardSection() {
-  const { userDetails } = useContext(UserContext);
+    const { userDetails } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
   const [incomeSources, setIncomeSources] = useState([]);
@@ -14,7 +14,7 @@ function DashboardSection() {
   
     const[categorie,setCategorie]=useState('');
     const[type,setType]=useState('');
-    
+    const[username,setUsername]=useState('');
 
 
   const [showAdd, setShowAdd] = useState(false);
@@ -60,6 +60,8 @@ function DashboardSection() {
             }
   const fetch_Categories=async () => {
 try{
+    if(userDetails){
+      setUsername(userDetails.username);
     
   const response= await fetch('http://localhost/TABBE3NI/API/categories.php' ,{
     method: 'POST',
@@ -81,6 +83,7 @@ try{
             setError(data.message || "Failed to fetch transactions.");
 
             }
+          }
         } catch (err) {
             setError("An error occurred while fetching transactions." );
             console.log(err);
@@ -90,11 +93,11 @@ try{
         
     }
     useEffect(() => {fetch_Categories()
-    },[ ])  ;    
+    },[userDetails ])  ;    
 
 return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
-            <Sidebar name={userDetails.username}></Sidebar>
+            <Sidebar name={username}></Sidebar>
             <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
             <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>

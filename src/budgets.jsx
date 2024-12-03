@@ -14,7 +14,7 @@ function Budgets() {
     const [id, setid] = useState(0);
     const [allocated_amount, setallocated_amount] = useState(0);
     const [showEdit, setShowEdit] = useState(false);
-    
+    const[name,setName]=useState('');
     const hideAddForm=()=>{
     setShowAdd(false);
   }
@@ -34,24 +34,22 @@ function Budgets() {
   }
   const [cats, setcats] = useState([]);
    const fetch_cat=async () => {
-      
+   
       try{
-      
+        if(userDetails){
           const response=await fetch('http://localhost/TABBE3NI/API/get_expenses.php' ,{ method: 'POST',
             body: JSON.stringify({ 
               user_id: userDetails.user_id ,
               }),
           })
-
-
           const data = await response.json();
-
           if (data.success) {
             setcats(data.data);
           } else {
           setError(data.message || "Failed to fetch categories.");
 
           }
+        }
       } catch (err) {
           setError("An error occurred while fetching categories.");
 
@@ -59,12 +57,19 @@ function Budgets() {
           setLoading(false);
       }
     }
-  useEffect(() => {
-    fetch_cat()
-},[])
+  
+    useEffect(() => {
+      fetch_cat()
+    },[userDetails])
+
+
   const fetch_budgets=async () => {       
-    try{
-      const response=await fetch('http://localhost/TABBE3NI/API/get_budgets.php?' ,{
+        try
+    {
+      if(userDetails)
+        {
+        setName(userDetails.username);
+        const response=await fetch('http://localhost/TABBE3NI/API/get_budgets.php?' ,{
         method:"POST",
         headers:{
           'Content-Type': 'application/json',
@@ -82,7 +87,7 @@ function Budgets() {
         }else {
           setError(data.message || "Failed to fetch budgets.");
         }
-
+      }
     } catch (err) {
         setError("An error occurred while fetching budgets.");
 
@@ -90,10 +95,10 @@ function Budgets() {
         setLoading(false);
     }
   }
-
-  useEffect(() => {
-    fetch_budgets()
-  },[])
+  
+      useEffect(() => {
+        fetch_budgets()
+      },[userDetails])
 
   const handle_submit=async (event) => {
     event.preventDefault()
@@ -188,7 +193,7 @@ function Budgets() {
   if (error) return <p>Error: {error}</p>;
 
   return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>         
-    <Sidebar name={userDetails.username}></Sidebar>
+    <Sidebar name={name}></Sidebar>
       <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2 justify-center items-center  shadow-md    '>
         <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
           <Form.Group className="mb-3" controlId="formBasicName">
