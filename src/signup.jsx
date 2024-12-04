@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import img1 from './image/Team goals-bro.png';
 import logo from './image/logo3.png';
@@ -27,7 +27,7 @@ function Signup() {
     const signup= async (e) =>{
     e.preventDefault();
     try{
-        
+        if(validPassword){
         const response = await fetch('http://localhost/TABBE3NI/API/signup.php',{
             method:'POST',
             headers:{
@@ -46,12 +46,15 @@ function Signup() {
             console.log('signup successful');
             navigate('/');
         }
+
         else{
             setMessage(data.message);
             console.log('signup unsuccessful');
         }
+    }else{
+        setMessage("password must verify conditions")
     }
-
+    }
     catch(error){
         console.error('Error during signup:', error);
     }
