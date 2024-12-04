@@ -4,12 +4,12 @@ import { IoStatsChartSharp } from "react-icons/io5";
 import { BiDollarCircle, BiCartAlt, BiBorderAll } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 
-const Sidebar = () => {
+const Sidebar = ( {name}) => {
   return (
     <div className="bg-zinc-800 flex flex-col font-mono text-lg text-gray-50 w-14 md:w-48 h-screen">
       {/* Header */}
       <div className="py-4 text-center md:text-left">
-        <h2 className="text-xl font-bold hidden md:block">User</h2>
+        <h2 className="text-xl font-bold hidden md:block"><span>{name}</span></h2>
       </div>
 
       {/* Navigation */}

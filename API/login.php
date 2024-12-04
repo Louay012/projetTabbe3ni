@@ -14,19 +14,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
 
     $email = $input['email'] ?? '';
-   
     $password = $input['password'] ?? '';
-
-   
    try {
-    $stmt=$pdo->prepare("select * from users where email=:email and password=:pass ");
+    $stmt=$pdo->prepare("select user_id,username from users where email=:email and password=:pass ");
     $stmt->bindParam(':email',$email);
     $stmt->bindParam(':pass',$password);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if($user){
         $_SESSION['user_id'] = $user['user_id'];
-        echo json_encode(['success' => true, 'message' => 'Login successful']);
+        echo json_encode(['success' => true, 'message' => 'Login successful', 'data'=>$user]);
     } else {
         echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
     }

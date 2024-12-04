@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import Sidebar from './sidebar';
 import { Button, Form } from 'react-bootstrap';
+import { UserContext } from './UserContext';
 
 
 
@@ -8,12 +9,22 @@ function Income() {
   const [income, setIncome] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cats, setcats] = useState([]);
+  const { userDetails } = useContext(UserContext);
+  const[username,setUsername]=useState('');
   const fetch_income=async () => {
-      
       try{
-      
-          const response=await fetch('http://localhost/TABBE3NI/API/income.php?user_id=2' ,{ method: 'GET'})
+        if(userDetails){
+          setUsername(userDetails.username);
+        
+          const response=await fetch('http://localhost/TABBE3NI/API/income.php?' ,{method:"POST",
+            headers:{
+              'Content-Type': 'application/json',
+            },
+              body:JSON.stringify({
+                user_id: userDetails.user_id, 
+              })
+            })
+    
 
 
           const data = await response.json();
@@ -26,8 +37,9 @@ function Income() {
           setError(data.message || "Failed to fetch income.");
 
           }
+        }
       } catch (err) {
-          setError("An error occurred while fetching budgets.");
+          setError("An error occurred while fetching income.");
 
       } finally {
           setLoading(false);
@@ -35,15 +47,16 @@ function Income() {
     }
   useEffect(() => {
     fetch_income()
-    },[])
-    
-   const fetch_cat=async () => {
+    },[userDetails]);
+
+    const [cats, setcats] = useState([]);
+    const fetch_cat=async () => {
       
       try{
-      
-          const response=await fetch('http://localhost/TABBE3NI/API/get_categories.php' ,{ method: 'POST',
+        if(userDetails){
+          const response=await fetch('http://localhost/TABBE3NI/API/get_income.php' ,{ method: 'POST',
             body: JSON.stringify({ 
-              user_id:2 ,
+              user_id: userDetails.user_id ,
               }),
           })
 
@@ -53,11 +66,12 @@ function Income() {
           if (data.success) {
             setcats(data.data);
           } else {
-          setError(data.message || "Failed to fetch categories.");
+          setError(data.message || "Failed to fetch income.");
 
           }
+        }
       } catch (err) {
-          setError("An error occurred while fetching categories.");
+          setError("An error occurred while fetching income.");
 
       } finally {
           setLoading(false);
@@ -85,6 +99,7 @@ function Income() {
               'Content-Type': 'application/json',
           },
             body:JSON.stringify({
+              user_id: userDetails.user_id,
               cat: cat,
               amount: amount,
               desc: desc,
@@ -110,8 +125,8 @@ function Income() {
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-  return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
-              <Sidebar></Sidebar>
+  return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
+              <Sidebar name={username}></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md    '>
               <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-120 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                   <Form.Group className="mb-3" controlId="formBasicName">

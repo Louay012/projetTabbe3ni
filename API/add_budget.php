@@ -14,19 +14,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     
    
     $budget_cat = $input['budget_cat'] ?? '';
-   
+    $user_id= $input['user_id'] ?? '';
     $allocated_amount = $input['allocated_amount'] ?? '';
 
    
    try {
-    $stmt1=$pdo->prepare("select category_id from categories where category_name=:budget_cat and user_id=2 ");
+    $stmt1=$pdo->prepare("select category_id from categories where category_name=:budget_cat and user_id=:user_id ");
     $stmt1->bindParam(':budget_cat',$budget_cat);
+    $stmt1->bindParam(':user_id',$user_id);
     $stmt1->execute();
     $result = $stmt1->fetch(PDO::FETCH_ASSOC);
     $category_id=$result['category_id'];
-    $stmt=$pdo->prepare("insert into budgets(user_id,category_id,allocated_amount,amount) values(2,:category_id,:allocated_amount,0)");
+    $stmt=$pdo->prepare("insert into budgets(user_id,category_id,allocated_amount,amount) values(:user_id,:category_id,:allocated_amount,0)");
     $stmt->bindParam(':category_id',$category_id);
     $stmt->bindParam(':allocated_amount',$allocated_amount);
+    $stmt->bindParam(':user_id',$user_id);
     $stmt->execute();
     if($stmt){
        

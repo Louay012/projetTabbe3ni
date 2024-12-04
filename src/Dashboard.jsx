@@ -1,8 +1,9 @@
 import React from 'react';
 import { Bar, Line ,Pie } from 'react-chartjs-2';
 import Sidebar from './sidebar';
-import { useState ,useEffect,useMemo} from 'react';
+import { useState ,useEffect,useMemo,useContext} from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement,ArcElement, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
+import { UserContext } from './UserContext';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 //import './dashboard.css';
@@ -14,8 +15,8 @@ function Dashboard() {
   const [incomes, setIncomes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const user_id=2;
-
+  const { userDetails } = useContext(UserContext);
+  const[username,setUsername]=useState('');
  
   const generateRandomRgbaColors = (n) => {
     const colors = [];
@@ -27,8 +28,14 @@ function Dashboard() {
     }
     return colors;
   };   
+  
+    
+  
   const fetch_Transactions=async () => {
+
     try{
+        if(userDetails){
+          setUsername(userDetails.username);
         
         const response=await fetch('http://localhost/TABBE3NI/API/get_charts.php' ,{
             method: 'POST',
@@ -37,7 +44,7 @@ function Dashboard() {
             },
             body: JSON.stringify({ 
                 choice:"",
-                user_id:user_id ,
+                user_id: userDetails.user_id ,
                 order :"date"}),
         })
         const data = await response.json();
@@ -86,8 +93,7 @@ function Dashboard() {
                 ],
               },  
             );
-            
-
+          
             setpieChartData({
               labels: exp_cat,
               datasets: [
@@ -105,6 +111,7 @@ function Dashboard() {
         } else {
         setError(data.message || "Failed to fetch transactions.");
         }
+      }
     } catch (err) {
         setError("An error occurred while fetching transactions." );
 
@@ -114,10 +121,12 @@ function Dashboard() {
     }
     const colors = useMemo(() => generateRandomRgbaColors(expense_cat.length), [expense_cat.length]);
     useEffect(() => {fetch_Transactions()
-    },[expenses,incomes])  ;
+    },[expenses,incomes,userDetails])  ;
+
+
   return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
-              <Sidebar></Sidebar>
-              <div className="bg-violet-100 flex-1 m-2 rounded-lg p-2 flex flex-col gap-4 md:flex-row justify-around">
+              <Sidebar name={username}></Sidebar>
+              <div className="bg-violet-100 flex-1 m-2 rounded-lg p-4 flex flex-col gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
                   <div className="p-2 bg-white rounded shadow-md w-11/12 md:w-96 h-[350px] md:h-[350px]">
                     {chartData ? (
