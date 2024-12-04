@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect , useContext }from 'react';
 import './home.css'; // Ensure your CSS is imported here or in the main `App.js`
 import logo from './image/logo3.png';
 import bg from './image/Manage money-amico.png';
-import { Link} from 'react-router-dom';
 
+import { Link ,useNavigate  } from 'react-router-dom';
+
+import { UserContext } from './UserContext';
 
 function Home() {
+    const { userDetails } = useContext(UserContext);
+    const navigate = useNavigate();
     console.log("Rendering Home");
+    useEffect(() => {
+        if (userDetails) {
+            console.log(userDetails)
+          navigate("/dashboard");
+        }
+      }, [userDetails,navigate]);
   return <>
     <header>
         <nav>

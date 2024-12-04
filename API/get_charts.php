@@ -58,26 +58,63 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
       $income = $stmt1->fetchAll(PDO::FETCH_ASSOC);
       $stmt1->closeCursor();
       $stmt2=$pdo->prepare("SELECT
-    c.category_id id,
-	category_name category,
-    SUM(COALESCE(amount,0)) total_amount
-    
-FROM 
-    categories c 
-LEFT JOIN 
-    transactions t
-ON 
-    t.category_id = c.category_id 
-WHERE
-	c.user_id= :user_id and type='expense'
-    GROUP BY category
-    order by id ");
+                c.category_id id,
+                category_name category,
+                SUM(COALESCE(amount,0)) total_amount
+                
+            FROM 
+                categories c 
+            LEFT JOIN 
+                transactions t
+            ON 
+                t.category_id = c.category_id 
+            WHERE
+                c.user_id= :user_id and type='expense'
+                GROUP BY category
+                order by id ");
 
     $stmt2->bindParam(':user_id',$user_id);
   
     $stmt2->execute();
     $expense_cat = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true, 'expenses' => $last_expenses, 'incomes' => $income,'expense_cat' => $expense_cat ]);
+
+    $stmt3=$pdo->prepare("SELECT
+
+                SUM(COALESCE(amount,0)) total_amount
+                
+            FROM 
+                categories c 
+            LEFT JOIN 
+                transactions t
+            ON 
+                t.category_id = c.category_id 
+            WHERE
+                c.user_id= :user_id and type='expense'
+               ");
+
+    $stmt3->bindParam(':user_id',$user_id);
+  
+    $stmt3->execute();
+    $total_expense = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+    $stmt4=$pdo->prepare("SELECT
+
+                SUM(COALESCE(amount,0)) total_amount
+                
+            FROM 
+                categories c 
+            LEFT JOIN 
+                transactions t
+            ON 
+                t.category_id = c.category_id 
+            WHERE
+                c.user_id= :user_id and type='income'
+               ");
+
+    $stmt4->bindParam(':user_id',$user_id);
+  
+    $stmt4->execute();
+    $total_income = $stmt4->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode(['success' => true, 'expenses' => $last_expenses, 'incomes' => $income,'expense_cat' => $expense_cat ,'total_expense' =>$total_expense , 'total_income' => $total_income]);
     }
     catch (Exception $e) {
         // Catch any database-related errors

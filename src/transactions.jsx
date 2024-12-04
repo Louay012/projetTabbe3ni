@@ -11,7 +11,7 @@ function Transactions() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const[amount,setAmount]=useState(0);
-    const[categorie,setCategorie]=useState('');
+    const[category_id,setCategory_id]=useState('');
     const[date,setDate]=useState('');
     const[description,setDescription]=useState('');
     const [selectedChoice, setSelectedChoice] = useState('');
@@ -56,7 +56,7 @@ function Transactions() {
        }
      useEffect(() => {
        fetch_cat()
-   },[])
+   },[userDetails])
 
 
     
@@ -96,11 +96,11 @@ function Transactions() {
         }
         
         useEffect(() => {fetch_Transactions()
-        },[ selectedOrder ,selectedChoice])  ;   
+        },[ selectedOrder ,selectedChoice,userDetails])  ;   
         
         const handle_submit=async (event) => {
             event.preventDefault();
-            console.log(categorie);
+            
             try{
                 console.log("try")
                   const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
@@ -111,7 +111,7 @@ function Transactions() {
                     body:JSON.stringify({
                       user_id: userDetails.user_id,
                       amount: amount,
-                      categorie: categorie,
+                      category_id: category_id,
                       description: description,
                       date: date,
                     })
@@ -128,7 +128,7 @@ function Transactions() {
                       }
                 } catch (err) {
                     setError("An error occurred while adding a transaction.");
-              
+                    console.log(err)
                 }
         
                 hideAddForm() 
@@ -137,7 +137,7 @@ function Transactions() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
+    return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
               <div className='flex justify-between items-center w-full'>
@@ -151,16 +151,16 @@ function Transactions() {
                           type="text"
                           placeholder="Enter the transaction category :"
                           name="category"
-                          onChange={(e)=>{setCategorie (e.target.value)}}
+                          onChange={(e)=>{setCategory_id (e.target.value)}}
                           required>
-                            {cats.map((cat)=><option>{cat.category_name}</option>)}
+                            {cats.map((cat)=><option value={cat.category_id} key={cat.category_id}>{cat.category_name}</option>)}
                         </Form.Select>
                       </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='font-mono font-semibold text-lg'>Amount:</Form.Label>
                     <Form.Control
-                      type="Number "
+                      type="Number"
                       placeholder="Enter the amount "
                       name="amount"
                       onChange={(e)=>{setAmount(e.target.value)}}
@@ -180,7 +180,7 @@ function Transactions() {
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='font-mono font-semibold text-lg'>Description:</Form.Label>
                     <Form.Control
-                      type="text "
+                      type="text"
                       placeholder="Enter the amount "
                       name="description"
                       onChange={(e)=>{setDescription(e.target.value)}}

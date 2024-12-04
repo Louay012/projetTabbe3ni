@@ -1,15 +1,18 @@
 import React from 'react';
-import { Bar, Line ,Pie } from 'react-chartjs-2';
+import {  Line ,Pie ,Doughnut } from 'react-chartjs-2';
 import Sidebar from './sidebar';
 import { useState ,useEffect,useMemo,useContext} from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement,ArcElement, LineElement, PointElement, Title, Tooltip, Legend } from 'chart.js';
 import { UserContext } from './UserContext';
+import { TfiStatsUp } from "react-icons/tfi";
+import { TfiStatsDown } from "react-icons/tfi";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 //import './dashboard.css';
 function Dashboard() {
   const [chartData, setChartData] = useState(null);
   const [piechartData, setpieChartData] = useState(null);
+  const [DoughnutchartData, setDoughnutChartData] = useState(null);
   const [expenses, setExpenses] = useState([]);
   const [expense_cat, setExpense_cat] = useState([]);
   const [incomes, setIncomes] = useState([]);
@@ -17,17 +20,10 @@ function Dashboard() {
   const [error, setError] = useState(null);
   const { userDetails } = useContext(UserContext);
   const[username,setUsername]=useState('');
- 
-  const generateRandomRgbaColors = (n) => {
-    const colors = [];
-    for (let i = 0; i < n; i++) {
-      const r = Math.floor(Math.random() * 256);  // Random red value between 0 and 255
-      const g = Math.floor(Math.random() * 256);  // Random green value between 0 and 255
-      const b = Math.floor(Math.random() * 256);
-      colors.push(`rgba(${r}, ${g}, ${b}, 0.1)`); // Push random color with opacity
-    }
-    return colors;
-  };   
+  const [total_income, settotal_income] = useState(0);
+  const [total_expense, settotal_expense] = useState(0);
+  const [balance, setbalance] = useState(0);
+    
   
     
   
@@ -55,6 +51,9 @@ function Dashboard() {
               setExpenses(data.expenses);
               setIncomes(data.incomes);
               setExpense_cat(data.expense_cat);
+              settotal_expense(data.total_expense.map((tot_exp)=> tot_exp.total_amount));
+              settotal_income(data.total_income.map((tot_inc)=> tot_inc.total_amount));
+              setbalance(total_income-total_expense);
               const exp_cat=expense_cat.map((exp)=> exp.category);
               const exp_cat_amount=expense_cat.map((exp)=> exp.total_amount);
 
@@ -93,6 +92,20 @@ function Dashboard() {
                 ],
               },  
             );
+            setDoughnutChartData({
+              labels:  ['income','expense'],
+              datasets: [
+                {
+                  label: 'Total expenses Amounts',
+                  data: [total_income,total_expense],
+                  backgroundColor: ['rgba(76, 175, 80, 0.2)','rgba(255, 0, 0, 0.2)'],
+                  borderColor: ['rgba(76, 175, 80, 0.6)','rgba(255, 0, 0, 0.6)'],
+                  borderWidth: 1,
+                },
+                
+              ],
+            },  
+          );
           
             setpieChartData({
               labels: exp_cat,
@@ -100,7 +113,9 @@ function Dashboard() {
                 {
                   label: 'Expenses',
                   data: exp_cat_amount,
-                  backgroundColor: colors,
+                  backgroundColor:['rgba(38, 8, 244, 0.2)','rgba(244, 111, 8, 0.2)',
+                    'rgba(8, 244, 82, 0.2)','rgba(234, 244, 8, 0.2)',
+                    'rgba(245, 40, 145, 0.2)','rgba(244, 8, 229, 0.2)','rgba(244, 8, 58, 0.2)','rgba(132, 210, 140, 0.2)'],
                   borderColor: [
                     '#ffffff',
                   ],
@@ -119,16 +134,62 @@ function Dashboard() {
         setLoading(false);
     }
     }
-    const colors = useMemo(() => generateRandomRgbaColors(expense_cat.length), [expense_cat.length]);
+   
     useEffect(() => {fetch_Transactions()
     },[expenses,incomes,userDetails])  ;
 
 
   return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
-              <div className="bg-violet-100 flex-1 m-2 rounded-lg p-4 flex flex-col gap-4 md:flex-row justify-around">
+              <div className="bg-purple-50 flex-1 m-2 rounded-lg p-2 flex flex-col flex-wrap gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
-                  <div className="p-2 bg-white rounded shadow-md w-11/12 md:w-96 h-[350px] md:h-[350px]">
+                  <div className='py-2  bg-white rounded shadow-md w-11/12 md:w-2/5 h-[250px] md:h-[250px]   '>
+                    <div className='flex items-center justify-around w-80 h-full'>
+                      {DoughnutchartData ? (
+                      <Doughnut className='' data={DoughnutchartData} options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                  legend: {
+                                    position: 'top',
+                                  },
+                                },
+                              }}></Doughnut>
+                            ) : (
+                              <p>Loading...</p>
+                            )}
+                    <div className=" flex flex-col items-center justify-around ">
+                   
+                    <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'><TfiStatsUp className='text-emerald-500 '/> {total_income}</span>
+                    <span className='flex items-center gap-2 font-mono text-lg text-red-600'><TfiStatsDown className='text-red-600'/>{total_expense}</span>
+                    <div className='flex items-center'>
+                      <span>total :  </span>
+                      <span className={balance<0 ? 'flex items-center gap-2 font-mono text-lg text-red-600' : 'flex items-center gap-2 font-mono text-lg text-emerald-500'}>{balance}</span>
+                    </div>
+                    </div>
+                  </div>
+                  </div>          
+                  {/* Pie Chart */}
+                  <div className="p-2 bg-white rounded shadow-md flex justify-center items-center w-11/12 md:w-96 h-[250px] md:h-[250px]">
+                    {piechartData ? (
+                      <Pie
+                        data={piechartData}
+                        key={JSON.stringify(piechartData)}
+                        options={{
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          plugins: {
+                            legend: {
+                              position: 'top',
+                            },
+                          },
+                        }}
+                      />
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </div>
+                  <div className="p-2 bg-white rounded shadow-md w-11/12 h-[300px] md:w-8/12  md:h-[320px]">
                     {chartData ? (
                       <Line
                         data={chartData}
@@ -151,28 +212,6 @@ function Dashboard() {
                       <p>Loading...</p>
                     )}
                   </div>
-
-                  {/* Pie Chart */}
-                  <div className="p-4 bg-white rounded shadow-md flex justify-center items-center w-11/12 md:w-96 h-[350px] md:h-[350px]">
-                    {piechartData ? (
-                      <Pie
-                        data={piechartData}
-                        key={JSON.stringify(piechartData)}
-                        options={{
-                          responsive: true,
-                          maintainAspectRatio: false,
-                          plugins: {
-                            legend: {
-                              position: 'top',
-                            },
-                          },
-                        }}
-                      />
-                    ) : (
-                      <p>Loading...</p>
-                    )}
-                  </div>
-
                      
             
               </div>
