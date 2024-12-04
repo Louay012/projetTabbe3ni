@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from "react";
-
+import React,{useContext,useState,useEffect} from 'react';
+import { UserContext } from './UserContext';
 import img1 from './image/Team goals-bro.png';
 import logo from './image/logo3.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,13 +16,17 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [validPassword , setvalidPassword] =useState(false);
     const [passwordFocus, setpasswordFocus] = useState(false);
-
+    const { userDetails } = useContext(UserContext);
     const navigate = useNavigate();  
     
     useEffect(() => {
         setvalidPassword(regex.test(password));   
     }, [password])
-
+    useEffect(() => {
+        if (userDetails) {
+          navigate("/dashboard");
+        }
+      }, [userDetails,navigate]);
     const signup= async (e) =>{
     e.preventDefault();
     try{

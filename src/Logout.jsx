@@ -8,10 +8,7 @@ const Logout = () => {
 
   const handleLogout = () => {
     // Clear context and LocalStorage
-    setUserDetails({
-      user_id: null,
-      username: null,
-    });
+    setUserDetails(null);
 
     localStorage.removeItem('userDetails'); // Remove data from LocalStorage
 

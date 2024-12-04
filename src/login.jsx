@@ -1,7 +1,6 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState,useEffect} from 'react';
 import logo from './image/logo3.png';
 import { Link ,useNavigate  } from 'react-router-dom';
-import { useState,useEffect } from 'react';
 import { UserContext } from './UserContext';
 
 
@@ -15,7 +14,7 @@ function Login() {
         if (userDetails) {
           navigate("/dashboard");
         }
-      }, [,userDetails,navigate]);
+      }, [userDetails,navigate]);
     const submit= async (e) =>{
     e.preventDefault();
     try{
