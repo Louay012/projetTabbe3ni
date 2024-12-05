@@ -8,6 +8,9 @@ import Dashboard from './Dashboard.jsx';
 import Budgets from './budgets.jsx';
 import Transactions from './transactions.jsx';
 import Categories from './Categories.jsx';
+import { UserProvider } from './UserContext'; // Import the context provider
+import ProtectedRoute from './ProtectedRoute';
+
 const router = createBrowserRouter([
   {
     path:"/",
@@ -23,29 +26,30 @@ const router = createBrowserRouter([
   },
   {
     path:"/income",
-      element:<Income/>
+      element:<ProtectedRoute><Income/></ProtectedRoute>
     },
   {
-    path:"/dashboard",
-      element:<Dashboard/>
+    path:"/Dashboard",
+      element:<ProtectedRoute><Dashboard/></ProtectedRoute>
     } ,
   {
     path:"/budgets",
-      element:<Budgets/>
+      element:<ProtectedRoute><Budgets/></ProtectedRoute>
     },
     {path:"/transactions",
-      element:<Transactions/>
+      element:<ProtectedRoute><Transactions/></ProtectedRoute>
     }
     ,
     {path:"/categories",
-      element:<Categories/>
+      element:<ProtectedRoute><Categories/></ProtectedRoute>
     }
 ])
 function App() {
-  return <>
-<RouterProvider router={router}></RouterProvider>
-    
-  </>;
+  return (
+    <UserProvider> 
+      <RouterProvider router={router} ></RouterProvider>
+    </UserProvider>
+  );
 }
 
 export default App;

@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $type = $input['type'];
 
    try {
-    $stmt=$pdo->prepare("select * from categories where user_id=:user_id and type=:type");
+    $stmt=$pdo->prepare("select category_id,category_name from categories where user_id=:user_id and type='income' ");
 
     $stmt->bindParam(':user_id',$user_id);
     $stmt->bindParam(':type',$type);

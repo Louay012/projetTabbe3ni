@@ -7,32 +7,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
 include 'db_con.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
     
-   
-    $budget_cat = $input['budget_cat'] ?? '';
+
+    $category_id = $input['category_id'] ?? '';
     $user_id= $input['user_id'] ?? '';
-    $allocated_amount = $input['allocated_amount'] ?? '';
+    $amount = $input['amount'] ?? '';
+    $description = $input['description'] ?? '';
+    $date = $input['date'] ?? '';
 
    
    try {
-    $stmt1=$pdo->prepare("select category_id from categories where category_name=:budget_cat and user_id=:user_id ");
-    $stmt1->bindParam(':budget_cat',$budget_cat);
-    $stmt1->bindParam(':user_id',$user_id);
-    $stmt1->execute();
-    $result = $stmt1->fetch(PDO::FETCH_ASSOC);
-    $category_id=$result['category_id'];
-    $stmt=$pdo->prepare("insert into budgets(user_id,category_id,allocated_amount,amount) values(:user_id,:category_id,:allocated_amount,0)");
+   
+    
+    $stmt=$pdo->prepare("insert into transactions(user_id,category_id,amount,transaction_date,description) values(:user_id,:category_id,:amount,:date,:description)");
+    
     $stmt->bindParam(':category_id',$category_id);
-    $stmt->bindParam(':allocated_amount',$allocated_amount);
+    $stmt->bindParam(':amount',$amount);
+    $stmt->bindParam(':description',$description);
+    $stmt->bindParam(':date',$date);
     $stmt->bindParam(':user_id',$user_id);
     $stmt->execute();
     if($stmt){
        
-        echo json_encode(['success' => true, 'message' => 'Budget added']);
+        echo json_encode(['success' => true, 'message' => 'transaction added ']);
     } else {
         echo json_encode(['success' => false, 'message' => 'problem in adding']);
     }

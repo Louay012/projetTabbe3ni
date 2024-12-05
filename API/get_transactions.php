@@ -33,8 +33,9 @@ ON
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE
         
-    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND t.user_id = :user_id 
- ORDER BY :order");
+    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
+    t.user_id = :user_id 
+ ORDER BY $order ");
     $stmt->bindParam(':choice',$choice);
     }
     else{
@@ -52,13 +53,13 @@ ON
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE 
     t.user_id = :user_id 
- ORDER BY :order");
+ ORDER BY $order  ");
     }
     $stmt->bindParam(':user_id',$user_id);
-    $stmt->bindParam(':order',$order);
+   
     $stmt->execute();
     $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true,'test'=>$order, 'data' => $transactions ]);
+    echo json_encode(['success' => true, 'data' => $transactions ]);
     }
     catch (Exception $e) {
         // Catch any database-related errors
