@@ -139,12 +139,12 @@ function Dashboard() {
     },[expenses,incomes,userDetails])  ;
 
 
-  return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
+  return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
               <div className="bg-purple-50 flex-1 m-2 rounded-lg p-2 flex flex-col flex-wrap gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
-                  <div className='py-2  bg-white rounded shadow-md w-11/12 md:w-2/5 h-[250px] md:h-[250px]   '>
-                    <div className='flex items-center justify-around w-80 h-full'>
+                  <div className='py-2  bg-white rounded shadow-md w-11/12 md:w-1/3 h-[250px] md:h-[250px]   '>
+                    
                       {DoughnutchartData ? (
                       <Doughnut className='' data={DoughnutchartData} options={{
                                 responsive: true,
@@ -158,16 +158,8 @@ function Dashboard() {
                             ) : (
                               <p>Loading...</p>
                             )}
-                    <div className=" flex flex-col items-center justify-around ">
                    
-                    <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'><TfiStatsUp className='text-emerald-500 '/> {total_income}</span>
-                    <span className='flex items-center gap-2 font-mono text-lg text-red-600'><TfiStatsDown className='text-red-600'/>{total_expense}</span>
-                    <div className='flex items-center'>
-                      <span>total :  </span>
-                      <span className={balance<0 ? 'flex items-center gap-2 font-mono text-lg text-red-600' : 'flex items-center gap-2 font-mono text-lg text-emerald-500'}>{balance}</span>
-                    </div>
-                    </div>
-                  </div>
+                 
                   </div>          
                   {/* Pie Chart */}
                   <div className="p-2 bg-white rounded shadow-md flex justify-center items-center w-11/12 md:w-96 h-[250px] md:h-[250px]">
@@ -189,6 +181,28 @@ function Dashboard() {
                       <p>Loading...</p>
                     )}
                   </div>
+                  <div className='p-3  bg-white rounded shadow-md w-11/12 md:w-1/4 h-[250px] md:h-[250px]   '>
+                      <div className=" flex flex-col items-center justify-around h-full">
+                        <span className='font-bold font-mono text-lg'>Sommaire :  </span>
+                          <div className='flex items-center justify-around w-full'> 
+                              <span className='font-mono'>total income :  </span>
+                              <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'>
+                                <TfiStatsUp className='text-emerald-500 '/> {total_income}
+                                </span>
+                            </div>
+                          <div className='flex items-center justify-around w-full'>
+                            <span className='font-mono'>total expenses :  </span>
+                            <span className='flex items-center gap-2 font-mono text-lg text-red-600'>
+                              <TfiStatsDown className='text-red-600'/>{total_expense}
+                              </span>
+                            </div>
+                            <div className='flex items-center justify-around w-full'>
+                              <span className='font-mono'>total :  </span>
+                              <span className={balance<0 ? 'flex items-center gap-2 font-mono text-lg text-red-600' : 'flex items-center gap-2 font-mono text-lg text-emerald-500'}>{balance}</span>
+                            </div>
+                      </div>
+                    </div>
+
                   <div className="p-2 bg-white rounded shadow-md w-11/12 h-[300px] md:w-8/12  md:h-[320px]">
                     {chartData ? (
                       <Line
