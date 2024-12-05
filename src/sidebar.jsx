@@ -1,21 +1,22 @@
 
 import Logout from './Logout';
-import user_logo from './image/user_logo.png';
+import user_logo from './image/icons8-user-100.png';
 import { Link   } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
+import { IoStatsChartSharp } from "react-icons/io5";
 import { BiDollarCircle } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BiBorderAll } from "react-icons/bi";
-import { IoStatsChartSharp } from "react-icons/io5";
-
-function Sidebar({name}) {
-  
+const Sidebar = ( {name}) => {
   return (
     <div className='bg-zinc-800 flex flex-col items-center  font-mono text-lg text-gray-50 w-14 md:w-48 '>
-                <div className='flex-1 flex flex-col items-center py-3  gap-10 '>
-                    <h2>User : </h2>
-                    <Link  to={"/dashboard"} ><img className='h-20 w-20 -mt-8 -mb-6' src={user_logo} alt=''></img></Link>
-                    <span>{name}</span>
+                <div className='flex-1 flex flex-col items-center justify-start  gap-10 '>
+                    
+                    <Link  to={"/dashboard"} className='flex flex-col w-full items-center text-gray-50 no-underline hover:bg-zinc-900'>
+                    <img className='h-20 w-20  ' src={user_logo} alt=''></img>
+                    <span className='text-inherit '>{name}</span>
+                    </Link>
+                    
                     <ul className='list-none flex flex-col items-start ' >
                     <li className='py-2  flex gap-2 items-center md:px-3' >
                       <Link  to={"/dashboard"}className='text-gray-50 no-underline  hover:text-purple-400 flex items-center gap-2' >

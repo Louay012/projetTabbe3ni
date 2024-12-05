@@ -177,7 +177,7 @@ function Transactions() {
     if (loading) return <p>Loading...</p>;
     
 
-    return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
+    return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
               

@@ -237,20 +237,22 @@ function Income() {
 
               <div className='w-full '>
               <table className='  border-2 text-left table shadow-sm border-gray-200  '>
+              <thead className='table-dark'>
                 <tr className='bg-zinc-700 text-white '>
                   <th className='border-1 border-gray-300'>Category</th>
                   <th className='border-1 border-gray-300'>Date</th>
                   <th className='border-1 border-gray-300'>Amount</th>
                   <th className='border-1 border-gray-300'>Description</th>
                 </tr>
-                
+              </thead>
+              <tbody>
                 {income.map((int)=><tr className='odd:bg-white even:bg-gray-100 hover:bg-blue-100'>
                 <td className='border-1 border-gray-300'>{int.category_name}</td>
                 <td className='border-1 border-gray-300'>{int.transaction_date}</td>
                 <td className='border-1 border-gray-300'>{int.amount}</td>
                 <td className='border-1 border-gray-300'>{int.description}</td></tr>
               )}
-              
+              </tbody>
               </table>
               </div>
               </div>
