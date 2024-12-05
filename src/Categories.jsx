@@ -16,7 +16,10 @@ function DashboardSection() {
     const[username,setUsername]=useState('');
 
     const formRef = useRef(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+   
   const [showAdd, setShowAdd] = useState(false);
+  const [showModif, setShowModif] = useState(false);
 
   const hideAddForm=()=>{
     setCategorie('');
@@ -24,10 +27,74 @@ function DashboardSection() {
 
     formRef.current.reset();
       setShowAdd(false);
+      setShowModif(false);
   }
     const showAddForm=()=>{
       setShowAdd(true);
     }
+    const handle_delete = async () => {
+      try {
+        const response = await fetch('http://localhost/TABBE3NI/API/delete_category.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            category_id: selectedCategory.id,
+          }),
+        });
+    
+        const data = await response.json();
+        if (data.success) {
+          fetch_Categories();
+          toast.success(data.message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+          });
+          hideAddForm();
+        } else {
+          setError(data.message || "Failed to delete Category.");
+        }
+      } catch (err) {
+        setError("An error occurred while deleting Category.");
+      }
+    };
+    const handle_change = async (event) => {
+      event.preventDefault();
+    
+      try {
+        const response = await fetch('http://localhost/TABBE3NI/API/update_category.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userDetails.user_id,
+            category_id: selectedCategory.id, // Pass the selected category ID
+            categorie: categorie,
+        
+          }),
+        });
+    
+        const data = await response.json();
+        if (data.success) {
+          fetch_Categories();
+          toast.success(data.message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+          });
+          hideAddForm();
+        } else {
+          setError(data.message || "Failed to modify Category.");
+        }
+      } catch (err) {
+        setError("An error occurred while modifying Category.");
+      }
+    };
     const handle_submit=async (event) => {
         event.preventDefault();
         
@@ -48,12 +115,14 @@ function DashboardSection() {
           const data=await response.json();
          
           if (data.success) {
+              hideAddForm();
               fetch_Categories();
                 toast.success(data.message, {
                 position: 'top-center',
                 autoClose: 3000, // 3 seconds
                 hideProgressBar: true,
                 closeOnClick: true,});
+                
             } else {
             setError(data.message || "Failed to add Category.");
     
@@ -90,8 +159,6 @@ function DashboardSection() {
             setError(data.message || "Failed to fetch Categories.");
 
             }
-          }else{
-            setError("User Data is not found")
           }
         } catch (err) {
             setError("An error occurred while fetching Categories." );
@@ -103,7 +170,8 @@ function DashboardSection() {
     }
     useEffect(() => {
       fetch_Categories()
-    },[userDetails ])  ;    
+    },[userDetails ])  ; 
+
     const showerror=()=>{
       toast.error(error, {
         position: 'top-center',
@@ -133,6 +201,42 @@ return <>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>
                   <input className='btn btn-primary' type='submit' value='Add Categories' onClick={showAddForm}/>
                 </div>
+                
+                <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-md z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
+  <Form.Group className="mb-3" controlId="formBasicName">
+    <Form.Label className="font-mono font-semibold text-lg">Categorie Name:</Form.Label>
+    <Form.Control
+      type="text"
+      placeholder="Enter the category :"
+      name="category"
+      value={categorie} // Prefill if modifying
+      onChange={(e) => setCategorie(e.target.value)}
+      required
+    />
+  </Form.Group>
+
+  <Form.Group className="mb-3" controlId="formBasicEmail">
+    <Form.Label className="font-mono font-semibold text-lg">Type:</Form.Label>
+    <Form.Control
+      name="type"
+      value={type} // Prefill if modifying
+      onChange={(e) => setType(e.target.value)}
+      required
+      disabled
+    >
+  
+    </Form.Control>
+  </Form.Group>
+
+  <div className="flex justify-between">
+    <Button variant="secondary" onClick={hideAddForm}>Cancel</Button>
+    <Button variant="primary" type="submit">Save Changes</Button>
+    <Button variant="danger" onClick={handle_delete}>
+        Delete Category
+    </Button>
+  </div>
+</Form>
+
                 <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label className='font-mono font-semibold text-lg'>Categorie Name:</Form.Label>
@@ -175,7 +279,12 @@ return <>
                         <h3>Income Source</h3>
                         <div className="flex flex-wrap justify-center gap-2">
                             {incomeSources.map((income) => 
-                            <div  key={income.id} className=" bg-emerald-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2">
+                            <div  key={income.id} className=" bg-emerald-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2 cursor-pointer"
+                            onClick={()=>{setSelectedCategory(income);
+                              setCategorie(income.category); 
+                              setType(income.type);
+                              setShowModif(true)}}
+                              >
                                 <h3 className="card-title">{income.category}</h3>
                                 <p>{income.total_amount} DT</p>
                             </div >
@@ -188,7 +297,12 @@ return <>
                         <h3>Spendings</h3>
                         <div className=" flex flex-wrap justify-center gap-2">
                             {spendings.map((spending) => 
-                                <div key={spending.id} className=" bg-purple-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2" >
+                                <div key={spending.id} className=" bg-purple-300 text-slate-50 p-3 shadow-md border-0 rounded flex flex-col items-center gap-2 cursor-pointer" 
+                                onClick={()=>{setSelectedCategory(spending);
+                                  setCategorie(spending.category); // Set the category name
+                                  setType(spending.type);
+                                
+                                  setShowModif(true)}}>
                                     <h3>{spending.category}</h3>
                                     <p>{spending.total_amount} DT</p>
                                 </div>

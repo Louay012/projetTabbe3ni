@@ -19,7 +19,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $stmt=$pdo->prepare("SELECT
     c.category_id id,
 	category_name category,
-    SUM(COALESCE(amount,0)) total_amount
+    SUM(COALESCE(amount,0)) total_amount,
+    type
     
 FROM 
     categories c 
@@ -41,7 +42,8 @@ WHERE
    $stmt1=$pdo->prepare("SELECT
     c.category_id id,
 	category_name category,
-    SUM(COALESCE(amount,0)) total_amount
+    SUM(COALESCE(amount,0)) total_amount,
+    type
     
 FROM 
     categories c 

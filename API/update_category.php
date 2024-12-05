@@ -12,30 +12,32 @@ include 'db_con.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
-    
 
+    $category_id = $input['category_id'];
     $categorie = $input['categorie'] ?? '';
     $type = $input['type'] ?? '';
     $user_id=$input['user_id']?? '';
+
     try {
-        $stmt=$pdo->prepare("select * from categories where category_name =:categorie and user_id=:user_id");
+        $stmt=$pdo->prepare("select * from categories where category_name =:categorie and user_id=:user_id and category_id!=:category_id ");
         $stmt->bindParam(':categorie',$categorie);
         $stmt->bindParam(':user_id',$user_id);
-        
+        $stmt->bindParam(':category_id',$category_id);
         $stmt->execute();
         $cat = $stmt->fetch(PDO::FETCH_ASSOC);
         if($cat){
 
             echo json_encode(['success' => false, 'message' => 'Nom de la catégorie est déja utilisé']);
         } else {
-            $stmt=$pdo->prepare("insert into categories(user_id,category_name,type) values(:user_id,:categorie,:type) ");
+           
+            $stmt=$pdo->prepare("UPDATE categories SET category_name =:categorie WHERE category_id=:category_id");
             $stmt->bindParam(':categorie',$categorie);
-            $stmt->bindParam(':type',$type);
-            $stmt->bindParam(':user_id',$user_id);
+          
+            $stmt->bindParam(':category_id',$category_id);
         
             $stmt->execute();
             if($stmt){
-                echo json_encode(['success' => true, 'message' => 'catégorie ajoutée']);
+                echo json_encode(['success' => true, 'message' => 'catégorie Modifiée']);
             }
             else{
                 echo json_encode(['success' => false, 'message' => 'erreur ']);
