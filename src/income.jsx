@@ -1,15 +1,17 @@
-import React, { useEffect, useState ,useContext} from 'react'
+import React, { useEffect, useState ,useContext,useRef} from 'react'
 import Sidebar from './sidebar';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 function Income() {
+  const formRef = useRef(null);
   const[date,setDate]=useState('');
   const [income, setIncome] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
   const { userDetails } = useContext(UserContext);
   const[username,setUsername]=useState('');
   const fetch_income=async () => {
@@ -29,11 +31,11 @@ function Income() {
 
 
           const data = await response.json();
-          console.log(data.data);
+          
           if (data.success) {
-            console.log(data.success);
+            
             setIncome(data.data);
-            console.log(income);
+            
           } else {
           setError(data.message || "Failed to fetch income.");
 
@@ -55,7 +57,11 @@ function Income() {
       
       try{
         if(userDetails){
+         
           const response=await fetch('http://localhost/TABBE3NI/API/get_income.php' ,{ method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ 
               user_id: userDetails.user_id ,
               }),
@@ -67,12 +73,12 @@ function Income() {
           if (data.success) {
             setcats(data.data);
           } else {
-          setError(data.message || "Failed to fetch income.");
+          setError(data.message || "Failed to fetch income cotegories.");
 
           }
         }
       } catch (err) {
-          setError("An error occurred while fetching income.");
+          setError("An error occurred while fetching income categories.");
 
       } finally {
           setLoading(false);
@@ -82,10 +88,18 @@ function Income() {
     fetch_cat()
 },[userDetails])
 
-  const [category_id , setCategory_id] = useState();  
-  const [amount , setamount] = useState();  
-  const [description , setDescription] = useState(); 
-  const hideAddForm=()=>{setShowAdd(false);}
+  const [category_id , setCategory_id] = useState(null);  
+  const [amount , setamount] = useState(null);  
+  const [description , setDescription] = useState(''); 
+  const hideAddForm=()=>{
+    setCategory_id(null);
+    setDate('');
+    setDescription('');
+    setamount(null);
+    formRef.current.reset();
+      
+    setShowAdd(false);}
+
   const [showAdd, setShowAdd] = useState(false);
     const showAddForm=()=>{
     setShowAdd(true);
@@ -93,7 +107,17 @@ function Income() {
   const handle_submit=async (event) => {
     event.preventDefault()
     try{
-      console.log("message")
+      if (amount <= 0) {
+        setError("Amount must be greater than 0.");
+        return;
+    }
+
+    // Validate Date: Must be before today's date
+    const today = new Date().toISOString().split('T')[0];  // Get today's date in YYYY-MM-DD format
+    if (date > today) {
+        setError("Date must be before today.");
+        return;
+    }
           const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
             method:"POST",
             headers:{
@@ -107,14 +131,19 @@ function Income() {
               date: date,
             })
           })
-          console.log("message")
+          
       const data=await response.json();
-      console.log("message")
-      if (data.success) {
-        fetch_income();
-        
+      
+        if (data.success) {
+          toast.success(data.message, {
+            position: 'top-center',
+            autoClose: 3000, // 3 seconds
+            hideProgressBar: true,
+            closeOnClick: true,});
+          fetch_income();
+          
         } else {
-        setError(data.message || "Failed to add budgets.");
+        setError(data.message || "Failed to add income.");
 
               }
         } catch (err) {
@@ -123,25 +152,40 @@ function Income() {
         }
         hideAddForm() 
         } 
-  
+        const showerror=()=>{
+          toast.error(error, {
+            position: 'top-center',
+            autoClose: 3000, // 3 seconds
+            hideProgressBar: true,
+            closeOnClick: true,});
+        }
+        useEffect(() => {
+          if (error) {
+            showerror();
+            setError(null); // Clear the error after showing it
+          }
+        }, [error]);
     
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    
   return <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
               <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md    '>
-              <Form onSubmit={handle_submit} className={showAdd ? 'w-96 h-120 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+
+              <Toaster/>
+
+              <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96 h-120 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                   <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label className='font-mono font-semibold text-lg'>Income Category</Form.Label>
                         
                         <Form.Select
-                          type="text"
+                          type="number"
                           placeholder="Choose the category :"
                           name="category"
-                          
-                          
                           onChange={(e)=>{setCategory_id(e.target.value)}}
-                          required>
+                          required><option value="" selected>
+                          Choose a category
+                        </option>
                             {cats.map((cat)=><option value={cat.category_id} key={cat.category_id}>{cat.category_name}</option>)}
                         </Form.Select>
                         
@@ -170,7 +214,7 @@ function Income() {
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='font-mono font-semibold text-lg'> Description</Form.Label>
                     <Form.Control
-                      type="Number "
+                      type="text"
                       placeholder="Enter the transaction description "
                       name="transaction_description"
                       onChange={(e)=>{setDescription(e.target.value)}}

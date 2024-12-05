@@ -31,11 +31,11 @@ FROM
 JOIN 
     categories c 
 ON 
-    t.category_id = c.category_id AND t.user_id = c.user_id
+    t.category_id = c.category_id AND t.user_id = c.user_id 
 WHERE
         
     DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
-    t.user_id = :user_id 
+    t.user_id = :user_id and type='expense'
  ORDER BY $order ");
     $stmt->bindParam(':choice',$choice);
     }
@@ -53,7 +53,7 @@ JOIN
 ON 
     t.category_id = c.category_id AND t.user_id = c.user_id
 WHERE 
-    t.user_id = :user_id 
+    t.user_id = :user_id and type='expense'
  ORDER BY $order  ");
     }
 

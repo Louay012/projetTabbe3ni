@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       element:<ProtectedRoute><Income/></ProtectedRoute>
     },
   {
-    path:"/Dashboard",
+    path:"/dashboard",
       element:<ProtectedRoute><Dashboard/></ProtectedRoute>
     } ,
   {

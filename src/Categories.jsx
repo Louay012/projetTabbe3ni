@@ -1,25 +1,28 @@
-import React,{ useEffect, useState ,useContext} from "react";
+import React,{ useEffect, useState ,useContext,useRef } from "react";
 import Sidebar from './sidebar';
-
-import { Card } from 'react-bootstrap';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
-
+import toast, { Toaster } from 'react-hot-toast';
 function DashboardSection() {
     const { userDetails } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-  const [incomeSources, setIncomeSources] = useState([]);
-  const [spendings, setSpendings] = useState([]);
+
+    const [incomeSources, setIncomeSources] = useState([]);
+    const [spendings, setSpendings] = useState([]);
   
     const[categorie,setCategorie]=useState('');
     const[type,setType]=useState('');
     const[username,setUsername]=useState('');
 
-
+    const formRef = useRef(null);
   const [showAdd, setShowAdd] = useState(false);
 
   const hideAddForm=()=>{
+    setCategorie('');
+    setType('');
+
+    formRef.current.reset();
       setShowAdd(false);
   }
     const showAddForm=()=>{
@@ -43,27 +46,31 @@ function DashboardSection() {
               });
               
           const data=await response.json();
-          console.log(data.message);
+         
           if (data.success) {
-            fetch_Categories();
-            console.log("success");
+              fetch_Categories();
+                toast.success(data.message, {
+                position: 'top-center',
+                autoClose: 3000, // 3 seconds
+                hideProgressBar: true,
+                closeOnClick: true,});
             } else {
-            setError(data.message || "Failed to add transaction.");
+            setError(data.message || "Failed to add Category.");
     
                   }
             } catch (err) {
-                setError("An error occurred while adding a transaction.");
+                setError("An error occurred while adding a Category.");
           
             }
-    
-            hideAddForm() 
+            
             }
+           
   const fetch_Categories=async () => {
-try{
-    if(userDetails){
-      setUsername(userDetails.username);
-    
-  const response= await fetch('http://localhost/TABBE3NI/API/categories.php' ,{
+    try{
+      if(userDetails){
+        setUsername(userDetails.username);
+        
+      const response= await fetch('http://localhost/TABBE3NI/API/categories.php' ,{
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -80,30 +87,53 @@ try{
                 setSpendings(data.data2);
             }
              else {
-            setError(data.message || "Failed to fetch transactions.");
+            setError(data.message || "Failed to fetch Categories.");
 
             }
+          }else{
+            setError("User Data is not found")
           }
         } catch (err) {
-            setError("An error occurred while fetching transactions." );
-            console.log(err);
+            setError("An error occurred while fetching Categories." );
+            
         } finally {
             setLoading(false);
         }
         
     }
-    useEffect(() => {fetch_Categories()
+    useEffect(() => {
+      fetch_Categories()
     },[userDetails ])  ;    
-
+    const showerror=()=>{
+      toast.error(error, {
+        position: 'top-center',
+        duration: 3000, // 3 seconds
+        hideProgressBar: true,
+        closeOnClick: true,});
+    }
+   
+    useEffect(() => {
+      if (error) {
+        showerror();
+        setError(null); // Clear the error after showing it
+      }
+    }, [error]);
+    
+    if (loading) return <p>Loading...</p>;
+    
 return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
+    <Toaster/>
             <Sidebar name={username}></Sidebar>
             <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
+
+            
+
             <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>
                   <input className='btn btn-primary' type='submit' value='Add Categories' onClick={showAddForm}/>
                 </div>
-                <Form onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+                <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label className='font-mono font-semibold text-lg'>Categorie Name:</Form.Label>
                         <Form.Control
@@ -111,7 +141,7 @@ return <>
                           placeholder="Enter the category :"
                           name="category"
                           onChange={(e)=>{setCategorie(e.target.value)}}
-                          
+                          required
                         />
                       </Form.Group>
 
@@ -123,7 +153,9 @@ return <>
                           name="type"
                           onChange={(e)=>{setType(e.target.value)}}
                           required>
-                            {<option set disabled>Enter the type of the category: </option>}
+                            <option value="" selected>
+                              Choose a category
+                            </option>
                             {   <option value="expense">Expense</option>}
                                 {<option value="income">Income</option>}
                         </Form.Select>

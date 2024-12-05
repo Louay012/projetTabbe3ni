@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     $categorie = $input['categorie'] ?? '';
     $type = $input['type'] ?? '';
-    $user_id=input['user_id']?? '';
+    $user_id=$input['user_id']?? '';
     try {
         $stmt=$pdo->prepare("select * from categories where category_name =:categorie");
         $stmt->bindParam(':categorie',$categorie);
@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $cat = $stmt->fetch(PDO::FETCH_ASSOC);
         if($cat){
 
-            echo json_encode(['success' => false, 'message' => 'Nom de la Catégorie est déja utilisé']);
+            echo json_encode(['success' => false, 'message' => 'Nom de la catégorie est déja utilisé']);
         } else {
             $stmt=$pdo->prepare("insert into categories(user_id,category_name,type) values(:user_id,:categorie,:type) ");
             $stmt->bindParam(':categorie',$categorie);
@@ -34,7 +34,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         
             $stmt->execute();
             if($stmt){
-                echo json_encode(['success' => true, 'message' => 'categorie ajoutée']);
+                echo json_encode(['success' => true, 'message' => 'catégorie ajoutée']);
             }
             else{
                 echo json_encode(['success' => false, 'message' => 'erreur ']);

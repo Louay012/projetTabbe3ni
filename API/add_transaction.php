@@ -22,7 +22,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
    
    try {
-   
     
     $stmt=$pdo->prepare("insert into transactions(user_id,category_id,amount,transaction_date,description) values(:user_id,:category_id,:amount,:date,:description)");
     
