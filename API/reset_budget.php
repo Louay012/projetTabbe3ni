@@ -15,20 +15,20 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    
     $id = $input['id'] ?? '';
    
-    $AddedAmount = $input['AddedAmount'] ?? '';
+
 
    
    try {
     
-    $stmt=$pdo->prepare("update budgets set amount=amount + :AddedAmount where budget_id=:id");
+    $stmt=$pdo->prepare("update budgets set date_deb=CURDATE() where budget_id=:id");
     $stmt->bindParam(':id',$id);
-    $stmt->bindParam(':AddedAmount',$AddedAmount);
+
     $stmt->execute();
     if($stmt){
        
-        echo json_encode(['success' => true, 'message' => 'expense added to budget']);
+        echo json_encode(['success' => true, 'message' => 'budget reset ']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'problem in adding expense']);
+        echo json_encode(['success' => false, 'message' => 'problem in reseting budget']);
     }
     $stmt=null;
     }

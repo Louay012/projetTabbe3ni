@@ -202,40 +202,40 @@ return <>
                   <input className='btn btn-primary' type='submit' value='Add Categories' onClick={showAddForm}/>
                 </div>
                 
-                <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-md z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
-  <Form.Group className="mb-3" controlId="formBasicName">
-    <Form.Label className="font-mono font-semibold text-lg">Categorie Name:</Form.Label>
-    <Form.Control
-      type="text"
-      placeholder="Enter the category :"
-      name="category"
-      value={categorie} // Prefill if modifying
-      onChange={(e) => setCategorie(e.target.value)}
-      required
-    />
-  </Form.Group>
+                <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-2xl z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
+                  <Form.Group className="mb-3" controlId="formBasicName">
+                    <Form.Label className="font-mono font-semibold text-lg">Categorie Name:</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter the category :"
+                      name="category"
+                      value={categorie} // Prefill if modifying
+                      onChange={(e) => setCategorie(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label className="font-mono font-semibold text-lg">Type:</Form.Label>
-    <Form.Control
-      name="type"
-      value={type} // Prefill if modifying
-      onChange={(e) => setType(e.target.value)}
-      required
-      disabled
-    >
-  
-    </Form.Control>
-  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label className="font-mono font-semibold text-lg">Type:</Form.Label>
+                    <Form.Control
+                      name="type"
+                      value={type} // Prefill if modifying
+                      onChange={(e) => setType(e.target.value)}
+                      required
+                      disabled
+                    >
+                  
+                    </Form.Control>
+                  </Form.Group>
 
-  <div className="flex justify-between">
-    <Button variant="secondary" onClick={hideAddForm}>Cancel</Button>
-    <Button variant="primary" type="submit">Save Changes</Button>
-    <Button variant="danger" onClick={handle_delete}>
-        Delete Category
-    </Button>
-  </div>
-</Form>
+                  <div className="flex justify-between ">
+                    <Button variant="secondary" onClick={hideAddForm}>Cancel</Button>
+                    <Button variant="primary" type="submit">Save </Button>
+                    <Button variant="danger" onClick={handle_delete}>
+                        Delete 
+                    </Button>
+                  </div>
+                </Form>
 
                 <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">

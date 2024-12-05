@@ -183,22 +183,22 @@ function Dashboard() {
                   </div>
                   <div className='p-3  bg-white rounded shadow-md w-11/12 md:w-1/4 h-[250px] md:h-[250px]   '>
                       <div className=" flex flex-col items-center justify-around h-full">
-                        <span className='font-bold font-mono text-lg'>Sommaire :  </span>
+                        <span className='font-bold font-mono text-xl  '>Sommaire :  </span>
                           <div className='flex items-center justify-around w-full'> 
                               <span className='font-mono'>total income :  </span>
                               <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'>
                                 <TfiStatsUp className='text-emerald-500 '/> {total_income}
                                 </span>
                             </div>
-                          <div className='flex items-center justify-around w-full'>
+                          <div className='flex items-center justify-around w-full border-b-neutral-800 border-b '>
                             <span className='font-mono'>total expenses :  </span>
-                            <span className='flex items-center gap-2 font-mono text-lg text-red-600'>
+                            <span className='flex items-center gap-2 font-mono text-lg text-red-600 '>
                               <TfiStatsDown className='text-red-600'/>{total_expense}
                               </span>
                             </div>
                             <div className='flex items-center justify-around w-full'>
-                              <span className='font-mono'>total :  </span>
-                              <span className={balance<0 ? 'flex items-center gap-2 font-mono text-lg text-red-600' : 'flex items-center gap-2 font-mono text-lg text-emerald-500'}>{balance}</span>
+                              <span className='font-mono font-bold text-lg'>Net balance :  </span>
+                              <span className={balance<0 ? 'flex items-center gap-2  font-mono text-lg text-red-600' : 'flex items-center gap-2  font-mono text-lg text-emerald-500'}>{balance}</span>
                             </div>
                       </div>
                     </div>

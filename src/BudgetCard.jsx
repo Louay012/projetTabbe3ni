@@ -1,9 +1,10 @@
 import React, { useState ,useEffect} from 'react'
-import { Card, CardBody, CardHeader, CardTitle, ProgressBar } from 'react-bootstrap';
+import { Card, CardBody, CardTitle, ProgressBar } from 'react-bootstrap';
 import { MdDeleteForever } from "react-icons/md";
-function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fetch_budgets}) {
+import { GrPowerReset } from "react-icons/gr";
+function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   const [progress, setProgress] = useState(0);
-  const [AddedAmount, setAddedAmount] = useState();
+
 
   useEffect(() => {
     const percentage = (amount / max) * 100;
@@ -21,23 +22,8 @@ function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fet
           setvariant("danger");
       }
   }, [progress]); 
-  const handle_add=async (e) => {
-      e.preventDefault();
-      if (!AddedAmount) {
-        alert("Please enter an amount.");
-        return;
-    }
-        onAddExpense(id,AddedAmount);
-        setAddedAmount('');
 
-      }
-  const handle_edit=async (e) => {
-        e.preventDefault();
-        onshowEdit();
-        onEditBudget(id,name,max);
-        
-    
-          }
+ 
   const handle_delete=async (e)=>{
           e.preventDefault()
           try{
@@ -79,13 +65,13 @@ function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fet
           
           </CardTitle>
           <ProgressBar className='rounded-pill bg-violet-400' now={progress} variant={variant}></ProgressBar>
-          <div className='flex items-center gap-3'>
-            <input type='number' onChange={(e)=>{setAddedAmount(e.target.value)}} value={AddedAmount} className='form-control'/>
-          <input type='submit' value="Add Expense" onClick={handle_add}  className='btn btn-secondary  my-2'/>
-          </div>
+          
           <div className='flex justify-around items-center'>
           <button type='submit'  onClick={handle_delete}  className='btn btn-danger '>
             <div className='flex items-center'><i><MdDeleteForever/></i><span>Delete</span></div>
+            </button>
+            <button type='submit'  onClick={()=>onreset(id)}  className='btn btn-secondary '>
+            <div className='flex items-center gap-1'><i><GrPowerReset  /></i><span>Reset</span></div>
             </button>
           <input type='submit' value="Edit Budget" onClick={()=>onshowEdit(id,name,max)} className='btn btn-primary  my-2'/>
           </div>

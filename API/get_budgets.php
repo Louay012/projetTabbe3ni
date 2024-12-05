@@ -14,11 +14,34 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $user_id = $input['user_id'];
    
     try {
-    $stmt=$pdo->prepare("select b.budget_id, c.category_name,b.allocated_amount,b.amount from budgets b,categories c 
-    where b.user_id=:user_id and b.user_id=c.user_id  and b.category_id=c.category_id ");
+    $stmt=$pdo->prepare("SELECT 
+    b.budget_id, 
+    c.category_name, 
+    b.allocated_amount, 
+    b.date_deb, 
+    SUM(COALESCE(t.amount, 0)) AS amount
+    
+FROM 
+    budgets b
+JOIN 
+    categories c 
+    ON b.category_id = c.category_id 
+    AND b.user_id = c.user_id
+LEFT JOIN 
+    transactions t 
+    ON t.category_id = c.category_id 
+    AND t.transaction_date >= b.date_deb
+WHERE 
+    b.user_id = :user_id 
+    AND c.type = 'expense'
+GROUP BY 
+    b.budget_id, c.category_name, b.allocated_amount, b.date_deb;
+"
+);
     $stmt->bindParam(':user_id',$user_id);
     $stmt->execute();
     $budgets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     echo json_encode(['success' => true, 'data' => $budgets ]);
     }
     catch (Exception $e) {
