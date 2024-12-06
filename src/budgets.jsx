@@ -159,35 +159,32 @@ function Budgets() {
       console.log("An error occurred while editing a budget.");             
     }               
   }
-      
-  const handle_addExpense=async (id,AddedAmount) => {               
-    try{             
-      console.log("message")                   
-      const response=await fetch('http://localhost/TABBE3NI/API/add_expense.php',{               
-        method:"POST",                  
-        headers:{      
+  const handle_reset=async (id) => {
+    try{
+      const response=await fetch('http://localhost/TABBE3NI/API/reset_budget.php',{
+        method:"POST",
+        headers:{
           'Content-Type': 'application/json',
-        },           
+        },
         body:JSON.stringify({
-          id: id,       
-          AddedAmount:AddedAmount,                 
-        })             
+          id: id,
+        })
       })
-
-      console.log("message")            
-      const data=await response.json();            
-      console.log("message")
-                      
-      if (data.success) {           
-        fetch_budgets();             
-      } else {            
-        console.log(data.message || "Failed to add expense.");                
+                  
+      const data=await response.json();
+                  
+      if (data.success) {
+        fetch_budgets();
+      } else {
+        console.log(data.message || "Failed to reset budgets.");
       }
-                       
-    } catch (err) {          
-      console.log("An error occurred while adding an expense.");                 
-    }                 
+                    
+    } catch (err) {
+      console.log("An error occurred while reseting a budget.");             
+    }               
   }
+      
+ 
               
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -276,9 +273,8 @@ function Budgets() {
             <BudgetCard 
               key={budget.budget_id} 
               id={budget.budget_id} 
-              onEditBudget={handle_EditBudget} 
               onshowEdit={showEditForm}
-              onAddExpense={handle_addExpense} 
+              onreset={handle_reset}
               name={budget.category_name} 
               fetch_budgets={fetch_budgets}
               max={budget.allocated_amount} 
