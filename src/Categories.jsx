@@ -230,9 +230,9 @@ return <>
 
   <div className="flex justify-between">
     <Button variant="secondary" onClick={hideAddForm}>Cancel</Button>
-    <Button variant="primary" type="submit">Save Changes</Button>
+    <Button variant="primary" type="submit">Save </Button>
     <Button variant="danger" onClick={handle_delete}>
-        Delete Category
+        Delete 
     </Button>
   </div>
 </Form>
