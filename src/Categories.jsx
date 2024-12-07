@@ -207,16 +207,8 @@ return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
  
             <Sidebar name={username}></Sidebar>
-            <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
-
-            
-
-            <div className='flex justify-between items-center w-full'>
-                  <span className='font-bold font-mono text-2xl'>Your Categories :</span>
-                  <input className='btn btn-primary' type='submit' value='Add Categories' onClick={showAddForm}/>
-                </div>
-                
-                <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-2xl z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
+            <div className={'flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-4 justify-start items-center  shadow-md' } >
+              <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-2xl z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
                   <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label className="font-mono font-semibold text-lg">Categorie Name:</Form.Label>
                     <Form.Control
@@ -288,7 +280,15 @@ return <>
                   </Button>
                   </div>
                   </Form>
-                <div className="flex justify-around w-full ">
+            
+            
+            <div className='flex justify-between items-center w-full'>
+                  <span className='font-bold font-mono text-2xl'>Your Categories :</span>
+                  <input className='btn btn-primary' type='submit' value='Add Category' onClick={showAddForm}/>
+                </div>
+                
+                
+                <div className="flex flex-col md:flex-row justify-around w-full gap-3">
                     <div className="flex-1 flex flex-col  items-center gap-4">
                         <h3>Income Source</h3>
                         <div className="flex flex-wrap justify-center gap-2">

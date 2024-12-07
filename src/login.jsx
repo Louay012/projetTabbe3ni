@@ -48,7 +48,7 @@ function Login() {
   const showerror=()=>{
     toast.error(error, {
       position: 'top-center',
-      autoClose: 3000, // 3 seconds
+      autoClose: 1000, 
       hideProgressBar: true,
       closeOnClick: true,});
   } 
@@ -60,9 +60,9 @@ function Login() {
   }, [error]);
   return <>
     
-    <div className="h-screen w-screen bg-[url('./image/login-bg.jpg')] bg-cover ">
+    <div className="h-screen w-screen bg-[url('./image/login-bg.jpg')] bg-cover flex justify-center items-center p-4">
         
-            <div  className='bg-white w-1/3 h-3/5 shadow-lg absolute top-20p left-30p p-2 flex flex-col items-center gap-4' >   
+            <div  className='bg-white w-full md:w-1/3 md:h-4/6 shadow-lg  px-2 py-6 flex flex-col items-center gap-4' >   
                 <Link to="/"><img src={logo} alt='logo'></img></Link>
                 <form onSubmit={submit} className='flex flex-col justify-between  gap-4'>
                     

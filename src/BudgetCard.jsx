@@ -30,7 +30,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   const handle_delete=async (e)=>{
           e.preventDefault()
           const result = await Swal.fire({
-            title: 'Are you sure?',  // Title of the dialog
+            title: 'Are you sure to delete this budget?',  // Title of the dialog
             text: "You won't be able to revert this!",  // Description
             icon: 'warning',  // Icon type
             showCancelButton: true,  // Show the cancel button
@@ -89,7 +89,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   }, [error]);
   
   return (
-    <Card className='w-96 h-0 shadow-md'>
+    <Card className=' shadow-md w-11/12 md:w-1/3 h-[250px] md:h-[250px]'>
       <CardBody className='flex flex-col gap-2'>
         <CardTitle>
           <div className='flex justify-between items-center'>
@@ -107,7 +107,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
             <button type='submit'  onClick={()=>onreset(id)}  className='btn btn-secondary '>
             <div className='flex items-center gap-1'><i><GrPowerReset  /></i><span>Reset</span></div>
             </button>
-          <input type='submit' value="Edit Budget" onClick={()=>onshowEdit(id,name,max)} className='btn btn-primary  my-2'/>
+          <input type='submit' value="Edit" onClick={()=>onshowEdit(id,name,max)} className='btn btn-primary  my-2'/>
           </div>
           
       </CardBody>

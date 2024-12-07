@@ -79,10 +79,10 @@ function Signup() {
   }, [error]);
 
   return <>
-  <div className='h-screen w-screen flex flex-col justify-center'>
+  <div className='h-screen w-screen flex flex-col justify-center py-4'>
    
-  <div  className='flex justify-center items-center  '>
-    <div  className='flex bg-white justify-around items-center shadow-lg rounded m-3 border-1 px-4 py-4 w-10/12 h-5/6 '>
+  <div  className='flex justify-center items-center  h-full'>
+    <div  className='flex bg-white justify-around items-center shadow-lg rounded m-3 border-1 p-4 h-full w-10/12 md:h-5/6 '>
     
         <form  onSubmit={signup} className='flex flex-col gap-3'>
             <div className='flex justify-center items-center'>
@@ -114,7 +114,7 @@ function Signup() {
             <p style={{fontSize:'14px',fontFamily:'cursive'}}>you already have an account? <Link to="../login" className="link-secondary" >Login</Link></p>
             
         </form>
-        <img style={{height:"600px",width:"600px" }} src={img1} alt='' className=''></img>
+        <img style={{height:"600px",width:"600px" }} src={img1} alt='' className='hidden md:block'></img>
     </div>
     </div>
     </div>

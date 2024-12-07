@@ -335,7 +335,7 @@ function Budgets() {
           <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showAddForm}/>
         </div>
               
-        <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-10 '>
+        <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-10  '>
           {budgets.map((budget)=>
             <BudgetCard 
               key={budget.budget_id} 

@@ -105,8 +105,8 @@ function Dashboard() {
                 {
                   label: 'Total expenses Amounts',
                   data: [total_income,total_expense],
-                  backgroundColor: ['rgba(76, 175, 80, 0.2)','rgba(255, 0, 0, 0.2)'],
-                  borderColor: ['rgba(76, 175, 80, 0.6)','rgba(255, 0, 0, 0.6)'],
+                  backgroundColor: ['rgba(76, 175, 80, 0.2)','rgba(128, 0, 128, 0.2)'],
+                  borderColor: ['rgba(76, 175, 80, 0.6)','rgba(128, 0, 128, 0.6)'],
                   borderWidth: 1,
                 },
                 

@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $stmt1->execute();
     $result = $stmt1->fetch(PDO::FETCH_ASSOC);
     $category_id=$result['category_id'];
-    $stmt=$pdo->prepare("insert into budgets(user_id,category_id,allocated_amount,amount) values(:user_id,:category_id,:allocated_amount,0)");
+    $stmt=$pdo->prepare("insert into budgets(user_id,category_id,allocated_amount,date_deb) values(:user_id,:category_id,:allocated_amount,CURRENT_DATE)");
     $stmt->bindParam(':category_id',$category_id);
     $stmt->bindParam(':allocated_amount',$allocated_amount);
     $stmt->bindParam(':user_id',$user_id);

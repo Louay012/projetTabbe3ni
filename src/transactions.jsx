@@ -179,10 +179,10 @@ function Transactions() {
 
     return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
-              <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
+              <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center w-full  shadow-md' >
               
         
-              <div className='flex justify-between items-center w-full'>
+              <div className='flex justify-between items-center w-full '>
                   <span className='font-bold font-mono text-2xl'>Your Expenses :</span>
                   <input className='btn btn-primary' type='submit' value='Add Expense' onClick={showAddForm}/>
                 </div>  
@@ -274,7 +274,7 @@ function Transactions() {
                     </select>
             </div>    
             {/*<div></div>overflow-x-auto*/}
-               <table className='  border-2 text-left table shadow-sm border-gray-200  '>
+              <table className='  border-2 text-left table shadow-sm border-gray-200 w-full '>
                 <thead className='table-dark'>
                     <tr className='bg-zinc-700 text-white '>
                         
