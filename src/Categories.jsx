@@ -208,7 +208,7 @@ return <>
  
             <Sidebar name={username}></Sidebar>
             <div className={'flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-4 justify-start items-center  shadow-md' } >
-              <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-2xl z-40 bg-neutral-50 absolute top-2' : 'hidden' }>
+              <Form onSubmit={handle_change} className={showModif ? 'w-96 p-4 flex flex-col gap-2 border-1 shadow-2xl z-40 bg-slate-50 absolute top-2' : 'hidden' }>
                   <Form.Group className="mb-3" controlId="formBasicName">
                     <Form.Label className="font-mono font-semibold text-lg">Categorie Name:</Form.Label>
                     <Form.Control
@@ -243,7 +243,7 @@ return <>
                   </div>
                 </Form>
 
-                <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+                <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-slate-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label className='font-mono font-semibold text-lg'>Categorie Name:</Form.Label>
                         <Form.Control
@@ -275,7 +275,7 @@ return <>
                   <Button variant="secondary" onClick={hideAddForm}>
                     Cancel
                   </Button>
-                  <Button variant="primary" type="submit" >
+                  <Button className="btn btn-dark" type="submit" >
                     Add
                   </Button>
                   </div>
@@ -284,7 +284,9 @@ return <>
             
             <div className='flex justify-between items-center w-full'>
                   <span className='font-bold font-mono text-2xl'>Your Categories :</span>
-                  <input className='btn btn-primary' type='submit' value='Add Category' onClick={showAddForm}/>
+                  <input className='px-4 py-2 font-bold text-white 
+           rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-gray-700' type='submit' value='Add Category' onClick={showAddForm}/>
                 </div>
                 
                 

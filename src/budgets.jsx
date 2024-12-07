@@ -257,7 +257,7 @@ function Budgets() {
     <Sidebar name={name}></Sidebar>
       <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2 justify-center items-center  shadow-md    '>
 
-        <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+        <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-slate-50 absolute top-2' : 'hidden' }>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label className='font-mono font-semibold text-lg'>Budget category:</Form.Label>
             <Form.Select
@@ -288,13 +288,13 @@ function Budgets() {
               <Button variant="secondary" onClick={hideAddForm}>
                 Cancel
               </Button>
-              <Button variant="primary" type="submit" >
+              <Button className="btn btn-dark"  type="submit" >
                 Add
               </Button>
             </div>
         </Form>
 
-        <Form onSubmit={handle_EditBudget} className={showEdit ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+        <Form onSubmit={handle_EditBudget} className={showEdit ? 'w-96 h-72 p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-slate-50 absolute top-2' : 'hidden' }>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label className='font-mono font-semibold text-lg'>Budget category:</Form.Label>
             <Form.Control
@@ -324,7 +324,7 @@ function Budgets() {
             <Button variant="secondary" onClick={hideEditForm}>
               Cancel
             </Button>
-            <Button variant="primary" type="submit" >
+            <Button className="btn btn-dark" type="submit" >
               Edit
             </Button>
           </div>
@@ -332,7 +332,9 @@ function Budgets() {
                
         <div className='flex justify-between items-center w-full'>
           <span className='font-bold font-mono text-2xl'>Your Budgets :</span>
-          <input className='btn btn-primary' type='submit' value='Add Budget' onClick={showAddForm}/>
+          <input className='px-4 py-2 font-bold text-white 
+           rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-gray-700' type='submit' value='Add Budget' onClick={showAddForm}/>
         </div>
               
         <div className='w-full  flex-1 flex  flex-wrap justify-center items-center gap-10  '>

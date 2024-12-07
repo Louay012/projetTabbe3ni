@@ -99,15 +99,19 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
           
           </CardTitle>
           <ProgressBar className='rounded-pill bg-violet-400' now={progress} variant={variant}></ProgressBar>
-          
+         
           <div className='flex justify-around items-center'>
-          <button type='submit'  onClick={handle_delete}  className='btn btn-danger '>
+          <button type='submit'  onClick={handle_delete}  className='px-4 py-2  text-white 
+           rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-gray-700 '>
             <div className='flex items-center'><i><MdDeleteForever/></i><span>Delete</span></div>
             </button>
-            <button type='submit'  onClick={()=>onreset(id)}  className='btn btn-secondary '>
+            <button type='submit'  onClick={()=>onreset(id)}  className='btn btn-outline-secondary '>
             <div className='flex items-center gap-1'><i><GrPowerReset  /></i><span>Reset</span></div>
             </button>
-          <input type='submit' value="Edit" onClick={()=>onshowEdit(id,name,max)} className='btn btn-primary  my-2'/>
+          <input type='submit' value="Edit" onClick={()=>onshowEdit(id,name,max)} className='px-4 py-2  text-white 
+           rounded-lg hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-violet  my-2'/>
           </div>
           
       </CardBody>

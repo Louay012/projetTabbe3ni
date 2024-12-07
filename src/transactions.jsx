@@ -184,11 +184,13 @@ function Transactions() {
         
               <div className='flex justify-between items-center w-full '>
                   <span className='font-bold font-mono text-2xl'>Your Expenses :</span>
-                  <input className='btn btn-primary' type='submit' value='Add Expense' onClick={showAddForm}/>
+                  <input className='px-4 py-2 font-bold text-white 
+           rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-gray-700' type='submit' value='Add Expense' onClick={showAddForm}/>
                 </div>  
               
 
-                <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
+                <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-slate-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label className='font-mono font-semibold text-lg'>Categorie:</Form.Label>
                         <Form.Select
@@ -234,10 +236,10 @@ function Transactions() {
                     />
                   </Form.Group>
                   <div className='flex justify-between'>
-                  <Button variant="secondary" onClick={hideAddForm}>
+                  <Button className="btn btn-secondary" onClick={hideAddForm}>
                     Cancel
                   </Button>
-                  <Button variant="primary" type="submit" >
+                  <Button className="btn btn-dark" type="submit" >
                     Add
                   </Button>
                   </div>
@@ -245,7 +247,7 @@ function Transactions() {
                     
               <div className='flex items-center justify-start gap-3'>
                     <label htmlFor="choice">Choose an option:</label>
-                    <select className='block w-30 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-900 outline-none py-2 px-3'
+                    <select className='block w-30 rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-gray-900 outline-none py-2 px-3'
                         id="choice"
                         
                         onChange={(e) => setSelectedChoice(e.target.value)}
