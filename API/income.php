@@ -9,18 +9,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 include 'db_con.php';
 session_start();
+
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents("php://input"), true);
     $user_id = $input['user_id']  ;
+    $choice = $input['choice'] ;
+    
+    $order= $input['order'];
+
    try {
-    $stmt=$pdo->prepare("select c.category_name, t.amount, t.transaction_date, t.description
-    from categories c, transactions t 
-    where c.user_id=:user_id and c.type='income' and t.user_id=:user_id and t.category_id = c.category_id
-    order by t.transaction_date desc");
+    if( $choice){
+       
+        $stmt=$pdo->prepare("SELECT 
+    t.transaction_id id, 
+    c.category_name category,  
+    t.amount amount, 
+    t.transaction_date date, 
+    t.description description 
+FROM 
+    transactions t
+JOIN 
+    categories c 
+ON 
+    t.category_id = c.category_id AND t.user_id = c.user_id 
+WHERE
+        
+    DATEDIFF(CURDATE(), t.transaction_date) <= :choice AND
+    t.user_id = :user_id and type='income'
+ ORDER BY $order ");
+    $stmt->bindParam(':choice',$choice);
+    }
+    else{
+       $stmt=$pdo->prepare(" SELECT 
+    t.transaction_id id, 
+    c.category_name category,  
+    t.amount amount, 
+    t.transaction_date date, 
+    t.description description 
+FROM 
+    transactions t
+JOIN 
+    categories c 
+ON 
+    t.category_id = c.category_id AND t.user_id = c.user_id
+WHERE 
+    t.user_id = :user_id and type='income'
+ ORDER BY $order  ");
+    }
+
     $stmt->bindParam(':user_id',$user_id);
+   
     $stmt->execute();
-    $income = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true, 'data' => $income ]);
+    $transactions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode(['success' => true, 'data' => $transactions ]);
     }
     catch (Exception $e) {
         // Catch any database-related errors

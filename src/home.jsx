@@ -10,10 +10,10 @@ import { UserContext } from './UserContext';
 function Home() {
     const { userDetails } = useContext(UserContext);
     const navigate = useNavigate();
-    console.log("Rendering Home");
+    
     useEffect(() => {
         if (userDetails) {
-            console.log(userDetails)
+            
           navigate("/dashboard");
         }
       }, [userDetails,navigate]);

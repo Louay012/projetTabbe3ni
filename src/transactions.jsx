@@ -1,6 +1,6 @@
 import React, { useState ,useEffect,useContext,useRef} from 'react'
 import Sidebar from './sidebar';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
 
@@ -186,7 +186,7 @@ function Transactions() {
                   <span className='font-bold font-mono text-2xl'>Your Expenses :</span>
                   <input className='btn btn-primary' type='submit' value='Add Expense' onClick={showAddForm}/>
                 </div>  
-                <Toaster/>
+              
 
                 <Form ref={formRef} onSubmit={handle_submit} className={showAdd ? 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-neutral-50 absolute top-2' : 'hidden' }>
                       <Form.Group className="mb-3" controlId="formBasicName">
@@ -268,7 +268,7 @@ function Transactions() {
                             Trier par:
                         </option>
                         <option value="category">Category</option>
-                        <option value="id">Transaction_id</option>
+                       
                         <option value="Amount">Amount</option>
                         <option value="date DESc">Date</option>
                     </select>

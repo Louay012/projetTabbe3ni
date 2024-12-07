@@ -5,17 +5,17 @@ import logo from './image/logo3.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link ,useNavigate  } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function Signup() {
     const regex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
     const [username, setUsername] = useState('');
     
     const [email, setEmail] = useState('');
-    const [message, setMessage] = useState('');
-    
     const [password, setPassword] = useState('');
     const [validPassword , setvalidPassword] =useState(false);
     const [passwordFocus, setpasswordFocus] = useState(false);
+    const [error, setError] = useState(null);
     const { userDetails } = useContext(UserContext);
     const navigate = useNavigate();  
     
@@ -45,28 +45,42 @@ function Signup() {
         
         const data = await response.json();
         if(data.success){
-            setMessage('signup successful');
-            console.log('signup successful');
-            navigate('/');
+            toast.success(data.message, {
+                position: 'top-center',
+                autoClose: 3000, // 3 seconds
+                hideProgressBar: true,
+                closeOnClick: true,});
+            navigate('/login');
         }
 
         else{
-            setMessage(data.message);
-            console.log('signup unsuccessful');
+            setError(data.message);
         }
     }else{
-        setMessage("password must verify conditions")
+        setError("password must verify conditions")
     }
     }
     catch(error){
-        console.error('Error during signup:', error);
+        setError('Error during signup:', error);
     }
   }
+  const showerror=()=>{
+    toast.error(error, {
+      position: 'top-center',
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: true,
+      closeOnClick: true,});
+  }
+  useEffect(() => {
+    if (error) {
+      showerror();
+      setError(null); // Clear the error after showing it
+    }
+  }, [error]);
+
   return <>
   <div className='h-screen w-screen flex flex-col justify-center'>
-   <div className={message ? "alert alert-danger flex justify-center items-center fixed top-2" : "hidden"} role="alert">
-            {message}
-        </div>
+   
   <div  className='flex justify-center items-center  '>
     <div  className='flex bg-white justify-around items-center shadow-lg rounded m-3 border-1 px-4 py-4 w-10/12 h-5/6 '>
     

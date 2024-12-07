@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement,ArcElement, Li
 import { UserContext } from './UserContext';
 import { TfiStatsUp } from "react-icons/tfi";
 import { TfiStatsDown } from "react-icons/tfi";
+import toast from 'react-hot-toast';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 //import './dashboard.css';
@@ -25,7 +26,13 @@ function Dashboard() {
   const [balance, setbalance] = useState(0);
     
   
-    
+  const showerror=()=>{
+    toast.error(error, {
+      position: 'top-center',
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: true,
+      closeOnClick: true,});
+  } 
   
   const fetch_Transactions=async () => {
 
@@ -137,7 +144,13 @@ function Dashboard() {
    
     useEffect(() => {fetch_Transactions()
     },[expenses,incomes,userDetails])  ;
-
+    
+    useEffect(() => {
+      if (error) {
+        showerror();
+        setError(null); // Clear the error after showing it
+      }
+    }, [error]);
 
   return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>

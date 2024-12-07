@@ -10,6 +10,7 @@ import Transactions from './transactions.jsx';
 import Categories from './Categories.jsx';
 import { UserProvider } from './UserContext'; // Import the context provider
 import ProtectedRoute from './ProtectedRoute';
+import  { Toaster } from 'react-hot-toast';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <UserProvider> 
+      <Toaster/>
       <RouterProvider router={router} ></RouterProvider>
     </UserProvider>
   );

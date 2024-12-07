@@ -51,7 +51,7 @@ const Sidebar = ( {name}) => {
                         </ul>
                     
                     </div>
-                  <div className='h-28'><Logout/></div>
+                  <div className='h-28 hover:text-purple-400' ><Logout/></div>
               </div>
   )
 }

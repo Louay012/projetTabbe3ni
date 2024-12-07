@@ -2,7 +2,9 @@ import React,{ useEffect, useState ,useContext,useRef } from "react";
 import Sidebar from './sidebar';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+
 function DashboardSection() {
     const { userDetails } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
@@ -25,14 +27,27 @@ function DashboardSection() {
     setCategorie('');
     setType('');
 
-    formRef.current.reset();
+      formRef.current.reset();
       setShowAdd(false);
       setShowModif(false);
   }
     const showAddForm=()=>{
       setShowAdd(true);
+      
     }
     const handle_delete = async () => {
+      const result = await Swal.fire({
+        title: 'Are you sure?',  // Title of the dialog
+        text: "You won't be able to revert this!",  // Description
+        icon: 'warning',  // Icon type
+        showCancelButton: true,  // Show the cancel button
+        confirmButtonColor: '#3085d6',  // Blue color for the confirm button
+        cancelButtonColor: '#d33',  // Red color for the cancel button
+        confirmButtonText: 'Yes, delete it!',  // Text for the confirm button
+        cancelButtonText: 'Cancel',  // Text for the cancel button
+      });
+    
+      if (result.isConfirmed) {
       try {
         const response = await fetch('http://localhost/TABBE3NI/API/delete_category.php', {
           method: 'POST',
@@ -47,20 +62,18 @@ function DashboardSection() {
         const data = await response.json();
         if (data.success) {
           fetch_Categories();
-          toast.success(data.message, {
-            position: 'top-center',
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-          });
+          Swal.fire('Deleted!', 'Budget deleted.', 'success');  // Success message after deletion
+          
           hideAddForm();
         } else {
           setError(data.message || "Failed to delete Category.");
         }
       } catch (err) {
         setError("An error occurred while deleting Category.");
-      }
+      }}
     };
+
+    
     const handle_change = async (event) => {
       event.preventDefault();
     
@@ -94,6 +107,7 @@ function DashboardSection() {
       } catch (err) {
         setError("An error occurred while modifying Category.");
       }
+    
     };
     const handle_submit=async (event) => {
         event.preventDefault();
@@ -191,7 +205,7 @@ function DashboardSection() {
     
 return <>
     <div className='flex flex-row  h-screen w-screen overflow-hidden gap-1 '>
-    <Toaster/>
+ 
             <Sidebar name={username}></Sidebar>
             <div className='flex-1  bg-white  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center  shadow-md' >
 
@@ -283,7 +297,9 @@ return <>
                             onClick={()=>{setSelectedCategory(income);
                               setCategorie(income.category); 
                               setType(income.type);
-                              setShowModif(true)}}
+                              setShowModif(true)
+                              formRef.current.reset();
+                              setShowAdd(false);}}
                               >
                                 <h3 className="card-title">{income.category}</h3>
                                 <p>{income.total_amount} DT</p>
@@ -301,7 +317,8 @@ return <>
                                 onClick={()=>{setSelectedCategory(spending);
                                   setCategorie(spending.category); // Set the category name
                                   setType(spending.type);
-                                
+                                  formRef.current.reset();
+                                  setShowAdd(false);
                                   setShowModif(true)}}>
                                     <h3>{spending.category}</h3>
                                     <p>{spending.total_amount} DT</p>

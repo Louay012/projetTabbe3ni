@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         
             $stmt->execute();
             if($stmt){
-                echo json_encode(['success' => true, 'message' => 'catégorie ajoutée']);
+                echo json_encode(['success' => true, 'message' => 'category added']);
             }
             else{
                 echo json_encode(['success' => false, 'message' => 'erreur ']);
