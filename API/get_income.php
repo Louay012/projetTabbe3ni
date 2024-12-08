@@ -13,12 +13,13 @@ session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents("php://input"), true);
     $user_id = $input['user_id']  ;
-   
+    
 
    try {
     $stmt=$pdo->prepare("select category_id,category_name from categories where user_id=:user_id and type='income' ");
 
     $stmt->bindParam(':user_id',$user_id);
+    
   
     $stmt->execute();
     $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);

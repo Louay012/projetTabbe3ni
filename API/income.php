@@ -15,7 +15,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $user_id = $input['user_id']  ;
     $choice = $input['choice'] ;
     
-    $order= $input['order'];
+    $order= $input['order'] ?? "id";
+    
 
    try {
     if( $choice){

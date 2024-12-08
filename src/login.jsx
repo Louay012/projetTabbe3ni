@@ -31,6 +31,7 @@ function Login() {
    
         const data = await response.json();
         if(data.success){
+            console.log(data.data);
             const userData=data.data;
             setUserDetails(userData);
             localStorage.setItem('userDetails', JSON.stringify(userData));
@@ -74,9 +75,10 @@ function Login() {
                     <label htmlFor="pass">Password : </label>
                     <input type="password" className="border-b border-b-slate-800 p-1 focus:outline-none focus:border-b-2 focus:border-b-purple-500" value={password} onChange={(e)=> setPassword(e.target.value)} required placeholder="Enter your password " name="pass"></input>
                     </div>
+                    
                     <input type="submit" className="bg-violet border-0 text-white p-2 rounded font-bold hover:bg-purple-500 focus:outline-none focus:ring-1" value="Login"></input>
                     
-                    <p style={{fontSize:'14px',fontFamily:'cursive'}}>You don't have an account yet? <Link to="/signup" className="link-secondary" >You can sign up here</Link></p>
+                    <p style={{fontSize:'14px',fontFamily:'cursive'}}>You don't have an account yet? <Link to="../signup" className="link-secondary" >You can sign up here</Link></p>
                 </form>
                 
             </div>

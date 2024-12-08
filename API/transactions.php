@@ -16,7 +16,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $choice = $input['choice'] ;
     
     $order= $input['order'];
-
    try {
     if( $choice){
        
@@ -56,7 +55,6 @@ WHERE
     t.user_id = :user_id and type='expense'
  ORDER BY $order  ");
     }
-
     $stmt->bindParam(':user_id',$user_id);
    
     $stmt->execute();
