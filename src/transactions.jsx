@@ -24,7 +24,7 @@ function Transactions() {
     const showerror=()=>{
       toast.error(error, {
         position: 'top-center',
-        autoClose: 3000, // 3 seconds
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,});
     }
@@ -122,7 +122,7 @@ function Transactions() {
               return;
           }
     
-          const today = new Date().toISOString().split('T')[0];  // Get today's date in YYYY-MM-DD format
+          const today = new Date().toISOString().split('T')[0]; 
           if (date > today) {
               setError("Date must be before today.");
               return;
@@ -138,8 +138,8 @@ function Transactions() {
     `,
     icon: 'info',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6', // Blue
-    cancelButtonColor: '#d33', // Red
+    confirmButtonColor: '#3085d6', 
+    cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, Add It!',
     cancelButtonText: 'Cancel',
   });
@@ -181,7 +181,7 @@ function Transactions() {
       useEffect(() => {
       if (error) {
         showerror();
-        setError(null); // Clear the error after showing it
+        setError(null); 
       }
     }, [error]);
 

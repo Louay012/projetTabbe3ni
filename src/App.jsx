@@ -10,7 +10,7 @@ import Dashboard from './Dashboard.jsx';
 import Budgets from './budgets.jsx';
 import Transactions from './transactions.jsx';
 import Categories from './Categories.jsx';
-import { UserProvider } from './UserContext'; // Import the context provider
+import { UserProvider } from './UserContext'; 
 import ProtectedRoute from './ProtectedRoute';
 import  { Toaster } from 'react-hot-toast';
 import Docs from './docs.jsx'

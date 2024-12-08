@@ -9,7 +9,7 @@ import { TfiStatsDown } from "react-icons/tfi";
 import toast from 'react-hot-toast';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
-//import './dashboard.css';
+
 function Dashboard() {
   const [chartData, setChartData] = useState(null);
   const [piechartData, setpieChartData] = useState(null);
@@ -29,7 +29,7 @@ function Dashboard() {
   const showerror=()=>{
     toast.error(error, {
       position: 'top-center',
-      autoClose: 3000, // 3 seconds
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,});
   } 

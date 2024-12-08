@@ -10,40 +10,7 @@ const ContactPage = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Collect the form data
-   
-
-    try {
-      const response = await fetch("http://localhost/TABBE3NI/API/send_mail.php", { // Ensure the correct path to your PHP file
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body:JSON.stringify({
-          name: name, 
-          email: email,
-          message: message,
-        })
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        setSuccess("Your message has been sent successfully!");
-        setError(null);
-        setSubmitted(true);
-      } else {
-        setError("There was a problem sending your message.");
-        setSuccess(null);
-      }
-    } catch (err) {
-      console.log(err)
-      setError("An error occurred. Please try again.");
-      setSuccess(null);
-    }
-  };
+ 
 
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-center items-center px-4">
@@ -57,7 +24,7 @@ const ContactPage = () => {
           Have questions or feedback? Reach out to us using the form below or through our contact information.
         </p>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+        <form  className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
           <div className="flex flex-col">
             <label htmlFor="name" className="text-sm font-semibold mb-2">Your Name</label>
             <input
@@ -107,11 +74,7 @@ const ContactPage = () => {
           </div>
         </form>
 
-        {/* Success/Error Messages */}
-        {submitted && success && <div className="mt-4 text-green-500">{success}</div>}
-        {error && <div className="mt-4 text-red-500">{error}</div>}
-
-        {/* Contact Info */}
+        
         <div className="mt-10 border-t border-gray-200 pt-6">
           <h2 className="text-2xl font-semibold text-purple-600 mb-4">Contact Information</h2>
           <ul className="space-y-4 text-gray-600">

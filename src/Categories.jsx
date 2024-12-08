@@ -37,14 +37,14 @@ function DashboardSection() {
     }
     const handle_delete = async () => {
       const result = await Swal.fire({
-        title: 'Are you sure?',  // Title of the dialog
-        text: "You won't be able to revert this!",  // Description
-        icon: 'warning',  // Icon type
-        showCancelButton: true,  // Show the cancel button
-        confirmButtonColor: '#3085d6',  // Blue color for the confirm button
-        cancelButtonColor: '#d33',  // Red color for the cancel button
-        confirmButtonText: 'Yes, delete it!',  // Text for the confirm button
-        cancelButtonText: 'Cancel',  // Text for the cancel button
+        title: 'Are you sure?',  
+        text: "You won't be able to revert this!", 
+        icon: 'warning',  
+        showCancelButton: true, 
+        confirmButtonColor: '#3085d6', 
+        cancelButtonColor: '#d33',  
+        confirmButtonText: 'Yes, delete it!', 
+        cancelButtonText: 'Cancel',  
       });
     
       if (result.isConfirmed) {
@@ -62,7 +62,7 @@ function DashboardSection() {
         const data = await response.json();
         if (data.success) {
           fetch_Categories();
-          Swal.fire('Deleted!', 'Budget deleted.', 'success');  // Success message after deletion
+          Swal.fire('Deleted!', 'Budget deleted.', 'success');  
           
           hideAddForm();
         } else {
@@ -85,7 +85,7 @@ function DashboardSection() {
           },
           body: JSON.stringify({
             user_id: userDetails.user_id,
-            category_id: selectedCategory.id, // Pass the selected category ID
+            category_id: selectedCategory.id,
             categorie: categorie,
         
           }),
@@ -133,7 +133,7 @@ function DashboardSection() {
               fetch_Categories();
                 toast.success(data.message, {
                 position: 'top-center',
-                autoClose: 3000, // 3 seconds
+                autoClose: 3000, 
                 hideProgressBar: true,
                 closeOnClick: true,});
                 
@@ -189,7 +189,7 @@ function DashboardSection() {
     const showerror=()=>{
       toast.error(error, {
         position: 'top-center',
-        duration: 3000, // 3 seconds
+        duration: 3000, 
         hideProgressBar: true,
         closeOnClick: true,});
     }
@@ -197,7 +197,7 @@ function DashboardSection() {
     useEffect(() => {
       if (error) {
         showerror();
-        setError(null); // Clear the error after showing it
+        setError(null); 
       }
     }, [error]);
     
@@ -215,7 +215,7 @@ return <>
                       type="text"
                       placeholder="Enter the category :"
                       name="category"
-                      value={categorie} // Prefill if modifying
+                      value={categorie}
                       onChange={(e) => setCategorie(e.target.value)}
                       required
                     />

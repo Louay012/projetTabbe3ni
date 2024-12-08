@@ -1,5 +1,5 @@
 import React, { useEffect , useContext }from 'react';
-import './home.css'; // Ensure your CSS is imported here or in the main `App.js`
+import './home.css'; 
 import logo from './image/logo3.png';
 import bg from './image/Manage money-amico.png';
 

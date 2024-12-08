@@ -194,12 +194,12 @@ function Budgets() {
     const result = await Swal.fire({
       title: 'Are you sure?',
       text: "This will reset the budget.",
-      icon: 'warning', // Icon type
-      showCancelButton: true, // Show the cancel button
-      confirmButtonColor: '#3085d6', // Confirm button color (blue)
-      cancelButtonColor: '#d33', // Cancel button color (red)
-      confirmButtonText: 'Yes, reset it!', // Confirm button text
-      cancelButtonText: 'Cancel', // Cancel button text
+      icon: 'warning',
+      showCancelButton: true, 
+      confirmButtonColor: '#3085d6', 
+      cancelButtonColor: '#d33', 
+      confirmButtonText: 'Yes, reset it!', 
+      cancelButtonText: 'Cancel', 
     });
   
     if (result.isConfirmed) {
@@ -223,8 +223,8 @@ function Budgets() {
         await Swal.fire({
           title: 'Reset Successful!',
           text: 'The budget has been reset.',
-          icon: 'success', // Success icon
-          confirmButtonColor: '#3085d6', // Confirm button color (blue)
+          icon: 'success', 
+          confirmButtonColor: '#3085d6',
         });
       } else {
         setError(data.message || "Failed to reset budgets.");
@@ -238,14 +238,14 @@ function Budgets() {
   const showerror=()=>{
     toast.error(error, {
       position: 'top-center',
-      autoClose: 3000, // 3 seconds
+      autoClose: 3000, 
       hideProgressBar: true,
       closeOnClick: true,});
   }
   useEffect(() => {
     if (error) {
       showerror();
-      setError(null); // Clear the error after showing it
+      setError(null); 
     }
   }, [error]);
  

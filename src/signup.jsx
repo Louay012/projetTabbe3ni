@@ -47,7 +47,7 @@ function Signup() {
         if(data.success){
             toast.success(data.message, {
                 position: 'top-center',
-                autoClose: 3000, // 3 seconds
+                autoClose: 3000,
                 hideProgressBar: true,
                 closeOnClick: true,});
             navigate('/login');
@@ -67,14 +67,14 @@ function Signup() {
   const showerror=()=>{
     toast.error(error, {
       position: 'top-center',
-      autoClose: 3000, // 3 seconds
+      autoClose: 3000, 
       hideProgressBar: true,
       closeOnClick: true,});
   }
   useEffect(() => {
     if (error) {
       showerror();
-      setError(null); // Clear the error after showing it
+      setError(null); 
     }
   }, [error]);
 

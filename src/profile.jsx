@@ -96,20 +96,20 @@ function Profile(){
       useEffect(() => {
         if (error) {
           showerror();
-          setError(null); // Clear the error after showing it
+          setError(null); 
         }
       }, [error]);
       if (loading) return <p>Loading...</p>;
     return  <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
                 <Sidebar name={username}></Sidebar>
-                <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2  items-center w-full  shadow-md' >
-                <Form ref={formRef} onSubmit={handle_submit} className={ 'w-96  p-4 flex flex-col gap-2 border-1 shadow-md z-40  bg-slate-50 absolute top-2' }>
+                <div className='flex-1  bg-purple-50  m-3 rounded-lg  p-4 flex flex-col gap-2 justify-center items-center w-full  shadow-md' >
+                <Form ref={formRef} onSubmit={handle_submit} className='w-96  p-4 flex flex-col gap-2 border-1 rounded shadow-2xl bg-white ' >
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label className='font-mono font-semibold text-lg'>mail : {mail.mail}</Form.Label>
+                    <Form.Label className='font-mono font-semibold text-lg'>Email : {mail.mail}</Form.Label>
                     
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label className='font-mono font-semibold text-lg'>user name</Form.Label>
+                    <Form.Label className='font-mono font-semibold text-lg'>user name:</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder={username}
@@ -128,7 +128,7 @@ function Profile(){
                       
                     />
                   </Form.Group>
-                  <div className='flex justify-between'>
+                  <div className='flex justify-end'>
                   <Button className="btn btn-dark" type="submit" >
                     change
                   </Button>

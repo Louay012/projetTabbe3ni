@@ -19,33 +19,32 @@ const Sidebar = ({ name }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear context and LocalStorage
+    
     setUserDetails(null);
 
-    localStorage.removeItem('userDetails'); // Remove data from LocalStorage
+    localStorage.removeItem('userDetails'); 
 
-    navigate('/'); // Redirect to the home page
+    navigate('/'); 
   };
   return (
     <div className="bg-zinc-800 flex flex-col py-4 px-2 font-mono text-lg text-gray-50 sm:w-16 md:w-48 min-h-screen">
-      {/* Top Section with User Profile */}
+     
       <div className="flex-1 flex flex-col items-center justify-start gap-10">
         <Link
           to="/profile"
-          className="flex flex-col w-full items-center justify-between text-gray-50 no-underline hover:text-purple-400"
+          className="flex flex-col w-full items-center justify-between text-gray-50 
+          no-underline  hover:text-purple-400"
         >
-          {/* User Icon (Mobile) */}
+        
           <FaUser className="md:w-14 md:h-14 sm:block w-6 h-6 md:text-inherit" />
-          {/* User Logo (Desktop) */}
-         
-          {/* User Name (Visible on larger screens) */}
+        
           <span className="hidden md:block text-inherit font-bold font-mono">{name}</span>
         </Link>
 
-        {/* Navigation Links */}
+      
         <div className='flex justify-center items-center'>
         <div className="list-none flex flex-col items-start  w-full">
-          {/* Dashboard */}
+        
           <li className="py-2 flex gap-2 items-center md:px-3">
             <Link
               to="/dashboard"
@@ -56,7 +55,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </li>
 
-          {/* Income */}
+        
           <li className="py-2 flex gap-2 items-center md:px-3">
             <Link
               to="/income"
@@ -67,7 +66,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </li>
 
-          {/* Budgets */}
+        
           <li className="py-2 flex gap-2 items-center md:px-3">
             <Link
               to="/budgets"
@@ -78,7 +77,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </li>
 
-          {/* Expenses */}
+        
           <li className="py-2 flex gap-2 items-center md:px-3">
             <Link
               to="/transactions"
@@ -89,7 +88,7 @@ const Sidebar = ({ name }) => {
             </Link>
           </li>
 
-          {/* Categories */}
+         
           <li className="py-2 flex gap-2 items-center md:px-3">
             <Link
               to="/categories"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaRegSadTear } from 'react-icons/fa';  // Icon for the error page
+import { FaRegSadTear } from 'react-icons/fa';  
 
 const Error = () => {
   return (

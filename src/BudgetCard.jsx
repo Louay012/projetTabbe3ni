@@ -30,14 +30,14 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   const handle_delete=async (e)=>{
           e.preventDefault()
           const result = await Swal.fire({
-            title: 'Are you sure to delete this budget?',  // Title of the dialog
-            text: "You won't be able to revert this!",  // Description
-            icon: 'warning',  // Icon type
-            showCancelButton: true,  // Show the cancel button
-            confirmButtonColor: '#3085d6',  // Blue color for the confirm button
-            cancelButtonColor: '#d33',  // Red color for the cancel button
-            confirmButtonText: 'Yes, delete it!',  // Text for the confirm button
-            cancelButtonText: 'Cancel',  // Text for the cancel button
+            title: 'Are you sure to delete this budget?',  
+            text: "You won't be able to revert this!", 
+            icon: 'warning', 
+            showCancelButton: true, 
+            confirmButtonColor: '#3085d6',  
+            cancelButtonColor: '#d33', 
+            confirmButtonText: 'Yes, delete it!',  
+            cancelButtonText: 'Cancel', 
           });
         
           if (result.isConfirmed) {
@@ -58,7 +58,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
             const data=await response.json();
       
             if (data.success) {
-              Swal.fire('Deleted!', 'Budget deleted.', 'success');  // Success message after deletion
+              Swal.fire('Deleted!', 'Budget deleted.', 'success'); 
           
               fetch_budgets();
               
@@ -76,7 +76,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   const showerror=()=>{
     toast.error(error, {
       position: 'top-center',
-      duration: 3000, // 3 seconds
+      duration: 3000, 
       hideProgressBar: true,
       closeOnClick: true,});
   }
@@ -84,7 +84,7 @@ function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   useEffect(() => {
     if (error) {
       showerror();
-      setError(null); // Clear the error after showing it
+      setError(null); 
     }
   }, [error]);
   

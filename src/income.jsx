@@ -24,7 +24,7 @@ function Income() {
     const showerror=()=>{
       toast.error(error, {
         position: 'top-center',
-        autoClose: 3000, // 3 seconds
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,});
     }
@@ -290,7 +290,7 @@ function Income() {
                         <option value="date DESc">Date</option>
                     </select>
             </div>    
-            {/*<div></div>overflow-x-auto*/}
+            
                <table className='  border-2 text-left table shadow-sm border-gray-200  '>
                 <thead className='table-dark'>
                     <tr className='bg-zinc-700 text-white '>
