@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+ Titre du projet : Application Web de Gestion de Budget
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Aperçu
+Ce projet est une *application web de gestion de budget* développée avec *React* pour le frontend et *PHP* pour le backend. L'application aide les utilisateurs à gérer leurs finances, y compris le suivi des dépenses, la définition des budgets et la visualisation des rapports financiers.
 
-## Available Scripts
+## Fonctionnalités
+- Authentification utilisateur (connexion et inscription)
+- Suivi des dépenses
+- Gestion des budgets (allocation de fonds aux catégories)
+- Tableau de bord pour voir le résumé financier
+- Interface mobile-friendly (via Tailwind CSS)
+- Données stockées dans MySQL
 
-In the project directory, you can run:
+## Technologies utilisées
+- *Frontend* : React, Tailwind CSS
+- *Backend* : PHP, MySQL (via PDO)
+- *Autres* : XAMPP/MAMP pour le serveur PHP local (optionnel pour les tests)
 
-### `npm start`
+## Prérequis
+Avant de démarrer, vous aurez besoin de ces éléments :
+- *Node.js* : (https://nodejs.org/)
+- *npm ou yarn* (npm est livré avec Node.js)
+- *PHP* : (https://www.php.net/)
+- *MySQL* : Une base de données MySQL (via XAMPP/MAMP)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Étapes d'installation des Prérequis
+### 1. *Téléchargez et installez Node.js :*
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1.  Suivez les instructions d'installation sur nodejs.org.
+2.  Vérifiez l'installation de Node.js et npm :
 
-### `npm test`
+        Après l'installation de Node.js, ouvrez un terminal et exécutez les commandes suivantes pour vérifier que Node.js et npm sont installés correctement :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+            node -v
+            npm -v
 
-### `npm run build`
+### 2. *Installez PHP et MySQL (via XAMPP ou MAMP) :*
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Téléchargez XAMPP depuis Apache Friends ou MAMP depuis MAMP.info.
+2. Suivez les instructions d'installation de ces outils pour configurer Apache (serveur web), PHP (serveur de backend), et MySQL (base de données).
+3. Testez votre serveur PHP et MySQL :
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Une fois XAMPP ou MAMP installé, lancez les services Apache et MySQL via leur panneau de contrôle respectif. Vous pouvez tester si votre serveur PHP fonctionne en accédant à http://localhost dans votre navigateur.
+* Accédez à phpMyAdmin en allant sur http://localhost/phpmyadmin pour gérer vos bases de données.
+Téléchargez et configurez MySQL :
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Si vous n'utilisez pas XAMPP ou MAMP, installez MySQL depuis MySQL.com.
+Vous devrez peut-être créer une nouvelle base de données et importer un fichier .sql (fourni dans le projet) pour configurer la base de données avec les bonnes tables.
 
-### `npm run eject`
+## Comment démarrer
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1. *Frontend (Application React)*
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Étapes :
+1. *Clonez le repository* :
+    
+git clone https://github.com/Louay012/Tabbe3ni.git
+cd Tabbe3ni
+##### *REMARQUE*: Si vous ne dispose pas de Git, vous devez l'installer à partir https://git-scm.com/
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. *Installez les dépendances* :
+    Utilisez npm pour installer les dépendances nécessaires :
+    
+npm install
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. *Exécutez l'application React* :
+    Lancez le serveur de développement React :
+            npm start
+    
+    L'application devrait maintenant être disponible sur http://localhost:3000. Ouvrez cette URL dans votre navigateur.
 
-## Learn More
+### 2. *Backend (API PHP)*
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Étapes :
+1. *Configurez le Backend PHP* :
+    - Placez les fichiers PHP (qui se trouvent dans le dossier /API) dans le répertoire racine de votre serveur local (par exemple, htdocs pour XAMPP).
+    - Assurez-vous que votre fichier php.ini est correctement configuré pour envoyer des emails (si nécessaire) et gérer les connexions à la base de données.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3. *Exécutez l'API PHP* :
+    - Si vous utilisez XAMPP, démarrez les services Apache et MySQL depuis le panneau de contrôle XAMPP.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 3. *Configuration de la base de données* :
 
-### Analyzing the Bundle Size
+1. Importez le fichier tabbe3ni_bd.sql pour configurer les tables nécessaires dans votre base de données MySQL. Ce fichier contient le schéma pour les tables users, categories, budgets, et transactions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 4. *Tester l'application* :
+Une fois que le frontend et le backend sont configurés, vous pouvez interagir avec l'application. 
+- Connectez-vous avec les identifiants fournis ou créez un nouveau compte.
+- Utilisez l'application pour ajouter des dépenses, définir des budgets et gérer les catégories financières.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+## Notes supplémentaires :
+- Assurez-vous que le serveur est en cours d'exécution et accessible via http://localhost pour les deux parties de l'application (React et PHP).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Dépannage :
+- *L'application React ne démarre pas* : Assurez-vous d'avoir exécuté npm install dans le dossier du projet pour installer les dépendances.
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
