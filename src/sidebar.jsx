@@ -30,7 +30,7 @@ const Sidebar = ({ name }) => {
       {/* Top Section with User Profile */}
       <div className="flex-1 flex flex-col items-center justify-start gap-10">
         <Link
-          to="/dashboard"
+          to="/profile"
           className="flex flex-col w-full items-center justify-between text-gray-50 no-underline hover:text-purple-400"
         >
           {/* User Icon (Mobile) */}

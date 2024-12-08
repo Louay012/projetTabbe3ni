@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './home.jsx';
 import Login from './login.jsx';
 import Signup from './signup.jsx';
+import Profile from './profile.jsx';
 import Income from './income.jsx';
 import { createBrowserRouter , RouterProvider } from 'react-router-dom';
 import Dashboard from './Dashboard.jsx';
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path:"/contact",
     element:<Contact/>
+  },
+  {
+    path:"/profile",
+    element:<ProtectedRoute><Profile/></ProtectedRoute>
   },
   {
     path:"/docs",
