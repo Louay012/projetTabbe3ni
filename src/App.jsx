@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './home.jsx';
 import Login from './login.jsx';
+import Error from './Error.jsx';
 import Signup from './signup.jsx';
 import Profile from './profile.jsx';
 import Income from './income.jsx';
@@ -57,6 +58,9 @@ const router = createBrowserRouter([
     ,
     {path:"/categories",
       element:<ProtectedRoute><Categories/></ProtectedRoute>
+    },
+    {path:"*",
+      element:<ProtectedRoute><Error/></ProtectedRoute>
     }
 ])
 function App() {

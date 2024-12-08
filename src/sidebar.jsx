@@ -1,6 +1,7 @@
 
-import Logout from './Logout';
-import user_logo from './image/icons8-user-100.png';
+
+
+
 import { Link   } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
 import { IoStatsChartSharp } from "react-icons/io5";
