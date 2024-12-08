@@ -11,7 +11,7 @@ function Income() {
     const [Transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    
+
     
     const[amount,setAmount]=useState(0);
     const[category,setCategory]=useState('');
@@ -73,80 +73,122 @@ function Income() {
        fetch_cat()
    },[userDetails])
 
-  
- 
-  const handle_submit=async (event) => {
-    event.preventDefault()
-    try{
-          const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
-            method:"POST",
-            headers:{
-              'Content-Type': 'application/json',
-          },
-            body:JSON.stringify({
-              user_id: userDetails.user_id,
-              amount: amount,
-              category_name: category,
-              description: description,
-              date: date,
-            })
-          })
-          
-      const data=await response.json();
-      console.log("message")
-      if (data.success) {
-        fetch_income();
-        
-        } else {
-        setError(data.message || "Failed to add income.");
 
-              }
-        } catch (err) {
-            setError("An error occurred while adding an income.");
-            console.log(err)
-        }
-        hideAddForm() 
-        } 
-  
-    const fetch_income=async () => {
-         
-         try{
+    
+    const fetch_Income=async () => {
+            
+        
+        try{
           if(userDetails){
             setUsername(userDetails.username);
             
+            const response=await fetch('http://localhost/TABBE3NI/API/income.php' ,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    choice:selectedChoice,
+                    user_id:userDetails.user_id ,
+                    order :selectedOrder}),
+            })
+           
+            const data = await response.json();
             
-             const response=await fetch('http://localhost/TABBE3NI/API/income.php' ,{ method: 'POST',
-               body: JSON.stringify({ 
-                 user_id:userDetails.user_id ,
-                 choice:selectedChoice,
-                 order:selectedOrder,
-                 }),
-             })
-             console.log("mess");
-   
-   
-             const data = await response.json();
-             console.log("mess2");
-   
-             if (data.success) {
-               setTransactions(data.data);
-             } else {
-             setError(data.message || "Failed to fetch income.");
-   
-             }
-            }
-         } catch (err) {
-          console.log(" no mess");
+            if (data.success) {
+              setTransactions(data.data);
             
-             setError("An error occurred while fetching income.");
-   
-         } finally {
-             setLoading(false);
-         }
-       }
-     useEffect(() => {
-       fetch_income()
-   },[userDetails,selectedChoice,selectedOrder])
+            
+            } else {
+            setError(data.message || "Failed to fetch Income.");
+
+            }}
+        } catch (err) {
+            setError("An error occurred while fetching Income." );
+
+        } finally {
+            setLoading(false);
+        }
+        }
+        
+        useEffect(() => {fetch_Income()
+        },[ selectedOrder ,selectedChoice,userDetails])  ;   
+        
+        const handle_submit=async (event) => {
+            event.preventDefault();
+            
+            if (amount <= 0) {
+              setError("Amount must be greater than 0.");
+              return;
+          }
+      
+          
+          const today = new Date().toISOString().split('T')[0];  // Get today's date in YYYY-MM-DD format
+          if (date > today) {
+              setError("Date must be before today.");
+              return;
+          }
+          
+          const result = await Swal.fire({
+            title: 'Confirm Transaction Details',
+    html: `
+      <div style="text-align: left;">
+        <p><strong>Category:</strong> ${category}</p>
+        <p><strong>Amount:</strong> ${amount}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Description:</strong> ${description}</p>
+    `,
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6', // Blue
+    cancelButtonColor: '#d33', // Red
+    confirmButtonText: 'Yes, Add It!',
+    cancelButtonText: 'Cancel',
+  });
+        
+          if (result.isConfirmed) {
+            try{
+               
+                  const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
+                    method:'POST',
+                    headers:{
+                      'Content-Type': 'application/json',
+                  },
+                    body:JSON.stringify({
+                      user_id: userDetails.user_id,
+                      amount: amount,
+                      category_name: category,
+                      description: description,
+                      date: date,
+                    })
+                  })
+                  
+              const data=await response.json();
+              
+              if (data.success) {
+                Swal.fire('Added!', 'Your transaction has been added successfully.', 'success');
+                hideAddForm() 
+                fetch_Income();
+                
+                } else {
+                setError(data.message || "Failed to add income.");
+        
+                      }
+                } catch (err) {
+                    setError("An error occurred while adding an income.");
+                    
+                }
+        
+               } 
+                
+                }
+      useEffect(() => {
+      if (error) {
+        showerror();
+        setError(null); // Clear the error after showing it
+      }
+    }, [error]);
+
     if (loading) return <p>Loading...</p>;
     
 
