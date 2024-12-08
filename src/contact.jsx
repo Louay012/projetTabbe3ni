@@ -1,97 +1,97 @@
-import React, { useState } from 'react';
-
-function Contact() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate form submission
-    console.log('Form submitted:', { name, email, message });
-    setSubmitted(true);
-
-    // Reset form fields
-    setName('');
-    setEmail('');
-    setMessage('');
-  };
-
+import React from "react";
+import { IoReturnUpBackSharp } from "react-icons/io5";
+import { Link ,useNavigate  } from 'react-router-dom';
+const ContactPage = () => {
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ color: '#6b4c8b' }}>Contact Us</h1>
-      <p>
-        Have questions, feedback, or need help? Feel free to reach out to us using the form below, and we’ll get back to you as soon as possible!
-      </p>
-      {submitted ? (
-        <div style={{ color: 'green', margin: '20px 0' }}>
-          Thank you for reaching out! We will get back to you shortly.
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Name:</label>
+    
+    <div className="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-center items-center px-4">
+      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg">
+        <Link to={"/"} className="flex no-underline items-center gap-2 text-black
+         hover:text-purple-600 font-bold font-mono text-lg group">
+        <IoReturnUpBackSharp className="group-hover:text-purple-600"/>
+        <span className="group-hover:text-purple-600">Home</span>
+        </Link>
+        <h1 className="text-4xl font-bold text-center text-purple-600 mb-6">
+          Contact Us
+        </h1>
+        <p className="text-center mb-8 text-gray-600">
+          Have questions or feedback? Reach out to us using the form below or through our contact information.
+        </p>
+
+        {/* Contact Form */}
+        <form className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-sm font-semibold mb-2">
+              Your Name
+            </label>
             <input
+              id="name"
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
+              placeholder="Enter your name"
+              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
+
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm font-semibold mb-2">
+              Your Email
+            </label>
             <input
+              id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
+              placeholder="Enter your email"
+              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Message:</label>
+
+          <div className="flex flex-col col-span-1 md:col-span-2">
+            <label htmlFor="message" className="text-sm font-semibold mb-2">
+              Your Message
+            </label>
             <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-              rows="5"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
+              id="message"
+              rows="4"
+              placeholder="Type your message here..."
+              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
             ></textarea>
           </div>
-          <button
-            type="submit"
-            style={{
-              backgroundColor: '#6b4c8b',
-              color: 'white',
-              border: 'none',
-              padding: '10px 20px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
-          >
-            Submit
-          </button>
+
+          <div className="col-span-1 md:col-span-2 flex justify-center">
+            <button
+              type="submit"
+              className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300"
+            >
+              Send Message
+            </button>
+          </div>
         </form>
-      )}
+
+        {/* Contact Info */}
+        <div className="mt-10 border-t border-gray-200 pt-6">
+          <h2 className="text-2xl font-semibold text-purple-600 mb-4">
+            Contact Information
+          </h2>
+          <ul className="space-y-4 text-gray-600">
+            <li>
+              <span className="font-bold text-gray-800">Address:</span> campus El Manar
+            </li>
+            <li>
+              <span className="font-bold text-gray-800">Email:</span>{" "}
+              <a href="mailto:support@example.com" className="text-purple-600 hover:underline">
+                support@example.com
+              </a>
+            </li>
+            <li>
+              <span className="font-bold text-gray-800">Phone:</span>{" "}
+              <a href="tel:+123456789" className="text-purple-600 hover:underline">
+                +123 456 789
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-export default Contact;
+export default ContactPage;

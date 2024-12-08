@@ -18,6 +18,7 @@ function Home() {
         }
       }, [userDetails,navigate]);
   return <>
+  <div className='h-max-screen'>
     <header>
         <nav>
             <ul>
@@ -50,6 +51,7 @@ function Home() {
         </div>
             <img id="back" alt="bg" src={bg} ></img>
     </div> 
+    </div>
     </>;
 }
 
