@@ -1,9 +1,13 @@
 import React, { useState ,useEffect} from 'react'
-import { Card, CardBody, CardHeader, CardTitle, ProgressBar } from 'react-bootstrap';
+import { Card, CardBody, CardTitle, ProgressBar } from 'react-bootstrap';
 import { MdDeleteForever } from "react-icons/md";
-function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fetch_budgets}) {
+import { GrPowerReset } from "react-icons/gr";
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
+
+function BudgetCard({id,name,max,amount,onreset,onshowEdit,fetch_budgets}) {
   const [progress, setProgress] = useState(0);
-  const [AddedAmount, setAddedAmount] = useState();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const percentage = (amount / max) * 100;
@@ -21,25 +25,24 @@ function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fet
           setvariant("danger");
       }
   }, [progress]); 
-  const handle_add=async (e) => {
-      e.preventDefault();
-      if (!AddedAmount) {
-        alert("Please enter an amount.");
-        return;
-    }
-        onAddExpense(id,AddedAmount);
-        setAddedAmount('');
 
-      }
-  const handle_edit=async (e) => {
-        e.preventDefault();
-        onshowEdit();
-        onEditBudget(id,name,max);
-        
-    
-          }
+ 
   const handle_delete=async (e)=>{
           e.preventDefault()
+          const result = await Swal.fire({
+            title: 'Are you sure to delete this budget?',  // Title of the dialog
+            text: "You won't be able to revert this!",  // Description
+            icon: 'warning',  // Icon type
+            showCancelButton: true,  // Show the cancel button
+            confirmButtonColor: '#3085d6',  // Blue color for the confirm button
+            cancelButtonColor: '#d33',  // Red color for the cancel button
+            confirmButtonText: 'Yes, delete it!',  // Text for the confirm button
+            cancelButtonText: 'Cancel',  // Text for the cancel button
+          });
+        
+          if (result.isConfirmed) {
+           
+            
           try{
             
                 const response=await fetch('http://localhost/TABBE3NI/API/delete_budget.php',{
@@ -55,21 +58,38 @@ function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fet
             const data=await response.json();
       
             if (data.success) {
+              Swal.fire('Deleted!', 'Budget deleted.', 'success');  // Success message after deletion
+          
               fetch_budgets();
               
+              
               } else {
-              console.log(data.message || "Failed to delete budgets.");
+              setError(data.message || "Failed to delete budgets.");
       
                     }
               } catch (err) {
-                console.log("An error occurred while deleting a budget.");
+                setError("An error occurred while deleting a budget.");
       
               }
-              
+            }        
+  }
+  const showerror=()=>{
+    toast.error(error, {
+      position: 'top-center',
+      duration: 3000, // 3 seconds
+      hideProgressBar: true,
+      closeOnClick: true,});
   }
  
+  useEffect(() => {
+    if (error) {
+      showerror();
+      setError(null); // Clear the error after showing it
+    }
+  }, [error]);
+  
   return (
-    <Card className='w-96 h-0 shadow-md'>
+    <Card className=' shadow-md w-11/12 md:w-1/3 h-[250px] md:h-[250px]'>
       <CardBody className='flex flex-col gap-2'>
         <CardTitle>
           <div className='flex justify-between items-center'>
@@ -79,15 +99,19 @@ function BudgetCard({id,name,max,amount,onAddExpense,onEditBudget,onshowEdit,fet
           
           </CardTitle>
           <ProgressBar className='rounded-pill bg-violet-400' now={progress} variant={variant}></ProgressBar>
-          <div className='flex items-center gap-3'>
-            <input type='number' onChange={(e)=>{setAddedAmount(e.target.value)}} value={AddedAmount} className='form-control'/>
-          <input type='submit' value="Add Expense" onClick={handle_add}  className='btn btn-secondary  my-2'/>
-          </div>
+         
           <div className='flex justify-around items-center'>
-          <button type='submit'  onClick={handle_delete}  className='btn btn-danger '>
+          <button type='submit'  onClick={handle_delete}  className='px-4 py-2  text-white 
+           rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-gray-700 '>
             <div className='flex items-center'><i><MdDeleteForever/></i><span>Delete</span></div>
             </button>
-          <input type='submit' value="Edit Budget" onClick={()=>onshowEdit(id,name,max)} className='btn btn-primary  my-2'/>
+            <button type='submit'  onClick={()=>onreset(id)}  className='btn btn-outline-secondary '>
+            <div className='flex items-center gap-1'><i><GrPowerReset  /></i><span>Reset</span></div>
+            </button>
+          <input type='submit' value="Edit" onClick={()=>onshowEdit(id,name,max)} className='px-4 py-2  text-white 
+           rounded-lg hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50
+            bg-violet  my-2'/>
           </div>
           
       </CardBody>

@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
     
 
-    $category_id = $input['category_id'] ?? '';
+    $category_name = $input['category_name'] ?? '';
     $user_id= $input['user_id'] ?? '';
     $amount = $input['amount'] ?? '';
     $description = $input['description'] ?? '';
@@ -22,8 +22,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
    
    try {
-   
-    
+    $stmt1=$pdo->prepare("select category_id from categories where category_name=:category_name and user_id=:user_id ");
+    $stmt1->bindParam(':user_id',$user_id);
+    $stmt1->bindParam(':category_name',$category_name);
+    $stmt1->execute();
+    $result = $stmt1->fetch(PDO::FETCH_ASSOC);
+    $category_id=$result['category_id'];
+
+
     $stmt=$pdo->prepare("insert into transactions(user_id,category_id,amount,transaction_date,description) values(:user_id,:category_id,:amount,:date,:description)");
     
     $stmt->bindParam(':category_id',$category_id);

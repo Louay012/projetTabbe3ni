@@ -10,11 +10,21 @@ import Transactions from './transactions.jsx';
 import Categories from './Categories.jsx';
 import { UserProvider } from './UserContext'; // Import the context provider
 import ProtectedRoute from './ProtectedRoute';
-
+import  { Toaster } from 'react-hot-toast';
+import Docs from './docs.jsx'
+import Contact from './contact.jsx'
 const router = createBrowserRouter([
   {
     path:"/",
     element:<Home/>
+  },
+  {
+    path:"/contact",
+    element:<Contact/>
+  },
+  {
+    path:"/docs",
+    element:<Docs/>
   },
   {
   path:"/login",
@@ -29,7 +39,7 @@ const router = createBrowserRouter([
       element:<ProtectedRoute><Income/></ProtectedRoute>
     },
   {
-    path:"/Dashboard",
+    path:"/dashboard",
       element:<ProtectedRoute><Dashboard/></ProtectedRoute>
     } ,
   {
@@ -47,6 +57,7 @@ const router = createBrowserRouter([
 function App() {
   return (
     <UserProvider> 
+      <Toaster/>
       <RouterProvider router={router} ></RouterProvider>
     </UserProvider>
   );

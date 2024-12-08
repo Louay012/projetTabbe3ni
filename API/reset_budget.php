@@ -9,28 +9,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 include 'db_con.php';
 session_start();
-
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $input = json_decode(file_get_contents("php://input"), true);
-    $user_id = $input['user_id']  ;
+    $input = json_decode(file_get_contents('php://input'), true);
     
+   
+    $id = $input['id'] ?? '';
+   
 
+
+   
    try {
-    $stmt=$pdo->prepare("select category_id,category_name from categories where user_id=:user_id and type='income' ");
-
-    $stmt->bindParam(':user_id',$user_id);
     
-  
+    $stmt=$pdo->prepare("update budgets set date_deb=CURDATE() where budget_id=:id");
+    $stmt->bindParam(':id',$id);
+
     $stmt->execute();
-    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode(['success' => true,'data' => $categories ]);
+    if($stmt){
+       
+        echo json_encode(['success' => true, 'message' => 'budget reset ']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'problem in reseting budget']);
     }
-    catch (Exception $e) {
+    $stmt=null;
+    }
+        catch (Exception $e) {
         // Catch any database-related errors
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'connecting error']);
+    echo json_encode(['success' => false, 'message' => 'Invalid connexion']);
 }
     $pdo=null;
 

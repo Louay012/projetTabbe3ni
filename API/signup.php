@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         
             $stmt->execute();
             if($stmt){
-                echo json_encode(['success' => true, 'message' => 'user ajouté']);
+                echo json_encode(['success' => true, 'message' => 'signup successful']);
             }
             else{
                 echo json_encode(['success' => false, 'message' => 'erreur signup']);

@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement,ArcElement, Li
 import { UserContext } from './UserContext';
 import { TfiStatsUp } from "react-icons/tfi";
 import { TfiStatsDown } from "react-icons/tfi";
+import toast from 'react-hot-toast';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement,ArcElement, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 //import './dashboard.css';
@@ -25,7 +26,13 @@ function Dashboard() {
   const [balance, setbalance] = useState(0);
     
   
-    
+  const showerror=()=>{
+    toast.error(error, {
+      position: 'top-center',
+      autoClose: 3000, // 3 seconds
+      hideProgressBar: true,
+      closeOnClick: true,});
+  } 
   
   const fetch_Transactions=async () => {
 
@@ -98,8 +105,8 @@ function Dashboard() {
                 {
                   label: 'Total expenses Amounts',
                   data: [total_income,total_expense],
-                  backgroundColor: ['rgba(76, 175, 80, 0.2)','rgba(255, 0, 0, 0.2)'],
-                  borderColor: ['rgba(76, 175, 80, 0.6)','rgba(255, 0, 0, 0.6)'],
+                  backgroundColor: ['rgba(76, 175, 80, 0.2)','rgba(128, 0, 128, 0.2)'],
+                  borderColor: ['rgba(76, 175, 80, 0.6)','rgba(128, 0, 128, 0.6)'],
                   borderWidth: 1,
                 },
                 
@@ -137,14 +144,20 @@ function Dashboard() {
    
     useEffect(() => {fetch_Transactions()
     },[expenses,incomes,userDetails])  ;
+    
+    useEffect(() => {
+      if (error) {
+        showerror();
+        setError(null); // Clear the error after showing it
+      }
+    }, [error]);
 
-
-  return <div className='flex flex-row  min-h-screen w-screen overflow-hidden gap-1 '>
+  return <div className='flex flex-row  min-h-screen max-w-screen overflow-hidden gap-1 '>
               <Sidebar name={username}></Sidebar>
               <div className="bg-purple-50 flex-1 m-2 rounded-lg p-2 flex flex-col flex-wrap gap-4 md:flex-row justify-around">
                   {/* Line Chart */}
-                  <div className='py-2  bg-white rounded shadow-md w-11/12 md:w-2/5 h-[250px] md:h-[250px]   '>
-                    <div className='flex items-center justify-around w-80 h-full'>
+                  <div className='py-2  bg-white rounded shadow-md w-11/12 md:w-1/3 h-[250px] md:h-[250px]   '>
+                    
                       {DoughnutchartData ? (
                       <Doughnut className='' data={DoughnutchartData} options={{
                                 responsive: true,
@@ -158,16 +171,8 @@ function Dashboard() {
                             ) : (
                               <p>Loading...</p>
                             )}
-                    <div className=" flex flex-col items-center justify-around ">
                    
-                    <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'><TfiStatsUp className='text-emerald-500 '/> {total_income}</span>
-                    <span className='flex items-center gap-2 font-mono text-lg text-red-600'><TfiStatsDown className='text-red-600'/>{total_expense}</span>
-                    <div className='flex items-center'>
-                      <span>total :  </span>
-                      <span className={balance<0 ? 'flex items-center gap-2 font-mono text-lg text-red-600' : 'flex items-center gap-2 font-mono text-lg text-emerald-500'}>{balance}</span>
-                    </div>
-                    </div>
-                  </div>
+                 
                   </div>          
                   {/* Pie Chart */}
                   <div className="p-2 bg-white rounded shadow-md flex justify-center items-center w-11/12 md:w-96 h-[250px] md:h-[250px]">
@@ -189,6 +194,28 @@ function Dashboard() {
                       <p>Loading...</p>
                     )}
                   </div>
+                  <div className='p-3  bg-white rounded shadow-md w-11/12 md:w-1/4 h-[250px] md:h-[250px]   '>
+                      <div className=" flex flex-col items-center justify-around h-full">
+                        <span className='font-bold font-mono text-xl  '>Sommaire :  </span>
+                          <div className='flex items-center justify-around w-full'> 
+                              <span className='font-mono'>total income :  </span>
+                              <span className='flex items-center gap-2 font-mono text-lg text-emerald-500'>
+                                <TfiStatsUp className='text-emerald-500 '/> {total_income}
+                                </span>
+                            </div>
+                          <div className='flex items-center justify-around w-full border-b-neutral-800 border-b '>
+                            <span className='font-mono'>total expenses :  </span>
+                            <span className='flex items-center gap-2 font-mono text-lg text-red-600 '>
+                              <TfiStatsDown className='text-red-600'/>{total_expense}
+                              </span>
+                            </div>
+                            <div className='flex items-center justify-around w-full'>
+                              <span className='font-mono font-bold text-lg'>Net balance :  </span>
+                              <span className={balance<0 ? 'flex items-center gap-2  font-mono text-lg text-red-600' : 'flex items-center gap-2  font-mono text-lg text-emerald-500'}>{balance}</span>
+                            </div>
+                      </div>
+                    </div>
+
                   <div className="p-2 bg-white rounded shadow-md w-11/12 h-[300px] md:w-8/12  md:h-[320px]">
                     {chartData ? (
                       <Line

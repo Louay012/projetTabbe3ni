@@ -11,24 +11,18 @@ include 'db_con.php';
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $input = json_decode(file_get_contents('php://input'), true);
-    
-   
-    $id = $input['id'] ?? '';
-   
-    $AddedAmount = $input['AddedAmount'] ?? '';
-
-   
+    $category_id = $input['category_id'] ?? '';
    try {
     
-    $stmt=$pdo->prepare("update budgets set amount=amount + :AddedAmount where budget_id=:id");
-    $stmt->bindParam(':id',$id);
-    $stmt->bindParam(':AddedAmount',$AddedAmount);
+    $stmt=$pdo->prepare("delete from  categories where category_id=:category_id");
+    $stmt->bindParam(':category_id',$category_id);
+
     $stmt->execute();
     if($stmt){
        
-        echo json_encode(['success' => true, 'message' => 'expense added to budget']);
+        echo json_encode(['success' => true, 'message' => 'category deleted']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'problem in adding expense']);
+        echo json_encode(['success' => false, 'message' => 'problem in deleting']);
     }
     $stmt=null;
     }
