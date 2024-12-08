@@ -76,7 +76,8 @@ function Profile(){
             console.log(data.data[0]);
             const userData=data.data;
             localStorage.setItem('userDetails', JSON.stringify(userData));
-            navigate(0);
+            navigate(0)
+            
              
             } else {
             setError(data.message || "Failed to change.");
@@ -115,7 +116,7 @@ function Profile(){
                       placeholder={username}
                       name="name"
                       onChange={(e)=>{setname(e.target.value)}}
-                      required
+                      
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
