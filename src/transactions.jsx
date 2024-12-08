@@ -3,6 +3,7 @@ import Sidebar from './sidebar';
 import toast from 'react-hot-toast';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from './UserContext';
+import Swal from 'sweetalert2';
 
 function Transactions() {
   const[username,setUsername]=useState('');
@@ -13,7 +14,7 @@ function Transactions() {
 
     
     const[amount,setAmount]=useState(0);
-    const[category_id,setCategory_id]=useState('');
+    const[category,setCategory]=useState('');
     const[date,setDate]=useState('');
     const[description,setDescription]=useState('');
     const [selectedChoice, setSelectedChoice] = useState('');
@@ -28,7 +29,7 @@ function Transactions() {
         closeOnClick: true,});
     }
     const hideAddForm=()=>{
-      setCategory_id(null);
+      setCategory(null);
     setDate(null);
     setDescription('');
     setAmount(null);
@@ -120,14 +121,30 @@ function Transactions() {
               setError("Amount must be greater than 0.");
               return;
           }
-      
-          
+    
           const today = new Date().toISOString().split('T')[0];  // Get today's date in YYYY-MM-DD format
           if (date > today) {
               setError("Date must be before today.");
               return;
           }
-          
+          const result = await Swal.fire({
+            title: 'Confirm Transaction Details',
+    html: `
+      <div style="text-align: left;">
+        <p><strong>Category:</strong> ${category}</p>
+        <p><strong>Amount:</strong> ${amount}</p>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Description:</strong> ${description}</p>
+    `,
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6', // Blue
+    cancelButtonColor: '#d33', // Red
+    confirmButtonText: 'Yes, Add It!',
+    cancelButtonText: 'Cancel',
+  });
+        
+          if (result.isConfirmed) {
             try{
                
                   const response=await fetch('http://localhost/TABBE3NI/API/add_transaction.php',{
@@ -138,7 +155,7 @@ function Transactions() {
                     body:JSON.stringify({
                       user_id: userDetails.user_id,
                       amount: amount,
-                      category_id: category_id,
+                      category_name: category,
                       description: description,
                       date: date,
                     })
@@ -147,14 +164,10 @@ function Transactions() {
               const data=await response.json();
               
               if (data.success) {
+                Swal.fire('Added!', 'Your transaction has been added successfully.', 'success');
                 
-                toast.success(data.message, {
-                  position: 'top-center',
-                  autoClose: 3000, // 3 seconds
-                  hideProgressBar: true,
-                  closeOnClick: true,});
                 fetch_Transactions();
-                
+                hideAddForm() 
                 } else {
                 setError(data.message || "Failed to add expense.");
         
@@ -162,10 +175,8 @@ function Transactions() {
                 } catch (err) {
                     setError("An error occurred while adding an expense.");
                     
-                }
-        
-                hideAddForm() 
-                
+                }     
+          }  
                 }
       useEffect(() => {
       if (error) {
@@ -197,12 +208,12 @@ function Transactions() {
                           type="text"
                           placeholder="Enter the transaction category :"
                           name="category"
-                          onChange={(e)=>{setCategory_id (e.target.value)}}
+                          onChange={(e)=>{setCategory (e.target.value)}}
                           required>
                             <option value=""  selected>
                               Choose a category
                             </option>
-                            {cats.map((cat)=><option value={cat.category_id} key={cat.category_id}>{cat.category_name}</option>)}
+                            {cats.map((cat)=><option value={cat.category_name} key={cat.category_id}>{cat.category_name}</option>)}
                         </Form.Select>
                       </Form.Group>
 

@@ -17,11 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
    
    try {
-    /*$stmt1=$pdo->prepare("select category_id from categories where category_name=:budget_cat and user_id=2 ");
-    $stmt1->bindParam(':budget_cat',$budget_cat);
-    $stmt1->execute();
-    $result = $stmt1->fetch(PDO::FETCH_ASSOC);
-    $category_id=$result['category_id'];*/
+    
     $stmt=$pdo->prepare("update  budgets set allocated_amount=:allocated_amount where budget_id=:id");
  
     $stmt->bindParam(':allocated_amount',$allocated_amount);
